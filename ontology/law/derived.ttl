@@ -1,0 +1,62 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://semantica-agent.example/koseki/id/derived/child-age-at-filing> a kos:DerivedValue ;
+    rdfs:label "届出時の子の年齢"@ja ;
+    dcterms:identifier "DERIVED-CHILD-AGE-AT-FILING" ;
+    rdfs:comment "推測：計算の定義はコードで決めた（仕様 §4.6）"@ja ;
+    kos:derivedFromProperty kos:childBirthDate,
+        kos:filingDate ;
+    kos:reviewStatus kos:HumanReviewed ;
+    kos:sourceKind kos:Speculation .
+
+<https://semantica-agent.example/koseki/id/derived/days-from-marriage-to-birth> a kos:DerivedValue ;
+    rdfs:label "婚姻の成立から出生までの日数"@ja ;
+    dcterms:identifier "DERIVED-DAYS-FROM-MARRIAGE-TO-BIRTH" ;
+    rdfs:comment "推測：計算の定義はコードで決めた（仕様 §4.6）"@ja ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/minpo/art/772> ;
+    kos:derivedFromProperty kos:childBirthDate,
+        kos:parentsMarriageDate ;
+    kos:reviewStatus kos:HumanReviewed ;
+    kos:sourceKind kos:Speculation .
+
+<https://semantica-agent.example/koseki/id/derived/days-from-prev-marriage-end-to-birth> a kos:DerivedValue ;
+    rdfs:label "前婚の解消から出生までの日数"@ja ;
+    dcterms:identifier "DERIVED-DAYS-FROM-PREV-MARRIAGE-END-TO-BIRTH" ;
+    rdfs:comment "推測：計算の定義はコードで決めた（仕様 §4.6）"@ja ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/minpo/art/772> ;
+    kos:derivedFromProperty kos:childBirthDate,
+        kos:motherPrevMarriageEndDate ;
+    kos:reviewStatus kos:HumanReviewed ;
+    kos:sourceKind kos:Speculation .
+
+<https://semantica-agent.example/koseki/id/derived/days-late> a kos:DerivedValue ;
+    rdfs:label "届出期間を過ぎた日数（期間内なら 0）"@ja ;
+    dcterms:identifier "DERIVED-DAYS-LATE" ;
+    rdfs:comment "推測：計算の定義はコードで決めた（仕様 §4.6）"@ja ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/49> ;
+    kos:derivedFromProperty kos:filingDate,
+        kos:filingDeadline ;
+    kos:reviewStatus kos:HumanReviewed ;
+    kos:sourceKind kos:Speculation .
+
+<https://semantica-agent.example/koseki/id/derived/filing-deadline> a kos:DerivedValue ;
+    rdfs:label "出生届の届出期間の末日"@ja ;
+    dcterms:identifier "DERIVED-FILING-DEADLINE" ;
+    rdfs:comment "推測：計算の定義はコードで決めた（仕様 §4.6）"@ja ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/43>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/49> ;
+    kos:derivedFromProperty kos:childBirthDate ;
+    kos:reviewStatus kos:HumanReviewed ;
+    kos:sourceKind kos:Speculation .
+
+<https://semantica-agent.example/koseki/id/derived/mother-age-at-birth> a kos:DerivedValue ;
+    rdfs:label "出生時の母の年齢"@ja ;
+    dcterms:identifier "DERIVED-MOTHER-AGE-AT-BIRTH" ;
+    rdfs:comment "推測：計算の定義はコードで決めた（仕様 §4.6）"@ja ;
+    kos:derivedFromProperty kos:childBirthDate,
+        kos:motherBirthDate ;
+    kos:reviewStatus kos:HumanReviewed ;
+    kos:sourceKind kos:Speculation .
+

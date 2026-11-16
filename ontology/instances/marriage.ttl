@@ -1,0 +1,1288 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kd: <https://semantica-agent.example/koseki/id/> .
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kd:marriage a kos:Business ;
+    rdfs:label "戸籍届出（婚姻）"@ja ;
+    dcterms:identifier "MARRIAGE" ;
+    rdfs:comment "※委託範囲については、戸籍事務を民間事業者に委託することが可能な業務の範囲について（平成25年3月28日 法務省民一第317号通知）及び戸籍事務の民間委託に関するＱ＆Ａ（平成27年3月31日法務省事務連絡）を参照のこと"@ja,
+        "○夫の従前本籍地に婚姻届出がされ、同地に新本籍を編製する場合の例"@ja,
+        "業務名 戸籍届出（婚姻）"@ja,
+        "脚注1 来庁者：現に届出の任に当たっている者"@ja,
+        "脚注2 http://www.moj.go.jp/content/000011716.pdf"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r1>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r2>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r3>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r34>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r4>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r5> ;
+    kos:hasStep <https://semantica-agent.example/koseki/id/marriage/step/1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/2>,
+        <https://semantica-agent.example/koseki/id/marriage/step/3>,
+        <https://semantica-agent.example/koseki/id/marriage/step/4>,
+        <https://semantica-agent.example/koseki/id/marriage/step/5>,
+        <https://semantica-agent.example/koseki/id/marriage/step/6>,
+        <https://semantica-agent.example/koseki/id/marriage/step/7>,
+        <https://semantica-agent.example/koseki/id/marriage/step/8> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r10> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R10" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "事項について確認する。「婚姻届記入例」を"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r10" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r18> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R18" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "第53条、第53条の2、第11条の2、第11"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r18" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r19> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R19" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "条の3"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r19" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/condition/foreign-party> a kos:Condition ;
+    rdfs:label "当事者が外国人の場合"@ja ;
+    dcterms:identifier "CONDITION-FOREIGN-PARTY" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r26>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r27>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r28> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/condition/minor> a kos:Condition ;
+    rdfs:label "未成年者の場合"@ja ;
+    dcterms:identifier "CONDITION-MINOR" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r25> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/condition/notifier-not-present> a kos:Condition ;
+    rdfs:label "届出人本人の来庁が確認できなかった場合"@ja ;
+    dcterms:identifier "CONDITION-NOTIFIER-NOT-PRESENT" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r5>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r7> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/condition/requested-by-notifier> a kos:Condition ;
+    rdfs:label "届出人から請求があった場合"@ja ;
+    dcterms:identifier "CONDITION-REQUESTED-BY-NOTIFIER" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r2> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/acceptance-certificate> a kos:DocumentType ;
+    rdfs:label "受理証明書"@ja ;
+    dcterms:identifier "DOCUMENT-ACCEPTANCE-CERTIFICATE" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r2> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/capacity-certificate> a kos:DocumentType ;
+    rdfs:label "要件具備証明書"@ja ;
+    dcterms:identifier "DOCUMENT-CAPACITY-CERTIFICATE" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r26>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r27>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r28> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/family-register-copy> a kos:DocumentType ;
+    rdfs:label "戸籍謄本等"@ja ;
+    dcterms:identifier "DOCUMENT-FAMILY-REGISTER-COPY" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r20>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r22> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/parental-consent> a kos:DocumentType ;
+    rdfs:label "父母の同意書"@ja ;
+    dcterms:identifier "DOCUMENT-PARENTAL-CONSENT" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r25> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1> a kos:ProcedureStep ;
+    rdfs:label "受付"@ja ;
+    dcterms:identifier "MARRIAGE-S1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/marriage/step/1/item/1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/1/item/2>,
+        <https://semantica-agent.example/koseki/id/marriage/step/1/item/3>,
+        <https://semantica-agent.example/koseki/id/marriage/step/1/item/4> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r6> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/marriage/step/2> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 1 .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/1> a kos:StepItem ;
+    rdfs:label "下記(1)から(3)までの必要書類が全て満たされ、疑義が無い場合は審査に移行する。"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r7> ;
+    kos:itemLabel "★" ;
+    kos:itemOrder 1 ;
+    kos:prerequisiteFor <https://semantica-agent.example/koseki/id/marriage/step/2> ;
+    kos:quote "下記(1)から(3)までの必要書類が全て満たされ、疑義が無い場合は審査に移行する。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/2> a kos:Task ;
+    rdfs:label "婚姻届の確認"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I2" ;
+    rdfs:comment "レビュー（Claude）で修正：備考の条文との対応を PDF の原本で確認した（LLM の出力では alignment=uncertain）"@ja,
+        "戸籍法、戸籍法施行規則に定められた記載事項について確認する。「婚姻届記入例」を用意する。"@ja,
+        "法務省HP（脚注2）"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/56>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/59>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/29>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/74> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r8> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/marriage/step/1/item/2.1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/1/item/2.2> ;
+    kos:itemLabel "(1)" ;
+    kos:itemOrder 2 ;
+    kos:quote "婚姻届の確認"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/marriage-notification> ;
+    kos:reviewStatus kos:HumanEdited .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/2.1> a kos:ReviewCheck ;
+    rdfs:label "記載例と照合して記入漏れがあれば、指摘する。"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I2.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r9> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:quote "記載例と照合して記入漏れがあれば、指摘する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/marriage-notification> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/2.2> a kos:ReviewCheck ;
+    rdfs:label "届出事件本人と来庁者の関係（本人又は使者）を確認する。"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I2.2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r12> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/messenger>,
+        <https://semantica-agent.example/koseki/id/role/principal>,
+        <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "届出事件本人と来庁者1の関係（本人又は使者）を確認す"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/3> a kos:Task ;
+    rdfs:label "来庁者の本人確認書類の受領"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I3" ;
+    rdfs:comment "戸籍法施行規則に定められた書類・方法により確認する。市町村が適当と認める「本人確認書類一覧表」を用意する。"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/53>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/53-2>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/27-2/para/1> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r13> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/marriage/step/1/item/3.1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/1/item/3.2>,
+        <https://semantica-agent.example/koseki/id/marriage/step/1/item/3.3> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "(2)" ;
+    kos:itemOrder 3 ;
+    kos:quote "来庁者の本人確認書類の受領"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/identity-document> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/3.1> a kos:ReviewCheck ;
+    rdfs:label "一覧表に該当するものか確認する。"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I3.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r14> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:quote "一覧表に該当するものか確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/identity-document> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/3.2> a kos:ReviewCheck ;
+    rdfs:label "写真がある書類の場合、面前の人物と同一であるか確認する。"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I3.2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r16> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "写真がある書類の場合、面前の人物と同一であるか確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/identity-document> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/3.3> a kos:ReviewCheck ;
+    rdfs:label "届書の記載と合致しているか確認する。"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I3.3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r17> ;
+    kos:itemLabel "③" ;
+    kos:itemOrder 3 ;
+    kos:quote "届書の記載と合致しているか確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/identity-document>,
+        <https://semantica-agent.example/koseki/id/document/marriage-notification> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/4> a kos:Task ;
+    rdfs:label "妻の戸籍を確認するため、妻の従前市区町村から戸籍謄本等を入手する（公用請求・郵送）。"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/non-honseki-filing> ;
+    kos:escalatesTo <https://semantica-agent.example/koseki/id/organization/wife-former-honseki-municipality> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r20>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r22> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/marriage/step/1/item/4.1> ;
+    kos:itemLabel "(3)" ;
+    kos:itemOrder 4 ;
+    kos:quote "妻の戸籍を確認するため、妻の従前市区町村から戸籍謄本等を入手する（公用請求・郵送）。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/family-register-copy> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/1/item/4.1> a kos:StepItem ;
+    rdfs:label "（届出地が妻の従前本籍地と異なる市区町村である場合）"@ja ;
+    dcterms:identifier "MARRIAGE-S1-I4.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/non-honseki-filing> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r20> ;
+    kos:itemLabel "（括弧書き）" ;
+    kos:itemOrder 1 ;
+    kos:quote "届出地が妻の従前本籍地と異なる市区町村である場合"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/2/item/1> a kos:ReviewCheck ;
+    rdfs:label "当事者間に婚姻しようとする意思の合致があるか。"@ja ;
+    dcterms:identifier "MARRIAGE-S2-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/minpo/art/742> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r23> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:quote "当事者間に婚姻しようとする意思の合致があるか。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/2/item/2> a kos:ReviewCheck ;
+    rdfs:label "婚姻年齢に達しているか。"@ja ;
+    dcterms:identifier "MARRIAGE-S2-I2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/minpo/art/731> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r24> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/marriage/step/2/item/2.1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/2/item/2.2> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "婚姻年齢に達しているか。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/2/item/2.1> a kos:StepItem ;
+    rdfs:label "未成年者の場合は父母の同意書が必要"@ja ;
+    dcterms:identifier "MARRIAGE-S2-I2.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/minor> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/38/para/1>,
+        <https://semantica-agent.example/koseki/id/law/minpo/art/737> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r25> ;
+    kos:itemLabel "※" ;
+    kos:itemOrder 1 ;
+    kos:quote "未成年者の場合は父母の同意書が必要"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/parental-consent> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/2/item/2.2> a kos:StepItem ;
+    rdfs:label "当事者が外国人のときは、その者が本国法に定める婚姻要件を満たしていることを証明する要件具備証明書が必要"@ja ;
+    dcterms:identifier "MARRIAGE-S2-I2.2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/foreign-party> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/tsusoku-ho/art/24/para/1> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r26>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r27>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r28> ;
+    kos:itemLabel "※" ;
+    kos:itemOrder 2 ;
+    kos:quote "当事者が外国人のときは、その者が本国法に定める婚姻 要件を満たしていることを証明する要件具備証明書が 必要"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/capacity-certificate> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/2/item/3> a kos:ReviewCheck ;
+    rdfs:label "重婚でないか。"@ja ;
+    dcterms:identifier "MARRIAGE-S2-I3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/minpo/art/732> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r29> ;
+    kos:itemLabel "③" ;
+    kos:itemOrder 3 ;
+    kos:quote "重婚でないか。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/2/item/4> a kos:ReviewCheck ;
+    rdfs:label "女性は待婚期間ではないか。"@ja ;
+    dcterms:identifier "MARRIAGE-S2-I4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/minpo/art/733> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r30> ;
+    kos:itemLabel "④" ;
+    kos:itemOrder 4 ;
+    kos:quote "女性は待婚期間ではないか。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/2/item/5> a kos:ReviewCheck ;
+    rdfs:label "不受理申出がされていないか。"@ja ;
+    dcterms:identifier "MARRIAGE-S2-I5" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/27-2/para/3>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/27-2/para/4>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/27-2/para/5> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r31> ;
+    kos:itemLabel "⑤" ;
+    kos:itemOrder 5 ;
+    kos:quote "不受理申出がされていないか。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/3/item/1> a kos:Task ;
+    rdfs:label "戸籍情報システムへの戸籍情報の登録（入力、審査、確認）"@ja ;
+    dcterms:identifier "MARRIAGE-S3-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r32> ;
+    kos:itemLabel "" ;
+    kos:itemOrder 1 ;
+    kos:quote "戸籍情報システムへの戸籍情報の登録（入力、審査、確認）"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/4/item/1> a kos:Task ;
+    rdfs:label "受理決定・受付帳の記載・受付番号発番"@ja ;
+    dcterms:identifier "MARRIAGE-S4-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/20>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/21> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r1> ;
+    kos:itemLabel "(1)" ;
+    kos:itemOrder 1 ;
+    kos:quote "受理決定・受付帳の記載・受付番号発番"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/4/item/2> a kos:Task ;
+    rdfs:label "届出人から請求があった場合、受理証明書を交付"@ja ;
+    dcterms:identifier "MARRIAGE-S4-I2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/requested-by-notifier> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/48> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r2> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/notifier> ;
+    kos:itemLabel "(2)" ;
+    kos:itemOrder 2 ;
+    kos:quote "届出人から請求があった場合、受理証明書を交付"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/acceptance-certificate> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/4/item/3> a kos:ReviewCheck ;
+    rdfs:label "戸籍記載内容の確認"@ja ;
+    dcterms:identifier "MARRIAGE-S4-I3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r3> ;
+    kos:itemLabel "(3)" ;
+    kos:itemOrder 3 ;
+    kos:quote "戸籍記載内容の確認"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/4/item/4> a kos:Task ;
+    rdfs:label "決裁"@ja ;
+    dcterms:identifier "MARRIAGE-S4-I4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r4> ;
+    kos:itemLabel "(4)" ;
+    kos:itemOrder 4 ;
+    kos:quote "決裁"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/5/item/1> a kos:Task ;
+    rdfs:label "1.受付の(2)において、届出人本人が来庁していることが確認できなかった場合には、当該来庁していない者に対して通知を発送する。"@ja ;
+    dcterms:identifier "MARRIAGE-S5-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/notifier-not-present> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/27-2/para/1>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/27-2/para/2> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r5>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r7> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/notifier> ;
+    kos:itemLabel "" ;
+    kos:itemOrder 1 ;
+    kos:quote "1.受付の(2)において、届出人本人が来庁していることが確認 できなかった場合には、当該来庁していない者に対して通知を 発送する。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/6/item/1> a kos:Task ;
+    rdfs:label "妻の従前本籍地市町村への通知資料発送"@ja ;
+    dcterms:identifier "MARRIAGE-S6-I1" ;
+    rdfs:comment "通知資料：宛名カード、返信用葉書、届書の謄本"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/36> ;
+    kos:escalatesTo <https://semantica-agent.example/koseki/id/organization/wife-former-honseki-municipality> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r8> ;
+    kos:itemLabel "(1)" ;
+    kos:itemOrder 1 ;
+    kos:quote "妻の従前本籍地市町村への通知資料発送"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/6/item/2> a kos:Task ;
+    rdfs:label "到着確認の消込"@ja ;
+    dcterms:identifier "MARRIAGE-S6-I2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r10> ;
+    kos:itemLabel "(2)" ;
+    kos:itemOrder 2 ;
+    kos:quote "到着確認の消込"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/6/item/3> a kos:StepItem ;
+    rdfs:label "妻の従前本籍地では、3、4の処理を行った後、8と同様に管轄法務局に届書類を送付する。"@ja ;
+    dcterms:identifier "MARRIAGE-S6-I3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:escalatesTo <https://semantica-agent.example/koseki/id/organization/legal-affairs-bureau> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r12> ;
+    kos:itemLabel "※" ;
+    kos:itemOrder 3 ;
+    kos:quote "妻の従前本籍地では、3、4の処理を行った後、8と同様に 管轄法務局に届書類を送付する。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/7/item/1> a kos:Task ;
+    rdfs:label "各種通知（住民票記載事項通知等）"@ja ;
+    dcterms:identifier "MARRIAGE-S7-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/juki-ho/art/7/para/5> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r13> ;
+    kos:itemLabel "(1)" ;
+    kos:itemOrder 1 ;
+    kos:normalizationNote "「住基法」を正式名に直した"@ja ;
+    kos:quote "各種通知（住民票記載事項通知等）"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/7/item/2> a kos:Task ;
+    rdfs:label "戸籍の附票作成"@ja ;
+    dcterms:identifier "MARRIAGE-S7-I2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/juki-ho/art/16>,
+        <https://semantica-agent.example/koseki/id/law/juki-ho/art/17> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r14> ;
+    kos:itemLabel "(2)" ;
+    kos:itemOrder 2 ;
+    kos:normalizationNote "「住基法」を正式名に直した"@ja ;
+    kos:quote "戸籍の附票作成"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/7/item/3> a kos:Task ;
+    rdfs:label "人口動態調査票入力"@ja ;
+    dcterms:identifier "MARRIAGE-S7-I3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/jinko-dotai-rei/art/3> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r15> ;
+    kos:itemLabel "(3)" ;
+    kos:itemOrder 3 ;
+    kos:quote "人口動態調査票入力"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/8/item/1> a kos:Task ;
+    rdfs:label "戸籍の記載手続が終了した届書その他の書類を受付の順序に従い、目録をつけて保存"@ja ;
+    dcterms:identifier "MARRIAGE-S8-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/48/para/1> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r17> ;
+    kos:itemLabel "(1)" ;
+    kos:itemOrder 1 ;
+    kos:quote "戸籍の記載手続が終了した届書その他の書類を受付の順 序に従い、目録をつけて保存"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/8/item/2> a kos:Task ;
+    rdfs:label "本籍人に関する届書類を1か月ごとに法務局に送付"@ja ;
+    dcterms:identifier "MARRIAGE-S8-I2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/48/para/2> ;
+    kos:escalatesTo <https://semantica-agent.example/koseki/id/organization/legal-affairs-bureau> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r19> ;
+    kos:itemLabel "(2)" ;
+    kos:itemOrder 2 ;
+    kos:quote "本籍人に関する届書類を1か月ごとに法務局に送付"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/role/messenger> a kos:PartyRole ;
+    rdfs:label "使者"@ja ;
+    dcterms:identifier "ROLE-MESSENGER" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r12> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/role/principal> a kos:PartyRole ;
+    rdfs:label "届出事件本人"@ja ;
+    dcterms:identifier "ROLE-PRINCIPAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r12> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r1> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "※委託範囲については、戸籍事務を民間事業者に委託することが可能な業務の範囲について（平成25年3"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r1" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r2> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "月28日 法務省民一第317号通知）及び戸籍事務の民間委託に関するＱ＆Ａ（平成27年3月31日法務"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r2" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r24> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R24" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "② 婚姻年齢に達しているか。 民法第731条"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r24" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r29> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R29" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "③ 重婚でないか。 民法第732条"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r29" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r3> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "省事務連絡）を参照のこと"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r3" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r30> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R30" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "④ 女性は待婚期間ではないか。 民法第733条"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r30" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r31> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R31" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "⑤ 不受理申出がされていないか。 戸籍法第27条の2第3項、第4項、第5項"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r31" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r33> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R33" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "登録"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote ""@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r33" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r34> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R34" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "1 現に届出の任に当たっている者"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r34" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r35> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R35" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "2 http://www.moj.go.jp/content/000011716.pdf"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r35" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r4> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "業務名 戸籍届出（婚姻）"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r4" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r5> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R5" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "○夫の従前本籍地に婚姻届出がされ、同地に新本籍を編製する場合の例"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r5" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r7> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R7" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "場合は審査に移行する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r7" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r14> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R14" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(2) 戸籍の附票作成 住基法第16条、第17条"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r14" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r15> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R15" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(3) 人口動態調査票入力 人口動態調査令第3条"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r15" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r18> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R18" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "の送付"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote ""@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r18" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r3> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(3) 戸籍記載内容の確認"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r3" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r4> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(4) 決裁"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r4" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r9> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R9" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "籍地市町村へ"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "法第36条）"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r9" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/condition/non-honseki-filing> a kos:Condition ;
+    rdfs:label "非本籍地に届出された場合"@ja ;
+    dcterms:identifier "CONDITION-NON-HONSEKI-FILING" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r20>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r22> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/3> a kos:ProcedureStep ;
+    rdfs:label "システム登録"@ja ;
+    dcterms:identifier "MARRIAGE-S3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/marriage/step/3/item/1> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r32>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r33> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/marriage/step/4> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 3 .
+
+<https://semantica-agent.example/koseki/id/marriage/step/4> a kos:ProcedureStep ;
+    rdfs:label "照合・決裁"@ja ;
+    dcterms:identifier "MARRIAGE-S4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/marriage/step/4/item/1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/4/item/2>,
+        <https://semantica-agent.example/koseki/id/marriage/step/4/item/3>,
+        <https://semantica-agent.example/koseki/id/marriage/step/4/item/4> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r1> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/marriage/step/5> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 4 .
+
+<https://semantica-agent.example/koseki/id/marriage/step/5> a kos:ProcedureStep ;
+    rdfs:label "本人への通知"@ja ;
+    dcterms:identifier "MARRIAGE-S5" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/marriage/step/5/item/1> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r5>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r6> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/marriage/step/6> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 5 .
+
+<https://semantica-agent.example/koseki/id/marriage/step/6> a kos:ProcedureStep ;
+    rdfs:label "妻の従前本籍地市町村への届書類の送付等"@ja ;
+    dcterms:identifier "MARRIAGE-S6" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/marriage/step/6/item/1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/6/item/2>,
+        <https://semantica-agent.example/koseki/id/marriage/step/6/item/3> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r9> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/marriage/step/7> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 6 .
+
+<https://semantica-agent.example/koseki/id/marriage/step/7> a kos:ProcedureStep ;
+    rdfs:label "関連事務"@ja ;
+    dcterms:identifier "MARRIAGE-S7" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/marriage/step/7/item/1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/7/item/2>,
+        <https://semantica-agent.example/koseki/id/marriage/step/7/item/3> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r13> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/marriage/step/8> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 7 .
+
+<https://semantica-agent.example/koseki/id/marriage/step/8> a kos:ProcedureStep ;
+    rdfs:label "届書類の保存、法務局への送付"@ja ;
+    dcterms:identifier "MARRIAGE-S8" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/marriage/step/8/item/1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/8/item/2> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r18> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 8 .
+
+<https://semantica-agent.example/koseki/id/organization/legal-affairs-bureau> a kos:Organization ;
+    rdfs:label "法務局"@ja ;
+    dcterms:identifier "ORGANIZATION-LEGAL-AFFAIRS-BUREAU" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r19> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/organization/wife-former-honseki-municipality> a kos:Organization ;
+    rdfs:label "妻の従前本籍地市区町村"@ja ;
+    dcterms:identifier "ORGANIZATION-WIFE-FORMER-HONSEKI-MUNICIPALITY" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r20>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r22>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r8> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/role/notifier> a kos:PartyRole ;
+    rdfs:label "届出人"@ja ;
+    dcterms:identifier "ROLE-NOTIFIER" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p5-r2>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r5>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p5-r7> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r14> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R14" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "① 一覧表に該当するものか確認する。 戸籍法施行規則に定められた書類・方法に"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r14" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r23> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R23" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "2.審査"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "① 当事者間に婚姻しようとする意思の合致があるか。 民法第742条"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r23" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r32> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R32" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "3. システム"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "戸籍情報システムへの戸籍情報の登録（入力、審査、確認）"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r32" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r6> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R6" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "1.受付"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "★下記(1)から(3)までの必要書類が全て満たされ、疑義が無い"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r6" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r8> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R8" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "(1) 婚姻届の確認"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r8" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r9> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R9" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "① 記載例と照合して記入漏れがあれば、指摘する。 戸籍法、戸籍法施行規則に定められた記載"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r9" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r1> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "4.照合・決裁"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(1) 受理決定・受付帳の記載・受付番号発番 戸籍法施行規則第20条、第21条"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r1" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r10> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R10" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "の届書類の送"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(2) 到着確認の消込"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r10" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r12> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R12" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "管轄法務局に届書類を送付する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r12" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r13> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R13" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "7.関連事務"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(1) 各種通知（住民票記載事項通知等） 住基法第7条第5項"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r13" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r16> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R16" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "8.届書類の保"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(1) 戸籍の記載手続が終了した届書その他の書類を受付の順 戸籍法施行規則第48条第１項"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r16" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r17> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R17" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "存、法務局へ"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "序に従い、目録をつけて保存"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r17" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r19> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R19" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(2) 本籍人に関する届書類を1か月ごとに法務局に送付 戸籍法施行規則第48条第２項"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r19" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/document/marriage-notification> a kos:DocumentType ;
+    rdfs:label "婚姻届"@ja ;
+    dcterms:identifier "DOCUMENT-MARRIAGE-NOTIFICATION" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r9> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/marriage/step/2> a kos:ProcedureStep ;
+    rdfs:label "審査"@ja ;
+    dcterms:identifier "MARRIAGE-S2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/marriage/step/2/item/1>,
+        <https://semantica-agent.example/koseki/id/marriage/step/2/item/2>,
+        <https://semantica-agent.example/koseki/id/marriage/step/2/item/3>,
+        <https://semantica-agent.example/koseki/id/marriage/step/2/item/4>,
+        <https://semantica-agent.example/koseki/id/marriage/step/2/item/5> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r23> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/marriage/step/3> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 2 .
+
+<https://semantica-agent.example/koseki/id/role/visitor> a kos:PartyRole ;
+    rdfs:label "来庁者"@ja ;
+    dcterms:identifier "ROLE-VISITOR" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r13>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r16> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r13> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R13" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "(2) 来庁者の本人確認書類の受領"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r13" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r15> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R15" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "② 写真がある書類の場合、面前の人物と同一であるか確認 より確認する。市町村が適当と認める「本人"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r15" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r16> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R16" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "する。 確認書類一覧表」を用意する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r16" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r17> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R17" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "③ 届書の記載と合致しているか確認する。 戸籍法第27条の2第1項、戸籍法施行規則"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r17" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r25> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R25" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "※未成年者の場合は父母の同意書が必要 民法第737条、戸籍法第38条第１項"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r25" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r26> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R26" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "※当事者が外国人のときは、その者が本国法に定める婚姻 法の適用に関する通則法第24条第１項"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r26" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r27> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R27" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "要件を満たしていることを証明する要件具備証明書が"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r27" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r28> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R28" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "必要"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r28" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r11> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R11" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "付等"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "※妻の従前本籍地では、3、4の処理を行った後、8と同様に"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r11" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r7> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R7" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "発送する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r7" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r8> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R8" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "6.妻の従前本"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(1) 妻の従前本籍地市町村への通知資料発送 宛名カード、返信用葉書、届書の謄本（戸籍"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r8" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/document/identity-document> a kos:DocumentType ;
+    rdfs:label "本人確認書類"@ja ;
+    dcterms:identifier "DOCUMENT-IDENTITY-DOCUMENT" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p4-r13>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p4-r17> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r11> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R11" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "② 届出事件本人と来庁者1の関係（本人又は使者）を確認す 用意する。（戸籍法第29条、第74条、戸籍"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r11" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r12> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R12" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "る。 法施行規則第56条、第59条、法務省HP2）"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r12" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r21> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R21" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "妻の戸籍を確認するため、妻の従前市区町村から戸籍謄本"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r21" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r22> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R22" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "等を入手する（公用請求・郵送）。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r22" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r2> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "(2) 届出人から請求があった場合、受理証明書を交付 戸籍法第48条"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r2" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r5> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R5" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "5.本人への通"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "1.受付の(2)において、届出人本人が来庁していることが確認 戸籍法第27条の2第1項、第2項"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r5" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p5-r6> a kos:SourceReference ;
+    dcterms:identifier "SRC-P5-R6" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:division "知"@ja ;
+    kos:pdfPage 5 ;
+    kos:printedPage 4 ;
+    kos:quote "できなかった場合には、当該来庁していない者に対して通知を"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p5-r6" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p4-r20> a kos:SourceReference ;
+    dcterms:identifier "SRC-P4-R20" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍届出（婚姻）"@ja ;
+    kos:pdfPage 4 ;
+    kos:printedPage 3 ;
+    kos:quote "(3) （届出地が妻の従前本籍地と異なる市区町村である場合）"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p4-r20" ;
+    kos:sourceKind kos:ManualSource .
+
