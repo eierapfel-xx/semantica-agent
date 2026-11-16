@@ -1,0 +1,28 @@
+# 出生届の事案の例：11/2 生まれを 11/20 に届出（届出期間を過ぎている）。
+# 試し方：uv run python -m semantica_agent.build judge --case docs/examples/birth-late.ttl
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix kcase: <https://semantica-agent.example/koseki/case/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@base <https://semantica-agent.example/koseki/id/> .
+
+kcase:example a kos:BirthFiling ;
+  kos:childBirthDate "2026-11-02"^^xsd:date ;
+  kos:childBirthTime "10:30:00"^^xsd:time ;
+  kos:filingDate "2026-11-20"^^xsd:date ;
+  kos:certBirthDate "2026-11-02"^^xsd:date ;
+  kos:certBirthTime "10:30:00"^^xsd:time ;
+  kos:certBirthPlace "A市" ;
+  kos:filingMunicipality "A市" ;
+  kos:honsekiMunicipality "A市" ;
+  kos:birthPlaceMunicipality "A市" ;
+  kos:notifierMunicipality "A市" ;
+  kos:notifierRole <role/mother> ;
+  kos:attachedDocument <document/birth-certificate> ;
+  kos:recordedItem <record-item/spouse-status>, <record-item/birth-datetime>,
+                   <record-item/birth-place>, <record-item/mother-birth-date> ;
+  kos:statedRelationship "嫡出子" ;
+  kos:statedFather "現在の夫" ;
+  kos:motherBirthDate "1990-01-01"^^xsd:date ;
+  kos:parentsMarriageDate "2020-01-01"^^xsd:date ;
+  kos:familyRegisterExists true ;
+  kos:addressExists true .

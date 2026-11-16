@@ -11,16 +11,18 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 
 from pyshacl import validate as shacl_validate
-from rdflib import Graph
+from rdflib import RDF, Graph
 
 from semantica_agent import law_gen, shapes_gen
 from semantica_agent.derive import derived_definitions_graph
 from semantica_agent.extract import extract_rows, load_rows, rows_for_business, save_rows
-from semantica_agent.ids import activity_iri, iri_from_short_id
+from semantica_agent.ids import activity_iri, iri_from_short_id, short_id
 from semantica_agent.instance_check import InstanceValidationError, validate_instance_output
 from semantica_agent.instance_gen import generate_instances, instances_to_graph
+from semantica_agent.judge import judge
 from semantica_agent.law_gen import LawFetchError
 from semantica_agent.llm_provider import PROVIDER_NAME, extract_json, register_provider
+from semantica_agent.namespaces import KD, KOS
 from semantica_agent.provenance import record_activity
 from semantica_agent.schema_gen import (
     check_schema_coverage,
@@ -288,6 +290,67 @@ def stage_validate(ctx: Ctx, args) -> None:
         raise StageError("整合性の検証で違反があります")
 
 
+OUTCOME_JA = {
+    "Reject": "受理できない",
+    "NeedsCorrection": "補正・追完が要る",
+    "NeedsInquiry": "法務局への受理照会が要る",
+    "AdditionalProcedure": "受理できるが追加の手続が要る",
+    "Info": "参考",
+}
+
+
+def _local(iri) -> str:
+    return str(iri).split("#")[-1]
+
+
+def _trace_lines(f, onto: Graph) -> list[str]:
+    from rdflib import RDFS
+
+    lines = [f"- [{_local(f.outcome)}] {short_id(f.rule)}：{f.message}"]
+    if f.value is not None:
+        lines.append(
+            f"    値：{short_id(f.value) if str(f.value).startswith(str(KD)) else f.value}"
+        )
+    if f.check is not None:
+        lines.append(f"    審査項目：{short_id(f.check)}「{onto.value(f.check, RDFS.label)}」")
+        for src in sorted(onto.objects(f.check, KOS.hasSource)):
+            page, printed = onto.value(src, KOS.pdfPage), onto.value(src, KOS.printedPage)
+            quote = onto.value(src, KOS.quote)
+            lines.append(f"      出典：手順書 PDF {page} 頁（印刷 {printed} 頁）「{quote}」")
+    for v in f.versions:
+        status = onto.value(v, KOS.versionStatus)
+        lines.append(f"    条文の版：{short_id(v)}（{_local(status) if status else '-'}）")
+        for src in sorted(onto.objects(v, KOS.hasSource)):
+            lines.append(f"      出典：{onto.value(src, KOS.url)}")
+    if f.provisional:
+        lines.append("    ※ 未承認の現行版に基づく暫定の指摘")
+    return lines
+
+
+def stage_judge(ctx: Ctx, args) -> None:
+    if not args.case:
+        raise StageError("judge には --case（出生届の事案の Turtle）が要ります")
+    case = Graph().parse(args.case)
+    subjects = sorted(set(case.subjects(RDF.type, KOS.BirthFiling)))
+    if len(subjects) != 1:
+        raise StageError(
+            f"事案のファイルには kos:BirthFiling がちょうど 1 つ要ります（{len(subjects)} 個）"
+        )
+    onto = load_ontology(ctx.onto(""))
+    j = judge(case, subjects[0], onto, Graph().parse(ctx.require("rules/birth-rules.ttl")))
+    decision = _local(j.decision) if j.decision else None
+    print(f"判定：{decision}（{OUTCOME_JA[decision]}）" if decision else "判定：指摘なし（受理可）")
+    if j.missing_inputs:
+        print(
+            "欠けた入力（評価できないルールがある）："
+            + "、".join(_local(p) for p in j.missing_inputs)
+        )
+    if j.provisional_decision:
+        print(f"暫定の判定（未承認の現行版に基づく）：{_local(j.provisional_decision)}")
+    for f in j.findings:
+        print("\n".join(_trace_lines(f, onto)))
+
+
 STAGES = {
     "extract": stage_extract,
     "schema": stage_schema,
@@ -298,6 +361,7 @@ STAGES = {
     "derived": stage_derived,
     "approve": stage_approve,
     "validate": stage_validate,
+    "judge": stage_judge,
 }
 
 
@@ -309,6 +373,7 @@ def _parser() -> argparse.ArgumentParser:
     p.add_argument("--business", choices=list(BUSINESS_SLUGS.values()))
     p.add_argument("--provider", default=PROVIDER_NAME, help=argparse.SUPPRESS)
     p.add_argument("--from-run", help="instances で、保存済みの実行の応答を使う（LLM を呼ばない）")
+    p.add_argument("--case", help="judge で判定する事案の Turtle ファイル")
     p.add_argument("--by", help="approve の確認者")
     p.add_argument("--file", help="approve の対象ファイル")
     return p

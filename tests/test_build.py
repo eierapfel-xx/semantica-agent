@@ -166,3 +166,19 @@ def test_instances_from_saved_run(tmp_project, sample, birth_rows):
     prov = Graph().parse(tmp_project / "ontology" / "provenance.ttl")
     assert (None, KOS.model, None) in prov
     assert "m-saved" in {str(o) for o in prov.objects(None, KOS.model)}
+
+
+def test_judge_stage_prints_findings_with_trace(capsys):
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    case = root / "docs" / "examples" / "birth-late.ttl"
+    assert main(["judge", "--case", str(case), "--root", str(root)]) == 0
+    out = capsys.readouterr().out
+    assert "判定：AdditionalProcedure" in out
+    assert "RULE-BIRTH-FILING-PERIOD" in out and "BIRTH-S2-I11" in out
+    assert "PDF 3 頁" in out
+
+
+def test_judge_stage_requires_case(tmp_project):
+    assert main(["judge", "--root", str(tmp_project)]) == 1
