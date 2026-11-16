@@ -1,0 +1,36 @@
+@base <https://semantica-agent.example/koseki/> .
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix kd: <https://semantica-agent.example/koseki/id/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kd:prefixes a owl:Ontology ;
+  sh:declare [ sh:prefix "kos" ; sh:namespace "https://semantica-agent.example/koseki/schema#"^^xsd:anyURI ] ,
+             [ sh:prefix "kd" ; sh:namespace "https://semantica-agent.example/koseki/id/"^^xsd:anyURI ] .
+
+<id/rule/birth/filing-period> a kos:JudgmentRule ;
+  kos:implementsCheck <id/birth/step/2/item/9> ; kos:outcome kos:AdditionalProcedure ;
+  kos:underVersion <id/law/koseki-ho/art/49/version/manual> ;
+  kos:shape <id/shape/birth/filing-period> .
+<id/shape/birth/filing-period> a sh:NodeShape ; sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Warning ; sh:message "届出期間を過ぎています"@ja ;
+  sh:property [ sh:path kos:daysLate ; sh:maxInclusive 0 ] .
+
+# 現行の嫡出推定（簡略版）：婚姻中の出生なのに「嫡出でない子」と書かれていれば補正
+<id/rule/birth/legitimacy-current> a kos:JudgmentRule ;
+  kos:implementsCheck <id/birth/step/2/item/5> ; kos:outcome kos:NeedsCorrection ;
+  kos:underVersion <id/law/minpo/art/772/version/2024-04-01> ;
+  kos:shape <id/shape/birth/legitimacy-current> .
+<id/shape/birth/legitimacy-current> a sh:NodeShape ; sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Violation ;
+  sh:sparql [
+    sh:prefixes kd:prefixes ;
+    sh:message "婚姻中の出生は夫の子と推定されます"@ja ;
+    sh:select """
+      SELECT $this WHERE {
+        $this kos:childBirthDate ?b ; kos:parentsMarriageDate ?m ; kos:statedRelationship "嫡出でない子" .
+        <https://semantica-agent.example/koseki/id/law/minpo/art/772/version/2024-04-01> kos:validFrom ?from .
+        FILTER (?b >= ?from && ?m <= ?b)
+      }"""
+  ] .

@@ -40,6 +40,8 @@ select = ["E", "F", "W", "I", "B", "UP", "SIM"]
 testpaths = ["tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
+# rdflib の XSD 名前空間を pytest が調べるときに出る無害な警告
+filterwarnings = ["ignore:Code. _mock_name is not defined in namespace XSD:UserWarning"]
 markers = [
     "slow: 時間のかかるテスト",
     "llm: Claude（Agent SDK）を実際に呼ぶテスト。Pro の利用枠を消費する",
