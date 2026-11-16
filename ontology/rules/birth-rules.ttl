@@ -99,7 +99,8 @@
 <https://semantica-agent.example/koseki/id/rule/birth/legitimacy-diff> a kos:JudgmentRule ;
     rdfs:label "手順書と現行で嫡出の結論が違う"@ja ;
     dcterms:identifier "RULE-BIRTH-LEGITIMACY-DIFF" ;
-    rdfs:comment "2024-04-01 以後の出生で、手順書の基準と現行の基準の結論が違うときに知らせる。切替日は民法772条の2024-04-01の版の施行日をオントロジーから引く。"@ja ;
+    rdfs:comment "2024-04-01 以後の出生で、手順書の基準と現行の基準の結論が違うときに知らせる。切替日は民法772条の2024-04-01の版の施行日をオントロジーから引く。"@ja,
+        "レビュー（Claude）で修正：最終レビューの指摘により、婚姻後の日数の境界を民法140条（初日不算入）に合わせ「二百日を経過した後」＝ daysFromMarriageToBirth >= 201 とした。"@ja ;
     kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/5> ;
     kos:outcome kos:Info ;
     kos:reviewStatus kos:LlmDraft ;
@@ -108,7 +109,8 @@
 <https://semantica-agent.example/koseki/id/rule/birth/legitimacy-manual> a kos:JudgmentRule ;
     rdfs:label "続き柄・嫡出子か（手順書の基準）"@ja ;
     dcterms:identifier "RULE-BIRTH-LEGITIMACY-MANUAL" ;
-    rdfs:comment "レビュー（Claude）で修正：続き柄の値を「嫡出子」「嫡出でない子」に決め、implementsCheck を主な審査項目 1 つにした。"@ja,
+    rdfs:comment "レビュー（Claude）で修正：最終レビューの指摘により、婚姻後の日数の境界を民法140条（初日不算入）に合わせ「二百日を経過した後」＝ daysFromMarriageToBirth >= 201 とした。"@ja,
+        "レビュー（Claude）で修正：続き柄の値を「嫡出子」「嫡出でない子」に決め、implementsCheck を主な審査項目 1 つにした。"@ja,
         "民法772条の手順書時点の版。2024-03-31 以前の出生にだけ適用される。届書の続き柄が、派生値（婚姻後日数・前婚解消後日数）から導く嫡出・嫡出でないの区別と合うかを見る。父欄との照合は、夫の特定に必要な値が事案に無いため含めない。"@ja ;
     kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/5> ;
     kos:outcome kos:NeedsCorrection ;
@@ -139,6 +141,7 @@
     rdfs:label "届出人が届出義務者・届出資格者に入らない"@ja ;
     dcterms:identifier "RULE-BIRTH-NOTIFIER" ;
     rdfs:comment "レビュー（Claude）で修正：オントロジーに父・医師などのノードのラベルが無く照合が空振りするため、kd:role/ の IRI で照合するようにした。戸籍法52条（e-Gov）により、法定代理人（4項）と、子の出生前に父母が離婚した場合は母が届け出る定め（1項。父母が出生時に婚姻中でない嫡出子の届出を父がした場合）を足した。"@ja,
+        "レビュー（Claude）で修正：最終レビューの指摘により、出生前の離婚の判定は出生日が入力されているときだけにした（出生日が無いと婚姻中でないとみなされ、誤って受理不可になっていた）。"@ja,
         "届出人の資格（PartyRole）を日本語ラベルで判定する。嫡出でない子の出生届では父は届出人になれない。ラベルの対応は要確認。"@ja ;
     kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/2> ;
     kos:outcome kos:Reject ;
@@ -302,7 +305,7 @@
         OPTIONAL { $this kos:motherRemarriedBeforeBirth ?rm }
         BIND ( COALESCE(?dp >= 0 && ?dp <= 300, false) AS ?pw )
         BIND ( COALESCE(?dm >= 0, false) AS ?mar )
-        BIND ( IF( COALESCE(?dm >= 200, false) || ?pw, "legit", IF(?mar, "free", "non") ) AS ?man )
+        BIND ( IF( COALESCE(?dm >= 201, false) || ?pw, "legit", IF(?mar, "free", "non") ) AS ?man )
         BIND ( IF( ?mar || ( ?pw && !COALESCE(?rm, false) ), "legit", "non" ) AS ?cur )
         FILTER ( ?man != ?cur )
       }
@@ -323,7 +326,7 @@
         BIND ( STR(?rel) = "嫡出でない子" AS ?non )
         BIND ( STR(?rel) = "嫡出子" AS ?leg )
         BIND ( COALESCE(?dp >= 0 && ?dp <= 300, false) AS ?pw )
-        BIND ( ( COALESCE(?dm >= 200, false) || ?pw ) AS ?presumed )
+        BIND ( ( COALESCE(?dm >= 201, false) || ?pw ) AS ?presumed )
         BIND ( ( COALESCE(?dm >= 0, false) || ?pw ) AS ?allowedLegit )
         FILTER ( ( ?non && ?presumed ) || ( ?leg && !?allowedLegit ) )
         FILTER EXISTS {
@@ -373,7 +376,7 @@
         BIND ( COALESCE(?dm >= 0, false) AS ?mar )
         FILTER (
           ( STR(?rel) = "嫡出子" && !( ?role IN (<https://semantica-agent.example/koseki/id/role/father>, <https://semantica-agent.example/koseki/id/role/mother>, <https://semantica-agent.example/koseki/id/role/cohabitant>, <https://semantica-agent.example/koseki/id/role/physician>, <https://semantica-agent.example/koseki/id/role/midwife>, <https://semantica-agent.example/koseki/id/role/other-attendant>, <https://semantica-agent.example/koseki/id/role/legal-representative>) ) ) ||
-          ( STR(?rel) = "嫡出子" && ?role = <https://semantica-agent.example/koseki/id/role/father> && !?mar ) ||
+          ( STR(?rel) = "嫡出子" && ?role = <https://semantica-agent.example/koseki/id/role/father> && BOUND(?bd) && !?mar ) ||
           ( STR(?rel) = "嫡出でない子" && !( ?role IN (<https://semantica-agent.example/koseki/id/role/mother>, <https://semantica-agent.example/koseki/id/role/cohabitant>, <https://semantica-agent.example/koseki/id/role/physician>, <https://semantica-agent.example/koseki/id/role/midwife>, <https://semantica-agent.example/koseki/id/role/other-attendant>, <https://semantica-agent.example/koseki/id/role/legal-representative>) ) )
         )
         FILTER EXISTS {

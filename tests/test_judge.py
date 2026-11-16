@@ -101,3 +101,63 @@ def test_llm_draft_manual_version_is_not_provisional(ont, rules):
     ont.add((v, KOS.reviewStatus, KOS.LlmDraft))
     j = judge(case("2026-11-02", "2026-11-20"), KCASE.c1, ont, rules)
     assert not j.findings[0].provisional and j.decision == KOS.AdditionalProcedure
+
+
+def test_missing_inputs_are_reported(ont, rules):
+    g = case("2026-11-02", "2026-11-20")
+    g.remove((KCASE.c1, KOS.childBirthDate, None))
+    j = judge(g, KCASE.c1, ont, rules)
+    assert KOS.childBirthDate in j.missing_inputs
+
+
+def test_complete_case_has_no_missing_inputs(ont, rules):
+    g = case("2026-11-02", "2026-11-16")
+    for p, v in (
+        ("filingMunicipality", "A"),
+        ("honsekiMunicipality", "A"),
+        ("statedRelationship", "嫡出子"),
+        ("motherBirthDate", None),
+        ("familyRegisterExists", True),
+        ("addressExists", True),
+    ):
+        lit = Literal(date(1990, 1, 1), datatype=XSD.date) if v is None else Literal(v)
+        g.add((KCASE.c1, KOS[p], lit))
+    g.add((KCASE.c1, KOS.notifierRole, KD["role/mother"]))
+    assert judge(g, KCASE.c1, ont, rules).missing_inputs == ()
+
+
+def test_provisional_decision_is_kept(ont, rules):
+    v = KD["law/minpo/art/772/version/2024-04-01"]
+    ont.remove((v, KOS.reviewStatus, None))
+    ont.add((v, KOS.reviewStatus, KOS.LlmDraft))
+    j = judge(legitimacy_case("2025-01-01"), KCASE.c1, ont, rules)
+    assert j.decision is None and j.provisional_decision == KOS.NeedsCorrection
+
+
+def test_sparql_value_and_substituted_message(ont, rules):
+    shape = KD["shape/birth/missing"]
+    from rdflib.namespace import SH
+
+    rule = KD["rule/birth/missing"]
+    rules.add((rule, KOS.shape, shape))
+    rules.add((rule, KOS.outcome, KOS.NeedsCorrection))
+    rules.add((shape, RDF.type, SH.NodeShape))
+    rules.add((shape, SH.targetClass, KOS.BirthFiling))
+    rules.add((shape, SH.message, Literal("記載事項 {?value} が無い")))
+    sparql = KD["shape/birth/missing/sparql"]
+    rules.add((shape, SH.sparql, sparql))
+    rules.add((sparql, SH.prefixes, KD.prefixes))
+    rules.add(
+        (
+            sparql,
+            SH.select,
+            Literal(
+                "SELECT $this ?value WHERE { $this a kos:BirthFiling . "
+                "BIND(<https://semantica-agent.example/koseki/id/record-item/x> AS ?value) }"
+            ),
+        )
+    )
+    j = judge(case("2026-11-02", "2026-11-10"), KCASE.c1, ont, rules)
+    [f] = [f for f in j.findings if f.rule == rule]
+    assert f.value == KD["record-item/x"]
+    assert "{?value}" not in f.message

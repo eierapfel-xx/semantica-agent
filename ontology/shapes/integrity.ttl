@@ -45,18 +45,22 @@ kd:prefixes a owl:Ontology ;
   sh:targetClass
     kos:Business, kos:ProcedureStep, kos:StepItem, kos:ReviewCheck, kos:Task,
     kos:Law, kos:LegalProvision, kos:LegalAmendment, kos:DerivedValue ;
+  # レビュー（Claude）で修正：最終レビューの指摘により、仕様 §4.5 に合わせ、出典の無いノードは
+  # 推測（kos:Speculation）で理由の rdfs:comment がある場合だけ認める。
   sh:or (
     [ sh:path kos:hasSource ; sh:minCount 1 ]
-    [ sh:path kos:sourceKind ; sh:minCount 1 ]
+    [ sh:and (
+        [ sh:path kos:sourceKind ; sh:hasValue kos:Speculation ]
+        [ sh:path rdfs:comment ; sh:minCount 1 ]
+      ) ]
   ) ;
-  sh:message "kos:hasSource か kos:sourceKind を 1 つ以上持つ必要があります。"@ja .
+  sh:message "kos:hasSource を 1 つ以上持つか、推測（kos:Speculation）として理由の rdfs:comment を持つ必要があります。"@ja .
 
 <https://semantica-agent.example/koseki/id/shape/integrity/provision-version-source-required>
   a sh:NodeShape ;
   sh:targetClass kos:ProvisionVersion ;
   sh:or (
     [ sh:path kos:hasSource ; sh:minCount 1 ]
-    [ sh:path kos:sourceKind ; sh:minCount 1 ]
     [ sh:path kos:versionStatus ; sh:hasValue kos:Manual ]
   ) ;
   sh:message "条文の版は出典（kos:hasSource か kos:sourceKind）を持つ必要があります（kos:versionStatus kos:Manual を除く）。"@ja .

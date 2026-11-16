@@ -126,3 +126,23 @@ def test_derive_marriage_days():
     )
     g = derive(case, KCASE.c1, _ontology())
     assert g.value(KCASE.c1, KOS.daysFromMarriageToBirth).toPython() == 200
+
+
+def test_derive_rejects_non_date_literal():
+    case = _case(filingDate="2026-11-10")
+    case.add((KCASE.c1, KOS.childBirthDate, Literal("2026-11-02")))  # xsd:string のまま
+    with pytest.raises(DeriveError, match="childBirthDate"):
+        derive(case, KCASE.c1, _ontology())
+
+
+def test_definitions_with_law_basis_link_egov_sources():
+    from semantica_agent.ids import egov_source_iri
+
+    g = derived_definitions_graph()
+    marriage = derived_iri("days-from-marriage-to-birth")
+    assert (marriage, KOS.hasSource, egov_source_iri("minpo-772")) in g
+    assert (marriage, KOS.sourceKind, KOS.Speculation) not in g
+    deadline = derived_iri("filing-deadline")
+    assert (deadline, KOS.hasSource, egov_source_iri("chiho-jichi-ho-4-2")) in g
+    age = derived_iri("mother-age-at-birth")
+    assert (age, KOS.sourceKind, KOS.Speculation) in g

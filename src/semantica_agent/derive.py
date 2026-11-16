@@ -9,7 +9,7 @@ import jpholiday
 from rdflib import RDF, RDFS, Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, PROV, XSD
 
-from semantica_agent.ids import ProvisionRef, article_iri, derived_iri, short_id
+from semantica_agent.ids import ProvisionRef, article_iri, derived_iri, egov_source_iri, short_id
 from semantica_agent.namespaces import KOS, bind_prefixes
 
 logger = logging.getLogger(__name__)
@@ -84,6 +84,15 @@ DERIVED_VALUES: tuple[DerivedDef, ...] = (
 )
 
 
+# 派生値の定義の出典（e-Gov の条文の出典ノードの slug。ontology/law/amendments.ttl にある）
+EGOV_SOURCES: dict[str, tuple[str, ...]] = {
+    "days-from-marriage-to-birth": ("minpo-772",),
+    "days-from-prev-marriage-end-to-birth": ("minpo-772",),
+    "filing-deadline": ("koseki-ho-49", "chiho-jichi-ho-4-2"),
+    "days-late": ("koseki-ho-49",),
+}
+
+
 def is_closed_day(d: date) -> bool:
     if not jpholiday.year_holidays(d.year):
         raise DeriveError(f"{d.year} 年の祝日のデータがありません")
@@ -124,10 +133,13 @@ def derived_definitions_graph() -> Graph:
         g.add((n, DCTERMS.identifier, Literal(short_id(n))))
         g.add((n, RDFS.label, Literal(d.label_ja, lang="ja")))
         g.add((n, KOS.reviewStatus, KOS.HumanReviewed))
-        g.add((n, KOS.sourceKind, KOS.Speculation))
-        g.add(
-            (n, RDFS.comment, Literal("推測：計算の定義はコードで決めた（仕様 §4.6）", lang="ja"))
-        )
+        sources = EGOV_SOURCES.get(d.slug, ())
+        for slug in sources:
+            g.add((n, KOS.hasSource, egov_source_iri(slug)))
+        if not sources:  # 条文に基づかない計算の定義
+            g.add((n, KOS.sourceKind, KOS.Speculation))
+            note = "推測：条文に基づかない計算の定義で、コードで決めた（仕様 §4.6）"
+            g.add((n, RDFS.comment, Literal(note, lang="ja")))
         for i in d.inputs:
             g.add((n, KOS.derivedFromProperty, KOS[i]))
         for ref in d.basis:
@@ -147,6 +159,14 @@ def _compute(d: DerivedDef, vals: list, rule: PeriodRule):
     return calc[d.output](*vals)
 
 
+def _as_date(prop: str, value: Literal) -> date:
+    """事案の日付は境界で検証する（xsd:date 以外は分かりやすいエラーで止める）。"""
+    py = value.toPython()
+    if not isinstance(py, date):
+        raise DeriveError(f"kos:{prop} は xsd:date の日付である必要があります: {value!r}")
+    return py
+
+
 def derive(case: Graph, case_iri: URIRef, ontology: Graph) -> Graph:
     rule = read_period_rule(ontology)
     g = bind_prefixes(Graph())
@@ -156,7 +176,7 @@ def derive(case: Graph, case_iri: URIRef, ontology: Graph) -> Graph:
         vals = [g.value(case_iri, KOS[i]) for i in d.inputs]
         if any(v is None for v in vals):
             continue
-        value = _compute(d, [v.toPython() for v in vals], rule)
+        value = _compute(d, [_as_date(i, v) for i, v in zip(d.inputs, vals, strict=True)], rule)
         lit = Literal(value, datatype=XSD.date) if isinstance(value, date) else Literal(value)
         g.add((case_iri, KOS[d.output], lit))
         node = URIRef(f"{case_iri}/derived/{d.slug}")

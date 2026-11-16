@@ -56,6 +56,7 @@ def test_birth_case(case, ontology, rules):
     decision = str(j.decision).split("#")[-1] if j.decision else None
     assert decision == case["decision"]
     assert {short_id(f.rule) for f in j.findings if not f.provisional} == set(case["rules"])
+    assert {str(p).split("#")[-1] for p in j.missing_inputs} == set(case.get("missing", []))
 
 
 def test_every_finding_traces_to_source(ontology, rules):

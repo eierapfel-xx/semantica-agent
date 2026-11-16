@@ -407,6 +407,105 @@
    "basis": [
     "手順書 出生 1.受付(1)①：記入例と照合して記入漏れがあれば、指摘する。"
    ]
+  },
+  {
+   "id": "b4a-200days-nonmarital-2023",
+   "title": "婚姻後200日目の出生を嫡出でない子と届出（2023年・旧法）",
+   "changes": {
+    "childBirthDate": "2023-07-20",
+    "certBirthDate": "2023-07-20",
+    "filingDate": "2023-07-25",
+    "parentsMarriageDate": "2023-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": null,
+   "rules": [],
+   "added_after_approval": true,
+   "basis": [
+    "民法第772条第2項（旧）：婚姻の成立の日から二百日を経過した後に生まれた子を婚姻中の懐胎と推定する。民法第140条により初日を算入しないので、婚姻 1/1 なら 7/20 が二百日目で、推定は 7/21 から。"
+   ]
+  },
+  {
+   "id": "b4a-201days-nonmarital-2023",
+   "title": "婚姻後201日目の出生を嫡出でない子と届出（2023年・旧法）",
+   "changes": {
+    "childBirthDate": "2023-07-21",
+    "certBirthDate": "2023-07-21",
+    "filingDate": "2023-07-25",
+    "parentsMarriageDate": "2023-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-LEGITIMACY-MANUAL"
+   ],
+   "added_after_approval": true,
+   "basis": [
+    "民法第772条第2項（旧）・民法第140条（初日不算入）"
+   ]
+  },
+  {
+   "id": "b4b-prev-300days-nonmarital",
+   "title": "前婚解消後300日目（再婚なし）の出生を嫡出でない子と届出",
+   "changes": {
+    "childBirthDate": "2025-10-28",
+    "certBirthDate": "2025-10-28",
+    "filingDate": "2025-11-04",
+    "parentsMarriageDate": null,
+    "motherPrevMarriageEndDate": "2025-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-LEGITIMACY-CURRENT"
+   ],
+   "added_after_approval": true,
+   "basis": [
+    "民法第772条第2項（現行）：婚姻の解消の日から三百日以内に生まれた子は婚姻中の懐胎と推定する（初日不算入で 1/1 解消なら 10/28 が三百日目）。"
+   ]
+  },
+  {
+   "id": "b4b-prev-301days-nonmarital",
+   "title": "前婚解消後301日目（再婚なし）の出生を嫡出でない子と届出",
+   "changes": {
+    "childBirthDate": "2025-10-29",
+    "certBirthDate": "2025-10-29",
+    "filingDate": "2025-11-04",
+    "parentsMarriageDate": null,
+    "motherPrevMarriageEndDate": "2025-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": null,
+   "rules": [],
+   "added_after_approval": true,
+   "basis": [
+    "民法第772条第2項（現行）：三百日を過ぎた出生には前の夫の嫡出推定が及ばない。"
+   ]
+  },
+  {
+   "id": "missing-birth-date",
+   "title": "出生日が入力されていない（父が届出）",
+   "changes": {
+    "childBirthDate": null,
+    "certBirthDate": null
+   },
+   "decision": null,
+   "rules": [],
+   "missing": [
+    "childBirthDate"
+   ],
+   "added_after_approval": true,
+   "basis": [
+    "入力の欠落は受理不可ではなく「評価できない入力がある」として返す（最終レビューの指摘）。"
+   ]
   }
  ],
  "approved_by": {
