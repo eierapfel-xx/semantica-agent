@@ -111,6 +111,8 @@ AUX_PROPERTIES: dict[str, str] = {
     "derivedFromProperty": "計算に使う事案のプロパティ",
     "normalizationNote": "正規化の注記",
     "alignment": "対応の確かさ",
+    "revisionId": "e-Gov の版の ID",
+    "lawNumber": "法律番号",
 }
 
 REQUIRED_PROPERTIES: dict[str, str] = {
