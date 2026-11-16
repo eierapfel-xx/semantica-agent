@@ -30,7 +30,8 @@ kd:prefixes a owl:Ontology ;
     sh:select """
       SELECT $this WHERE {
         $this kos:childBirthDate ?b ; kos:parentsMarriageDate ?m ; kos:statedRelationship "嫡出でない子" .
-        <https://semantica-agent.example/koseki/id/law/minpo/art/772/version/2024-04-01> kos:validFrom ?from .
+        <https://semantica-agent.example/koseki/id/rule/birth/legitimacy-current> kos:underVersion ?ver .
+        ?ver kos:validFrom ?from .
         FILTER (?b >= ?from && ?m <= ?b)
       }"""
   ] .

@@ -96,7 +96,8 @@ def _decision(findings: list[Finding]) -> URIRef | None:
 def judge(case: Graph, case_iri: URIRef, ontology: Graph, rules: Graph) -> Judgment:
     derived = derive(case, case_iri, ontology)
     data = bind_prefixes(Graph())
-    for g in (derived, ontology):
+    # ルールのノード（kos:underVersion 等）も入れる。シェイプが自分のルールから版を引くため。
+    for g in (derived, ontology, rules):
         for t in g:
             data.add(t)
     _, report, _ = validate(data, shacl_graph=rules, advanced=True, allow_warnings=True)

@@ -221,6 +221,7 @@ ROLE_SLUGS: dict[str, str] = {
     "医師": "physician",
     "助産師": "midwife",
     "請求者": "requester",
+    "その他の立会者": "other-attendant",
 }
 
 ORGANIZATION_SLUGS: dict[str, str] = {
