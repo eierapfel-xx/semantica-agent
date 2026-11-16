@@ -1,0 +1,156 @@
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix kd: <https://semantica-agent.example/koseki/id/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+kd:prefixes a owl:Ontology ;
+  sh:declare [ sh:prefix "kos" ; sh:namespace "https://semantica-agent.example/koseki/schema#"^^xsd:anyURI ] ,
+             [ sh:prefix "kd" ; sh:namespace "https://semantica-agent.example/koseki/id/"^^xsd:anyURI ] ,
+             [ sh:prefix "rdfs" ; sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ] .
+
+# 1. 型を持つノードは識別子とレビュー状態を持つ
+<https://semantica-agent.example/koseki/id/shape/integrity/identifier-and-review-status>
+  a sh:NodeShape ;
+  # レビュー（Claude）で修正：列挙値の型（CurrentTreatment・JudgmentOutcome・ReviewStatus・
+  # SourceKind・VersionStatus）はスキーマの個体で、事案（Filing・BirthFiling）はエージェントの入力なので、
+  # オントロジーの整合性の対象から外した。
+  sh:targetClass
+    kos:Business, kos:Condition,
+    kos:DerivedValue, kos:DocumentType,
+    kos:JudgmentRule, kos:Law, kos:LegalAmendment, kos:LegalProvision,
+    kos:Organization, kos:PartyRole, kos:ProcedureStep, kos:ProvisionVersion,
+    kos:RecordItem, kos:ReviewCheck,
+    kos:SourceReference, kos:StepItem, kos:Task ;
+  sh:property [
+    sh:path dcterms:identifier ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "dcterms:identifier がちょうど 1 つ必要です。"@ja
+  ] ;
+  sh:property [
+    sh:path kos:reviewStatus ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "kos:reviewStatus が 1 つ必要です。"@ja
+  ] .
+
+# 2. 出典の記録が必要なクラス
+<https://semantica-agent.example/koseki/id/shape/integrity/source-required>
+  a sh:NodeShape ;
+  sh:targetClass
+    kos:Business, kos:ProcedureStep, kos:StepItem, kos:ReviewCheck, kos:Task,
+    kos:Law, kos:LegalProvision, kos:LegalAmendment, kos:DerivedValue ;
+  sh:or (
+    [ sh:path kos:hasSource ; sh:minCount 1 ]
+    [ sh:path kos:sourceKind ; sh:minCount 1 ]
+  ) ;
+  sh:message "kos:hasSource か kos:sourceKind を 1 つ以上持つ必要があります。"@ja .
+
+<https://semantica-agent.example/koseki/id/shape/integrity/provision-version-source-required>
+  a sh:NodeShape ;
+  sh:targetClass kos:ProvisionVersion ;
+  sh:or (
+    [ sh:path kos:hasSource ; sh:minCount 1 ]
+    [ sh:path kos:sourceKind ; sh:minCount 1 ]
+    [ sh:path kos:versionStatus ; sh:hasValue kos:Manual ]
+  ) ;
+  sh:message "条文の版は出典（kos:hasSource か kos:sourceKind）を持つ必要があります（kos:versionStatus kos:Manual を除く）。"@ja .
+
+# 3. 審査項目はちょうど 1 つの親を持つ
+<https://semantica-agent.example/koseki/id/shape/integrity/review-check-single-parent>
+  a sh:NodeShape ;
+  sh:targetClass kos:ReviewCheck ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:message "審査項目は kos:hasItem または kos:hasSubItem の目的語として、ちょうど 1 つの親を持つ必要があります。"@ja ;
+    sh:select """
+      SELECT $this ?count
+      WHERE {
+        {
+          SELECT $this (COUNT(DISTINCT ?parent) AS ?count)
+          WHERE {
+            OPTIONAL { ?parent (kos:hasItem|kos:hasSubItem) $this . }
+          }
+          GROUP BY $this
+        }
+        FILTER (?count != 1)
+      }
+    """
+  ] .
+
+# 4. 変更・廃止扱いの審査項目は、現行または廃止の版を持つ条文を根拠とする
+<https://semantica-agent.example/koseki/id/shape/integrity/changed-check-has-current-version>
+  a sh:NodeShape ;
+  sh:targetClass kos:ReviewCheck ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:message "現行法で変更・廃止となった審査項目の根拠条文（またはその上位の条）に、versionStatus が Current か Repealed の版が必要です。"@ja ;
+    sh:select """
+      SELECT $this
+      WHERE {
+        $this kos:currentTreatment ?t .
+        FILTER (?t IN (kos:Changed, kos:Obsolete))
+        FILTER NOT EXISTS {
+          $this kos:citesProvision ?p .
+          ?p kos:partOf* ?q .
+          ?q kos:hasVersion ?v .
+          ?v kos:versionStatus ?s .
+          FILTER (?s IN (kos:Current, kos:Repealed))
+        }
+      }
+    """
+  ] .
+
+# 5. 推測の出典を持つノードは説明を持つ
+<https://semantica-agent.example/koseki/id/shape/integrity/speculation-has-comment>
+  a sh:NodeShape ;
+  sh:targetSubjectsOf kos:sourceKind ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:message "kos:sourceKind kos:Speculation を持つノードは rdfs:comment が必要です。"@ja ;
+    sh:select """
+      SELECT $this
+      WHERE {
+        $this kos:sourceKind kos:Speculation .
+        FILTER NOT EXISTS { $this rdfs:comment ?c }
+      }
+    """
+  ] .
+
+# 6. 出典
+<https://semantica-agent.example/koseki/id/shape/integrity/source-reference>
+  a sh:NodeShape ;
+  sh:targetClass kos:SourceReference ;
+  sh:property [
+    sh:path kos:sourceKind ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "出典は kos:sourceKind をちょうど 1 つ持つ必要があります。"@ja
+  ] ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:message "ManualSource の出典は pdfPage と rowId を、CurrentLawSource の出典は url と fetchedDate を持つ必要があります。"@ja ;
+    sh:select """
+      SELECT $this
+      WHERE {
+        {
+          $this kos:sourceKind kos:ManualSource .
+          FILTER (NOT EXISTS { $this kos:pdfPage ?pg } || NOT EXISTS { $this kos:rowId ?r })
+        }
+        UNION
+        {
+          $this kos:sourceKind kos:CurrentLawSource .
+          FILTER (NOT EXISTS { $this kos:url ?u } || NOT EXISTS { $this kos:fetchedDate ?d })
+        }
+      }
+    """
+  ] .
