@@ -70,7 +70,13 @@ def _finding(report: Graph, result, rules: Graph, ontology: Graph) -> Finding:
     if outcome is None:
         raise JudgeError(f"ルールに kos:outcome がありません: {rule}")
     versions = tuple(sorted(rules.objects(rule, KOS.underVersion)))
-    provisional = any((v, KOS.reviewStatus, KOS.LlmDraft) in ontology for v in versions)
+    # 下書きの現行版（e-Gov 由来、未承認）に基づく判定だけを暫定にする（仕様 §5.5）。
+    # 手順書時点の版は手順書から起こしたもので、承認の対象ではない。
+    provisional = any(
+        (v, KOS.reviewStatus, KOS.LlmDraft) in ontology
+        and (v, KOS.versionStatus, KOS.Manual) not in ontology
+        for v in versions
+    )
     return Finding(
         rule=rule,
         outcome=outcome,

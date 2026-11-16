@@ -93,3 +93,11 @@ def test_result_without_rule_is_error(ont, rules):
 def test_message_is_kept(ont, rules):
     j = judge(case("2026-11-02", "2026-11-20"), KCASE.c1, ont, rules)
     assert "届出期間" in j.findings[0].message
+
+
+def test_llm_draft_manual_version_is_not_provisional(ont, rules):
+    v = KD["law/koseki-ho/art/49/version/manual"]
+    ont.remove((v, KOS.reviewStatus, None))
+    ont.add((v, KOS.reviewStatus, KOS.LlmDraft))
+    j = judge(case("2026-11-02", "2026-11-20"), KCASE.c1, ont, rules)
+    assert not j.findings[0].provisional and j.decision == KOS.AdditionalProcedure

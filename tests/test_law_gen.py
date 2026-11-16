@@ -211,3 +211,12 @@ def test_cached_get_fetches_each_url_once():
     assert g("a") == g("a") == {"u": "a"}
     g("b")
     assert calls == ["a", "b"]
+
+
+def test_manual_version_created_by_amendment_has_identifier(draft, texts):
+    from rdflib.namespace import DCTERMS
+
+    g = amendments_to_graph(draft, texts, ACT)
+    manual = version_iri(article_iri(ProvisionRef("民法", 733)), "manual")
+    assert g.value(manual, DCTERMS.identifier) is not None
+    assert g.value(manual, KOS.reviewStatus) == KOS.LlmDraft

@@ -306,7 +306,7 @@ class _AmendmentBuilder:
             self.g.add((art, KOS.hasVersion, v))
             manual = version_iri(art, "manual")
             self.g.add((art, KOS.hasVersion, manual))
-            self.g.add((manual, RDF.type, KOS.ProvisionVersion))
+            self.node(manual, KOS.ProvisionVersion)
             self.g.add((manual, KOS.versionStatus, KOS.Manual))
             self.g.add((manual, KOS.validUntil, Literal(eff)))
             self.g.add((a, KOS.amends, art))

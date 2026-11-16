@@ -79,6 +79,9 @@
         <https://semantica-agent.example/koseki/id/law/minpo/art/731/version/manual> .
 
 <https://semantica-agent.example/koseki/id/law/minpo/art/731/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-MINPO-731-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
+    kos:reviewStatus kos:LlmDraft ;
     kos:validUntil "2022-04-01"^^xsd:date ;
     kos:versionStatus kos:Manual .
 
@@ -86,6 +89,9 @@
         <https://semantica-agent.example/koseki/id/law/minpo/art/733/version/manual> .
 
 <https://semantica-agent.example/koseki/id/law/minpo/art/733/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-MINPO-733-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
+    kos:reviewStatus kos:LlmDraft ;
     kos:validUntil "2024-04-01"^^xsd:date ;
     kos:versionStatus kos:Manual .
 
@@ -93,6 +99,9 @@
         <https://semantica-agent.example/koseki/id/law/minpo/art/737/version/manual> .
 
 <https://semantica-agent.example/koseki/id/law/minpo/art/737/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-MINPO-737-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
+    kos:reviewStatus kos:LlmDraft ;
     kos:validUntil "2022-04-01"^^xsd:date ;
     kos:versionStatus kos:Manual .
 
@@ -100,6 +109,9 @@
         <https://semantica-agent.example/koseki/id/law/minpo/art/765/version/manual> .
 
 <https://semantica-agent.example/koseki/id/law/minpo/art/765/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-MINPO-765-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
+    kos:reviewStatus kos:LlmDraft ;
     kos:validUntil "2026-04-01"^^xsd:date ;
     kos:versionStatus kos:Manual .
 
@@ -107,6 +119,9 @@
         <https://semantica-agent.example/koseki/id/law/minpo/art/772/version/manual> .
 
 <https://semantica-agent.example/koseki/id/law/minpo/art/772/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-MINPO-772-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
+    kos:reviewStatus kos:LlmDraft ;
     kos:validUntil "2024-04-01"^^xsd:date ;
     kos:versionStatus kos:Manual .
 
@@ -114,6 +129,9 @@
         <https://semantica-agent.example/koseki/id/law/minpo/art/819/version/manual> .
 
 <https://semantica-agent.example/koseki/id/law/minpo/art/819/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-MINPO-819-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
+    kos:reviewStatus kos:LlmDraft ;
     kos:validUntil "2026-04-01"^^xsd:date ;
     kos:versionStatus kos:Manual .
 
