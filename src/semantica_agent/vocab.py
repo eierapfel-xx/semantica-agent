@@ -104,6 +104,7 @@ AUX_PROPERTIES: dict[str, str] = {
     "reviewedDate": "確認日",
     "model": "モデル",
     "promptSha256": "プロンプトのハッシュ",
+    "sha256": "ファイルのハッシュ",
     "periodDays": "期間の日数",
     "countFirstDay": "初日を算入する",
     "extendOnHoliday": "末日が休日なら延ばす",
