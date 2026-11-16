@@ -17,10 +17,10 @@ from semantica_agent import law_gen, shapes_gen
 from semantica_agent.derive import derived_definitions_graph
 from semantica_agent.extract import extract_rows, load_rows, rows_for_business, save_rows
 from semantica_agent.ids import activity_iri, iri_from_short_id
-from semantica_agent.instance_check import InstanceValidationError
+from semantica_agent.instance_check import InstanceValidationError, validate_instance_output
 from semantica_agent.instance_gen import generate_instances, instances_to_graph
 from semantica_agent.law_gen import LawFetchError
-from semantica_agent.llm_provider import PROVIDER_NAME, register_provider
+from semantica_agent.llm_provider import PROVIDER_NAME, extract_json, register_provider
 from semantica_agent.provenance import record_activity
 from semantica_agent.schema_gen import (
     check_schema_coverage,
@@ -124,23 +124,48 @@ def _schema_text(ctx: Ctx) -> str:
     return schema_summary(Graph().parse(ctx.require("schema.ttl")))
 
 
+def _saved_outputs(ctx: Ctx, run_id: str) -> dict[str, dict]:
+    """保存済みの応答から、業務ごとに最後の（JSON として読める）応答を返す。"""
+    run_dir = ctx.root / ctx.settings.run_root / run_id
+    if not run_dir.is_dir():
+        raise StageError(f"保存済みの実行がありません: {run_dir}")
+    found: dict[str, dict] = {}
+    for resp in sorted(run_dir.glob("*-response.txt")):
+        try:
+            out = extract_json(resp.read_text(encoding="utf-8"))
+        except ValueError:
+            continue
+        if isinstance(out, dict) and out.get("business"):
+            meta_path = resp.with_name(resp.name.replace("-response.txt", "-meta.json"))
+            meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
+            found[out["business"]] = {**out, "metadata": {"model": meta.get("model")}}
+    return found
+
+
+def _instances_output(ctx: Ctx, biz: str, biz_rows, schema_text: str, saved) -> dict:
+    if saved is None:
+        return generate_instances(
+            biz, biz_rows, schema_text, list(LAW_SLUGS), provider=ctx.provider, **ctx.llm_kwargs()
+        )
+    if biz not in saved:
+        raise InstanceValidationError([f"保存済みの実行に {biz} の応答がありません"])
+    errors = validate_instance_output(saved[biz], biz_rows)
+    if errors:
+        raise InstanceValidationError(errors)
+    return saved[biz]
+
+
 def stage_instances(ctx: Ctx, args) -> None:
     schema_text = _schema_text(ctx)
     rows = ctx.rows()
     businesses = [args.business] if args.business else list(BUSINESS_SLUGS.values())
-    ctx.announce(len(businesses))
+    saved = _saved_outputs(ctx, args.from_run) if args.from_run else None
+    ctx.announce(0 if saved is not None else len(businesses))
     failed = []
     for biz in businesses:
         biz_rows = rows_for_business(rows, biz)
         try:
-            out = generate_instances(
-                biz,
-                biz_rows,
-                schema_text,
-                list(LAW_SLUGS),
-                provider=ctx.provider,
-                **ctx.llm_kwargs(),
-            )
+            out = _instances_output(ctx, biz, biz_rows, schema_text, saved)
         except InstanceValidationError as e:
             print(f"[{biz}] 検証エラー:\n" + "\n".join(f"  - {x}" for x in e.errors))
             failed.append(biz)
@@ -279,6 +304,7 @@ def _parser() -> argparse.ArgumentParser:
     p.add_argument("--root", default=".")
     p.add_argument("--business", choices=list(BUSINESS_SLUGS.values()))
     p.add_argument("--provider", default=PROVIDER_NAME, help=argparse.SUPPRESS)
+    p.add_argument("--from-run", help="instances で、保存済みの実行の応答を使う（LLM を呼ばない）")
     p.add_argument("--by", help="approve の確認者")
     p.add_argument("--file", help="approve の対象ファイル")
     return p

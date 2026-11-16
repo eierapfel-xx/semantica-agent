@@ -70,6 +70,11 @@ class _Checker:
     def check_cites(self, where: str, cites: list[dict], remark_rows: list[Row]) -> None:
         remarks = "".join(r.remarks for r in remark_rows)
         for cite in cites or []:
+            if not isinstance(cite.get("article"), int):
+                self.err(
+                    f"{where}: 条の番号の無い条文は cites でなく notes に書く: {cite.get('law')}"
+                )
+                continue
             ref = cite_to_ref(cite)
             if ref.law not in LAW_SLUGS:
                 self.err(f"{where}: 未知の法令です（vocab.LAW_SLUGS に足すか確認）: {ref.law}")
@@ -81,10 +86,9 @@ class _Checker:
         if not rows:
             self.err(f"{where}: row_ids がありません")
         quote = _norm(item.get("quote") or "")
-        if not quote or quote not in _norm("".join(r.procedure for r in rows)):
-            self.err(
-                f"{where}: quote が row_ids の行の業務手順に含まれません: {item.get('quote')!r}"
-            )
+        texts = (_norm("".join(r.procedure for r in rows)), _norm("".join(r.remarks for r in rows)))
+        if not quote or not any(quote in t for t in texts):
+            self.err(f"{where}: quote が row_ids の行にありません: {item.get('quote')!r}")
         remark_rows = self.known_rows(where, item.get("remark_row_ids") or item.get("row_ids"))
         self.check_cites(where, item.get("cites"), remark_rows)
         if item.get("kind") not in ITEM_KINDS:

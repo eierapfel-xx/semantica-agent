@@ -133,3 +133,36 @@ def test_api_key_stops(tmp_project, monkeypatch, fake_provider):
 
 def test_extract_reads_pdf_path_error(tmp_project):
     assert main(["extract", "--root", str(tmp_project)]) == 1
+
+
+def test_instances_from_saved_run(tmp_project, sample, birth_rows):
+    import json as _json
+
+    from semantica_agent.extract import save_rows as _save
+
+    _save(birth_rows, tmp_project / "data" / "extracted" / "rows.json")
+    write_turtle(Graph(), tmp_project / "ontology" / "schema.ttl")
+    run = tmp_project / "data" / "generation" / "instances-1"
+    run.mkdir(parents=True)
+    bad = {**sample, "business": "birth", "steps": []}
+    (run / "001-response.txt").write_text(_json.dumps(bad, ensure_ascii=False), encoding="utf-8")
+    (run / "001-meta.json").write_text('{"model": "m-old"}', encoding="utf-8")
+    (run / "002-response.txt").write_text(
+        "```json\n" + _json.dumps(sample, ensure_ascii=False) + "\n```", encoding="utf-8"
+    )
+    (run / "002-meta.json").write_text('{"model": "m-saved"}', encoding="utf-8")
+    args = [
+        "instances",
+        "--business",
+        "birth",
+        "--from-run",
+        "instances-1",
+        "--root",
+        str(tmp_project),
+    ]
+    assert main(args) == 0
+    g = Graph().parse(tmp_project / "ontology" / "generated" / "instances" / "birth.ttl")
+    assert (None, RDF.type, KOS.ReviewCheck) in g
+    prov = Graph().parse(tmp_project / "ontology" / "provenance.ttl")
+    assert (None, KOS.model, None) in prov
+    assert "m-saved" in {str(o) for o in prov.objects(None, KOS.model)}

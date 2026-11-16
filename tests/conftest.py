@@ -45,3 +45,15 @@ def birth_rows():
 @pytest.fixture
 def sample():
     return json.loads((FIXTURES / "instances_birth_sample.json").read_text(encoding="utf-8"))
+
+
+@pytest.fixture(autouse=True)
+def _block_real_llm(request, monkeypatch):
+    """llm マーカーの無いテストで、実際の Agent SDK を呼ばせない（利用枠を守る）。"""
+    if request.node.get_closest_marker("llm"):
+        return
+
+    def _blocked(*args, **kwargs):
+        raise RuntimeError("llm マーカーの無いテストで実際の Agent SDK を呼ぼうとしました")
+
+    monkeypatch.setattr("semantica_agent.llm_provider.query", _blocked)

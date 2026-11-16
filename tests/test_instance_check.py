@@ -85,3 +85,28 @@ def test_business_mismatch(sample, birth_rows):
 def test_missing_fields_do_not_crash(birth_rows):
     errors = validate_instance_output({"business": "birth", "steps": [{"items": [{}]}]}, birth_rows)
     assert errors
+
+
+def test_quote_from_remarks_column_is_accepted(sample, birth_rows):
+    rows = birth_rows + [
+        Row("p2-r13", "table", "birth", "", "", "※その他、母子健康手帳が併せて提出され", 2, 1, 1.0)
+    ]
+    out = copy.deepcopy(sample)
+    out["steps"][0]["items"][1]["children"].append(
+        {
+            **out["steps"][0]["items"][1]["children"][0],
+            "label": "※",
+            "kind": "note",
+            "quote": "母子健康手帳が併せて提出され",
+            "row_ids": ["p2-r13"],
+            "remark_row_ids": [],
+            "cites": [],
+            "notes": [],
+        }
+    )
+    assert validate_instance_output(out, rows) == []
+
+
+def test_cite_without_article_is_error(sample, birth_rows):
+    bad = with_item(sample, cites=[{"law": "戸籍法", "article": None}])
+    assert any("条の番号" in e for e in validate_instance_output(bad, birth_rows))
