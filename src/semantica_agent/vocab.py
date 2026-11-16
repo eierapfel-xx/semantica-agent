@@ -155,6 +155,7 @@ LAW_SLUGS: dict[str, str] = {
     "墓地、埋葬等に関する法律": "bochi-maiso-ho",
     "地方公共団体の手数料の標準に関する政令": "tesuryo-seirei",
     "学校教育法": "gakko-kyoiku-ho",
+    "地方自治法": "chiho-jichi-ho",
 }
 
 LAW_ALIASES: dict[str, str] = {"住基法": "住民基本台帳法"}

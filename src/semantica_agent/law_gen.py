@@ -38,6 +38,7 @@ EGOV_LAW_IDS: dict[str, str] = {
     "戸籍法": "322AC0000000224",
     "戸籍法施行規則": "322M40000010094",
     "学校教育法": "322AC0000000026",
+    "地方自治法": "322AC0000000067",
 }
 TREATMENTS = {"valid": KOS.Valid, "changed": KOS.Changed, "obsolete": KOS.Obsolete}
 STATUSES = {"current": KOS.Current, "repealed": KOS.Repealed}
@@ -108,6 +109,7 @@ CHECK_ARTICLES: tuple[tuple[str, str], ...] = (
     ("戸籍法", "51"),
     ("戸籍法", "52"),
     ("学校教育法", "17"),
+    ("地方自治法", "4-2"),
 )
 
 
