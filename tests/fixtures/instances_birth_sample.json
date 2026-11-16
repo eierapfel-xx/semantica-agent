@@ -1,0 +1,61 @@
+{
+  "business": "birth",
+  "steps": [
+    {
+      "number": 1, "label": "受付", "row_ids": ["p2-r2"], "cites": [],
+      "items": [
+        {"label": "★", "kind": "task",
+         "text": "下記(1)から(2)までの必要書類が全て満たされ、疑義が無い場合は審査に移行する。",
+         "quote": "必要書類が全て満たされ、疑義が無い場合は審査に移行する", "row_ids": ["p2-r2", "p2-r3"],
+         "remark_row_ids": [], "conditions": [], "documents": [], "record_items": [], "roles": [],
+         "escalates_to": [], "cites": [], "notes": [], "alignment": "ok", "speculative": false,
+         "reason": null, "prerequisite_for": 2, "children": []},
+        {"label": "(1)", "kind": "check", "text": "出生届及び出生証明書等の確認",
+         "quote": "出生届及び出生証明書等の確認", "row_ids": ["p2-r4"], "remark_row_ids": [],
+         "conditions": [], "documents": ["出生届", "出生証明書"], "record_items": [], "roles": [],
+         "escalates_to": [], "cites": [], "notes": [], "alignment": "ok", "speculative": false,
+         "reason": null, "prerequisite_for": null,
+         "children": [
+           {"label": "①", "kind": "check", "text": "記入例と照合して記入漏れがあれば、指摘する。",
+            "quote": "記入例と照合して記入漏れがあれば、指摘する", "row_ids": ["p2-r5"],
+            "remark_row_ids": ["p2-r5", "p2-r6"], "conditions": [], "documents": [],
+            "record_items": [], "roles": [], "escalates_to": [],
+            "cites": [{"law": "戸籍法", "article": 29, "branch": null, "paragraph": null, "item": null, "normalization_note": null},
+                      {"law": "戸籍法", "article": 49, "branch": null, "paragraph": null, "item": null, "normalization_note": null}],
+            "notes": ["戸籍法、戸籍法施行規則に定められた記載事項について確認する。"],
+            "alignment": "ok", "speculative": false, "reason": null, "prerequisite_for": null,
+            "children": []}
+         ]}
+      ]
+    },
+    {
+      "number": 2, "label": "審査", "row_ids": ["p2-r7"], "cites": [],
+      "items": [
+        {"label": "○", "kind": "check", "text": "届出地に該当しているか。", "quote": "届出地に該当しているか",
+         "row_ids": ["p2-r7"], "remark_row_ids": ["p2-r7"], "conditions": [], "documents": [],
+         "record_items": [], "roles": [], "escalates_to": [],
+         "cites": [{"law": "戸籍法", "article": 25, "branch": null, "paragraph": null, "item": null, "normalization_note": null},
+                   {"law": "戸籍法", "article": 51, "branch": null, "paragraph": null, "item": null, "normalization_note": null}],
+         "notes": [], "alignment": "ok", "speculative": false, "reason": null, "prerequisite_for": null, "children": []},
+        {"label": "○", "kind": "check", "text": "届出人は届出義務者又は届出の資格を有する者か。",
+         "quote": "届出人は届出義務者又は届出の資格を有する者か", "row_ids": ["p2-r8"], "remark_row_ids": ["p2-r8"],
+         "conditions": [], "documents": [], "record_items": [], "roles": ["届出人", "届出義務者"], "escalates_to": [],
+         "cites": [{"law": "戸籍法", "article": 52, "branch": null, "paragraph": 1, "item": null, "normalization_note": null},
+                   {"law": "戸籍法", "article": 52, "branch": null, "paragraph": 2, "item": null, "normalization_note": null}],
+         "notes": [], "alignment": "ok", "speculative": false, "reason": null, "prerequisite_for": null, "children": []},
+        {"label": "○", "kind": "check", "text": "必要な添付書類は揃っているか。", "quote": "必要な添付書類は揃っているか",
+         "row_ids": ["p2-r9"], "remark_row_ids": ["p2-r9"], "conditions": [], "documents": ["出生証明書"],
+         "record_items": [], "roles": [], "escalates_to": [],
+         "cites": [{"law": "戸籍法", "article": 49, "branch": null, "paragraph": 3, "item": null, "normalization_note": null}],
+         "notes": [], "alignment": "ok", "speculative": false, "reason": null, "prerequisite_for": null, "children": []},
+        {"label": "（）", "kind": "task", "text": "出生証明書が添付されていない場合には、法務局に受理照会する。",
+         "quote": "法務局に受理照会する", "row_ids": ["p2-r10", "p2-r11"], "remark_row_ids": [],
+         "conditions": ["出生証明書が添付されていない場合"], "documents": [], "record_items": [], "roles": [],
+         "escalates_to": ["法務局"], "cites": [], "notes": [], "alignment": "ok", "speculative": false,
+         "reason": null, "prerequisite_for": null, "children": []}
+      ]
+    }
+  ],
+  "notes": [{"text": "来庁者：現に届出の任に当たっている者", "row_ids": ["p2-r12"]}],
+  "new_vocab": []
+}

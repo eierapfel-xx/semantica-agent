@@ -174,6 +174,8 @@ CONDITION_SLUGS: dict[str, str] = {
     "協議離婚の場合": "divorce-by-agreement",
     "裁判離婚の場合": "judicial-divorce",
     "未成年者の場合": "minor",
+    "出生証明書が添付されていない場合": "no-birth-certificate",
+    "届出期間経過後に届出があった場合": "late-filing",
 }
 
 ROLE_SLUGS: dict[str, str] = {
@@ -208,4 +210,13 @@ RECORD_ITEM_SLUGS: dict[str, str] = {
     "出生時刻": "birth-time",
     "生存配偶者の年齢": "surviving-spouse-age",
     "配偶者の有無": "spouse-status",
+}
+
+# 項目の JSON のフィールド → (語彙の種類, 日本語名 → slug の表, クラス, プロパティ)
+ITEM_VOCAB_FIELDS: dict[str, tuple[str, dict[str, str], str, str]] = {
+    "conditions": ("condition", CONDITION_SLUGS, "Condition", "appliesWhen"),
+    "documents": ("document", DOCUMENT_SLUGS, "DocumentType", "requiresDocument"),
+    "record_items": ("record-item", RECORD_ITEM_SLUGS, "RecordItem", "requiresRecordItem"),
+    "roles": ("role", ROLE_SLUGS, "PartyRole", "involvesRole"),
+    "escalates_to": ("organization", ORGANIZATION_SLUGS, "Organization", "escalatesTo"),
 }
