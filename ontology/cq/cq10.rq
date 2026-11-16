@@ -1,0 +1,10 @@
+# 交付の請求者の種類（条件）ごとの根拠条文
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?condition ?provision WHERE {
+  kd:certificate kos:hasStep/kos:hasItem/kos:hasSubItem* ?item .
+  ?item kos:appliesWhen ?condition ; kos:citesProvision ?provision .
+}

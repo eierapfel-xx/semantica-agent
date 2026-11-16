@@ -1,0 +1,27 @@
+@base <https://semantica-agent.example/koseki/> .
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix kd: <https://semantica-agent.example/koseki/id/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<id/birth/step/2/item/9> a kos:ReviewCheck ; rdfs:label "届出期間内の届出か。"@ja ;
+  kos:citesProvision <id/law/koseki-ho/art/49> .
+<id/birth/step/2/item/5> a kos:ReviewCheck ; rdfs:label "父母との続き柄の記載は正しいか"@ja ;
+  kos:citesProvision <id/law/minpo/art/772> .
+
+<id/law/koseki-ho/art/49> a kos:LegalProvision ;
+  kos:hasVersion <id/law/koseki-ho/art/49/version/manual> .
+<id/law/koseki-ho/art/49/version/manual> a kos:ProvisionVersion ;
+  kos:versionStatus kos:Manual ; kos:reviewStatus kos:HumanReviewed .
+
+<id/law/minpo/art/772> a kos:LegalProvision ;
+  kos:hasVersion <id/law/minpo/art/772/version/manual>, <id/law/minpo/art/772/version/2024-04-01> .
+<id/law/minpo/art/772/version/manual> a kos:ProvisionVersion ;
+  kos:versionStatus kos:Manual ; kos:validUntil "2024-04-01"^^xsd:date ;
+  kos:reviewStatus kos:HumanReviewed .
+<id/law/minpo/art/772/version/2024-04-01> a kos:ProvisionVersion ;
+  kos:versionStatus kos:Current ; kos:validFrom "2024-04-01"^^xsd:date ;
+  kos:reviewStatus kos:HumanReviewed .
+
+<id/derived/birth-filing-period> a kos:DerivedValue ;
+  kos:periodDays 14 ; kos:countFirstDay true ; kos:extendOnHoliday true .

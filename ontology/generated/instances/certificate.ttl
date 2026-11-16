@@ -1,0 +1,1740 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kd: <https://semantica-agent.example/koseki/id/> .
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kd:certificate a kos:Business ;
+    rdfs:label "戸籍謄本等の交付"@ja ;
+    dcterms:identifier "CERTIFICATE" ;
+    rdfs:comment "1 現に請求の任に当たっている者"@ja,
+        "2 国又は地方公共団体の機関"@ja,
+        "3 本人若しくはその配偶者、直系尊属若しくは直系卑属又は本人の代理以外の者"@ja,
+        "※委託範囲については、戸籍事務を民間事業者に委託することが可能な業務の範囲について（平成25年3月28日 法務省民一第317号通知）及び戸籍事務の民間委託に関するＱ＆Ａ（平成27年3月31日法務省事務連絡）を参照のこと"@ja,
+        "業務名 戸籍謄本等の交付"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r1>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r2>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r3>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r37>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r38>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r39>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r4> ;
+    kos:hasStep <https://semantica-agent.example/koseki/id/certificate/step/1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/2>,
+        <https://semantica-agent.example/koseki/id/certificate/step/3>,
+        <https://semantica-agent.example/koseki/id/certificate/step/4>,
+        <https://semantica-agent.example/koseki/id/certificate/step/5> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r25> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R25" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "省略事項や通数が請求と一致するように注"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r25" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r26> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R26" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "意する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r26" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1> a kos:ProcedureStep ;
+    rdfs:label "受付・審査"@ja ;
+    dcterms:identifier "CERTIFICATE-S1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/certificate/step/1/item/1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/2>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/3>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/4>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/5>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/6>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/7> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r5> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/certificate/step/2> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 1 .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/1> a kos:ReviewCheck ;
+    rdfs:label "下記(1)から(6)までの必要書類が全て満たされ、疑義が無い場合は証明書作成に移行する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r5>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r6> ;
+    kos:itemLabel "★" ;
+    kos:itemOrder 1 ;
+    kos:prerequisiteFor <https://semantica-agent.example/koseki/id/certificate/step/3> ;
+    kos:quote "★下記(1)から(6)までの必要書類が全て満たされ、疑義が無い場合は証明書作成に移行する。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/2> a kos:ReviewCheck ;
+    rdfs:label "交付請求書の受付・交付請求書の記載内容、添付書類の確認"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I2" ;
+    rdfs:comment "市町村が適当と認める「交付請求書記入例」を用意する。"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r7>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r8> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/certificate/step/1/item/2.1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/2.2>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/2.3> ;
+    kos:itemLabel "(1)" ;
+    kos:itemOrder 2 ;
+    kos:quote "交付請求書の受付・交付請求書の記載内容、添付書類の確認"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/2.1> a kos:ReviewCheck ;
+    rdfs:label "記入例と照合して記載漏れがあれば、記載を求める。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I2.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r9> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:quote "記入例と照合して記載漏れがあれば、記載を求める。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/2.2> a kos:ReviewCheck ;
+    rdfs:label "必要とする戸籍謄本等（謄本・正本・附票）を確認し、請求目的と合致しているか確認する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I2.2" ;
+    rdfs:comment "必要に応じて、市町村が記載事項と利用目的の対照表を用意する。"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r11> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "必要とする戸籍謄本等（謄本・正本・附票）を確認し、請求目的と合致しているか確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/family-register-copy> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/2.3> a kos:ReviewCheck ;
+    rdfs:label "請求に係る戸籍に記載されている者と請求者及び来庁者の関係を確認する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I2.3" ;
+    rdfs:comment "脚注1：現に請求の任に当たっている者"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r13> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/requester>,
+        <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "③" ;
+    kos:itemOrder 3 ;
+    kos:quote "請求に係る戸籍に記載されている者と請求者及び来庁者1の関係を確認する。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/3> a kos:ReviewCheck ;
+    rdfs:label "来庁者の本人特定事項の確認"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I3" ;
+    rdfs:comment "交付請求書の余白や裏面にチェック表を設けることが望ましい。"@ja,
+        "法令に基づく本人確認書類一覧表を用意することが望ましい。"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r14> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/certificate/step/1/item/3.1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/3.2>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/3.3> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "(2)" ;
+    kos:itemOrder 3 ;
+    kos:quote "来庁者の本人特定事項の確認"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/identity-document> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/3.1> a kos:ReviewCheck ;
+    rdfs:label "戸籍法施行規則第１１条の２各号に該当する確認書類の提示を受け、本人特定事項を確認する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I3.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r16> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:quote "戸籍法施行規則第１１条の２各号に該当する確認書類の提示を受け、本人特定事項を確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/identity-document> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/3.2> a kos:ReviewCheck ;
+    rdfs:label "顔写真がある書類の場合、面前の人物と同一であるか確認する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I3.2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r18> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "顔写真がある書類の場合、面前の人物と同一であるか確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/identity-document> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/3.3> a kos:ReviewCheck ;
+    rdfs:label "請求書の記載と確認書類の内容が合致しているか確認する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I3.3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r19>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r20> ;
+    kos:itemLabel "③" ;
+    kos:itemOrder 3 ;
+    kos:quote "請求書の記載と確認書類の内容が合致しているか確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request>,
+        <https://semantica-agent.example/koseki/id/document/identity-document> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/4> a kos:ReviewCheck ;
+    rdfs:label "来庁者が請求者の代理人の場合"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/by-agent> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r21> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/certificate/step/1/item/4.1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/4.2> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/agent>,
+        <https://semantica-agent.example/koseki/id/role/requester>,
+        <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "(3)" ;
+    kos:itemOrder 4 ;
+    kos:quote "来庁者が請求者の代理人の場合"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/4.1> a kos:Task ;
+    rdfs:label "請求者の自署又は押印のある委任状を受領する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I4.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/by-agent> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-4> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r22> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/certificate/step/1/item/4.1.1> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/agent>,
+        <https://semantica-agent.example/koseki/id/role/requester> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:quote "請求者の自署又は押印のある委任状を受領する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/power-of-attorney> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/4.1.1> a kos:StepItem ;
+    rdfs:label "来庁者が請求者の法定代理人である場合には、戸籍謄本等、後見登記等の登記事項証明書又は裁判所の謄本等を受領する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I4.1.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/by-agent> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r25> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/legal-representative>,
+        <https://semantica-agent.example/koseki/id/role/requester> ;
+    kos:itemLabel "※" ;
+    kos:itemOrder 1 ;
+    kos:quote "来庁者が請求者の法定代理人である場合には、戸籍謄本等、後見登記等の登記事項証明書又は裁判所の謄本等を受領する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/court-copy>,
+        <https://semantica-agent.example/koseki/id/document/family-register-copy>,
+        <https://semantica-agent.example/koseki/id/document/guardianship-registration-certificate> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/4.2> a kos:Task ;
+    rdfs:label "来庁者について(2)及び戸籍法施行規則第11条の4に規定する事項の確認の実施。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I4.2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/by-agent> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-4> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r26>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r27> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "来庁者について(2)及び戸籍法施行規則第11条の4に規定する事項の確認の実施。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/5> a kos:ReviewCheck ;
+    rdfs:label "公的機関からの請求（公用請求）の場合"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I5" ;
+    rdfs:comment "脚注2：国又は地方公共団体の機関"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/public-agency-request> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3/item/1>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/2>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3/para/1> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/certificate/step/1/item/5.1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/5.2> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/public-body> ;
+    kos:itemLabel "(4)" ;
+    kos:itemOrder 5 ;
+    kos:quote "公的機関2からの請求（公用請求）の場合"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/5.1> a kos:ReviewCheck ;
+    rdfs:label "(1)において、請求書に戸籍法第10条の２第2項に規定する必要事項が記載されているか確認し、請求理由が適法か否かを審査する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I5.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/public-agency-request> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/2> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r31> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/public-body> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:quote "(1)において、請求書に戸籍法第10条の２第2項に規定する必要事項が記載されているか確認し、請求理由が適法か否かを審査する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/5.2> a kos:Task ;
+    rdfs:label "来庁者について(2)及び戸籍法施行規則第11条の3に規定する事項の確認の実施。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I5.2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/public-agency-request> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r32>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r33> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "来庁者について(2)及び戸籍法施行規則第 11 条の 3 に規定する事項の確認の実施。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/6> a kos:ReviewCheck ;
+    rdfs:label "第三者からの請求（第三者請求）の場合"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I6" ;
+    rdfs:comment "脚注3：本人若しくはその配偶者、直系尊属若しくは直系卑属又は本人の代理以外の者"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/third-party-request> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/1>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r34> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/certificate/step/1/item/6.1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/6.2>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/6.3> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/third-party> ;
+    kos:itemLabel "(5)" ;
+    kos:itemOrder 6 ;
+    kos:quote "第三者3からの請求（第三者請求）の場合"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/6.1> a kos:ReviewCheck ;
+    rdfs:label "(1)において、請求書に戸籍法第10条の2第１項各号及び第10条の3に規定する必要事項が記載されているか確認し、請求理由が適法か否かを審査する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I6.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/third-party-request> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/1>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/third-party> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:quote "(1)において、請求書に戸籍法第10条の2第１項各号及び第10条の3に規定する必要事項が記載されているか確認し、請求理由が適法か否かを審査する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/6.2> a kos:Task ;
+    rdfs:label "来庁者について(2)の実施。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I6.2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/third-party-request> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r2> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "来庁者について(2)の実施。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/6.3> a kos:ReviewCheck ;
+    rdfs:label "来庁者が請求者と異なる場合は(3)を実施するとともに、来庁者の氏名・住所の記載があるか、自署又は押印があるか確認する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I6.3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/third-party-request> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r3>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r4>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r5> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/requester>,
+        <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "③" ;
+    kos:itemOrder 3 ;
+    kos:quote "来庁者が請求者と異なる場合は(3)を実施するとともに、来庁者の氏名・住所の記載があるか、自署又は押印があるか確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/7> a kos:ReviewCheck ;
+    rdfs:label "特定事務受任者からの請求（弁護士等の資格者による請求）の場合"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I7" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/designated-agent-request> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/3>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/4>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/5> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r7> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/certificate/step/1/item/7.1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/7.2>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/7.3>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/7.4>,
+        <https://semantica-agent.example/koseki/id/certificate/step/1/item/7.5> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/certified-professional> ;
+    kos:itemLabel "(6)" ;
+    kos:itemOrder 7 ;
+    kos:normalizationNote "「第３項～第5項」を第3項・第4項・第5項に展開した"@ja ;
+    kos:quote "特定事務受任者からの請求（弁護士等の資格者による請求）の場合"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/7.1> a kos:ReviewCheck ;
+    rdfs:label "(1)について、請求書に戸籍法第10条の２第3項から第5項までに規定する必要事項が記載されているか確認し、請求理由が適法か否かを審査する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I7.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/designated-agent-request> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/3>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/4>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/5> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/certified-professional> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:normalizationNote "「第3項から第5項まで」を展開した"@ja ;
+    kos:quote "(1)について、請求書に戸籍法第10条の２第3項から第5項までに規定する必要事項が記載されているか確認し、請求理由が適法か否かを審査する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/7.2> a kos:Task ;
+    rdfs:label "来庁者について(2)の実施。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I7.2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/designated-agent-request> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r11> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "来庁者について(2)の実施。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/7.3> a kos:ReviewCheck ;
+    rdfs:label "来庁者が請求者と異なる場合は(3)を実施するとともに請求書に来庁者の氏名・住所の記載があるか、自署又は押印があるか確認する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I7.3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/designated-agent-request> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r13>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r14> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/requester>,
+        <https://semantica-agent.example/koseki/id/role/visitor> ;
+    kos:itemLabel "③" ;
+    kos:itemOrder 3 ;
+    kos:quote "来庁者が請求者と異なる場合は(3)を実施するとともに請求書に来庁者の氏名・住所の記載があるか、自署又は押印があるか確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/7.4> a kos:ReviewCheck ;
+    rdfs:label "弁護士等の資格者の所属する会が発行した統一請求書により請求されているか。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I7.4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/designated-agent-request> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2/item/4> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r16> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/certified-professional> ;
+    kos:itemLabel "④" ;
+    kos:itemOrder 4 ;
+    kos:quote "弁護士等の資格者の所属する会が発行した統一請求書により請求されているか。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/unified-request-form> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/1/item/7.5> a kos:ReviewCheck ;
+    rdfs:label "依頼主の氏名又は名称記載があるか。"@ja ;
+    dcterms:identifier "CERTIFICATE-S1-I7.5" ;
+    rdfs:comment "⑤は不要な場合あり。"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/designated-agent-request> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r17> ;
+    kos:involvesRole <https://semantica-agent.example/koseki/id/role/certified-professional> ;
+    kos:itemLabel "⑤" ;
+    kos:itemOrder 5 ;
+    kos:quote "依頼主の氏名又は名称記載があるか。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/2/item/1> a kos:ReviewCheck ;
+    rdfs:label "交付可否を判断する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S2-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r18> ;
+    kos:itemLabel "" ;
+    kos:itemOrder 1 ;
+    kos:quote "交付可否を判断する。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/3/item/1> a kos:Task ;
+    rdfs:label "該当戸籍の検索"@ja ;
+    dcterms:identifier "CERTIFICATE-S3-I1" ;
+    rdfs:comment "市町村が戸籍情報システムの端末を貸与（供用）する場合は、操作マニュアルを貸与（供用）する。"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r19> ;
+    kos:hasSubItem <https://semantica-agent.example/koseki/id/certificate/step/3/item/1.1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/3/item/1.2> ;
+    kos:itemLabel "(1)" ;
+    kos:itemOrder 1 ;
+    kos:quote "該当戸籍の検索"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/3/item/1.1> a kos:ReviewCheck ;
+    rdfs:label "請求に係る者が請求の対象となる戸籍に記載されているか。"@ja ;
+    dcterms:identifier "CERTIFICATE-S3-I1.1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r20>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r21> ;
+    kos:itemLabel "①" ;
+    kos:itemOrder 1 ;
+    kos:quote "請求に係る者が請求の対象となる戸籍に記載されているか。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/3/item/1.2> a kos:ReviewCheck ;
+    rdfs:label "請求内容と証明書の記載内容に相違がないか。"@ja ;
+    dcterms:identifier "CERTIFICATE-S3-I1.2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r22> ;
+    kos:itemLabel "②" ;
+    kos:itemOrder 2 ;
+    kos:quote "請求内容と証明書の記載内容に相違がないか。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request>,
+        <https://semantica-agent.example/koseki/id/document/family-register-copy> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/3/item/2> a kos:Task ;
+    rdfs:label "証明書の作成（出力）"@ja ;
+    dcterms:identifier "CERTIFICATE-S3-I2" ;
+    rdfs:comment "省略事項や通数が請求と一致するように注意する。"@ja,
+        "附録第15号書式、附録第17号書式"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:citesProvision <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/12>,
+        <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/14> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r24> ;
+    kos:itemLabel "(2)" ;
+    kos:itemOrder 2 ;
+    kos:quote "証明書の作成（出力）"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/family-register-copy> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/3/item/3> a kos:ReviewCheck ;
+    rdfs:label "作成した証明書と請求内容の突合"@ja ;
+    dcterms:identifier "CERTIFICATE-S3-I3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r27> ;
+    kos:itemLabel "(3)" ;
+    kos:itemOrder 3 ;
+    kos:quote "作成した証明書と請求内容の突合"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request>,
+        <https://semantica-agent.example/koseki/id/document/family-register-copy> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/3/item/4> a kos:Task ;
+    rdfs:label "作成した証明書及び交付請求書、その他添付書類を整理して交付担当職員に引き継ぐ。"@ja ;
+    dcterms:identifier "CERTIFICATE-S3-I4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r29> ;
+    kos:itemLabel "(4)" ;
+    kos:itemOrder 4 ;
+    kos:quote "作成した証明書及び交付請求書、その他添付書類を整理して交付担当職員に引き継ぐ。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request>,
+        <https://semantica-agent.example/koseki/id/document/family-register-copy> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/4/item/1> a kos:ReviewCheck ;
+    rdfs:label "作成した証明書が請求内容と一致しているか確認する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S4-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r30> ;
+    kos:itemLabel "(1)" ;
+    kos:itemOrder 1 ;
+    kos:quote "作成した証明書が請求内容と一致しているか確認する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request>,
+        <https://semantica-agent.example/koseki/id/document/family-register-copy> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/4/item/2> a kos:ReviewCheck ;
+    rdfs:label "本人確認書類、代理権確認書類、その他確認書類のうち、還付すべきもの、写しを取るべきものを判断"@ja ;
+    dcterms:identifier "CERTIFICATE-S4-I2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r31>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r32> ;
+    kos:itemLabel "(2)" ;
+    kos:itemOrder 2 ;
+    kos:quote "本人確認書類、代理権確認書類、その他確認書類のうち、還付すべきもの、写しを取るべきものを判断"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/authority-confirmation-document>,
+        <https://semantica-agent.example/koseki/id/document/identity-document> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/5/item/1> a kos:Task ;
+    rdfs:label "写しを取るべき書類のコピー"@ja ;
+    dcterms:identifier "CERTIFICATE-S5-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r33> ;
+    kos:itemLabel "(1)" ;
+    kos:itemOrder 1 ;
+    kos:quote "写しを取るべき書類のコピー"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/5/item/2> a kos:Task ;
+    rdfs:label "証明書及び還付すべき書類を手交する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S5-I2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r34> ;
+    kos:itemLabel "(2)" ;
+    kos:itemOrder 2 ;
+    kos:quote "証明書及び還付すべき書類を手交する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/family-register-copy> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/5/item/3> a kos:Task ;
+    rdfs:label "有料の場合は手数料を受領する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S5-I3" ;
+    rdfs:comment "市町村が「手数料一覧表」を用意する。"@ja,
+        "根拠法令（条の指定なし）：地方公共団体の手数料の標準に関する政令"@ja ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:alignment "uncertain" ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r35> ;
+    kos:itemLabel "(3)" ;
+    kos:itemOrder 3 ;
+    kos:quote "有料の場合は手数料を受領する。"@ja ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/certificate/step/5/item/4> a kos:Task ;
+    rdfs:label "請求書、提出を受けた書類、コピーした書類を保管する。"@ja ;
+    dcterms:identifier "CERTIFICATE-S5-I4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r37> ;
+    kos:itemLabel "(4)" ;
+    kos:itemOrder 4 ;
+    kos:quote "請求書、提出を受けた書類、コピーした書類を保管する。"@ja ;
+    kos:requiresDocument <https://semantica-agent.example/koseki/id/document/certificate-request> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/authority-confirmation-document> a kos:DocumentType ;
+    rdfs:label "代理権確認書類"@ja ;
+    dcterms:identifier "DOCUMENT-AUTHORITY-CONFIRMATION-DOCUMENT" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r31>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r32> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/court-copy> a kos:DocumentType ;
+    rdfs:label "裁判所の謄本"@ja ;
+    dcterms:identifier "DOCUMENT-COURT-COPY" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r25> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/guardianship-registration-certificate> a kos:DocumentType ;
+    rdfs:label "後見登記等の登記事項証明書"@ja ;
+    dcterms:identifier "DOCUMENT-GUARDIANSHIP-REGISTRATION-CERTIFICATE" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r25> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/power-of-attorney> a kos:DocumentType ;
+    rdfs:label "委任状"@ja ;
+    dcterms:identifier "DOCUMENT-POWER-OF-ATTORNEY" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r22> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/unified-request-form> a kos:DocumentType ;
+    rdfs:label "統一請求書"@ja ;
+    dcterms:identifier "DOCUMENT-UNIFIED-REQUEST-FORM" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r16> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/role/legal-representative> a kos:PartyRole ;
+    rdfs:label "法定代理人"@ja ;
+    dcterms:identifier "ROLE-LEGAL-REPRESENTATIVE" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r25> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r1> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "※委託範囲については、戸籍事務を民間事業者に委託することが可能な業務の範囲について（平成25年3月28"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r1" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r2> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "日 法務省民一第317号通知）及び戸籍事務の民間委託に関するＱ＆Ａ（平成27年3月31日法務省事務連絡）"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r2" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r3> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "を参照のこと"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r3" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r37> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R37" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "1 現に請求の任に当たっている者"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r37" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r38> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R38" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "2 国又は地方公共団体の機関"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r38" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r39> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R39" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "3 本人若しくはその配偶者、直系尊属若しくは直系卑属又は本人の代理以外の者"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r39" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r4> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "業務名 戸籍謄本等の交付"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r4" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r6> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R6" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "場合は証明書作成に移行する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r6" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r20> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R20" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "① 請求に係る者が請求の対象となる戸籍に記載されている （供用）する場合は、操作マニュアルを貸与"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r20" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r21> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R21" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "か。 （供用）する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r21" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r35> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R35" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(3) 有料の場合は手数料を受領する。 市町村が「手数料一覧表」を用意する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r35" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/certificate/step/2> a kos:ProcedureStep ;
+    rdfs:label "交付決定"@ja ;
+    dcterms:identifier "CERTIFICATE-S2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/certificate/step/2/item/1> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r18> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/certificate/step/3> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 2 .
+
+<https://semantica-agent.example/koseki/id/certificate/step/4> a kos:ProcedureStep ;
+    rdfs:label "確認"@ja ;
+    dcterms:identifier "CERTIFICATE-S4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/certificate/step/4/item/1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/4/item/2> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r30> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/certificate/step/5> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 4 .
+
+<https://semantica-agent.example/koseki/id/certificate/step/5> a kos:ProcedureStep ;
+    rdfs:label "交付"@ja ;
+    dcterms:identifier "CERTIFICATE-S5" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/certificate/step/5/item/1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/5/item/2>,
+        <https://semantica-agent.example/koseki/id/certificate/step/5/item/3>,
+        <https://semantica-agent.example/koseki/id/certificate/step/5/item/4> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r33> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 5 .
+
+<https://semantica-agent.example/koseki/id/role/agent> a kos:PartyRole ;
+    rdfs:label "代理人"@ja ;
+    dcterms:identifier "ROLE-AGENT" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r22> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/role/public-body> a kos:PartyRole ;
+    rdfs:label "公的機関"@ja ;
+    dcterms:identifier "ROLE-PUBLIC-BODY" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r31> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/role/third-party> a kos:PartyRole ;
+    rdfs:label "第三者"@ja ;
+    dcterms:identifier "ROLE-THIRD-PARTY" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r34>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r10> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R10" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "② 必要とする戸籍謄本等（謄本・正本・附票）を確認し、請 ※必要に応じて、市町村が記載事項と利用"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r10" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r11> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R11" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "求目的と合致しているか確認する。 目的の対照表を用意する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r11" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r5> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R5" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:division "1.受付・審査"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "★下記(1)から(6)までの必要書類が全て満たされ、疑義が無い"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r5" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r7> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R7" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "(1) 交付請求書の受付・交付請求書の記載内容、添付書類の確 戸籍法第10条"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r7" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r8> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R8" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "認 ※市町村が適当と認める「交付請求書記入"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r8" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r9> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R9" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "① 記入例と照合して記載漏れがあれば、記載を求める。 例」を用意する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r9" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r18> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R18" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:division "2.交付決定"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "交付可否を判断する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r18" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r19> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R19" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:division "3.証明書作成"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(1) 該当戸籍の検索 市町村が戸籍情報システムの端末を貸与"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r19" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r23> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R23" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(2) 証明書の作成（出力） 戸籍法施行規則第12条、第14条、附録第"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r23" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r24> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R24" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "15号書式、附録第17号書式"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r24" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r33> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R33" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:division "5.交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(1) 写しを取るべき書類のコピー"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r33" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r34> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R34" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(2) 証明書及び還付すべき書類を手交する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r34" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r37> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R37" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(4) 請求書、提出を受けた書類、コピーした書類を保管する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r37" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/certificate/step/3> a kos:ProcedureStep ;
+    rdfs:label "証明書作成"@ja ;
+    dcterms:identifier "CERTIFICATE-S3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasItem <https://semantica-agent.example/koseki/id/certificate/step/3/item/1>,
+        <https://semantica-agent.example/koseki/id/certificate/step/3/item/2>,
+        <https://semantica-agent.example/koseki/id/certificate/step/3/item/3>,
+        <https://semantica-agent.example/koseki/id/certificate/step/3/item/4> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r19> ;
+    kos:nextStep <https://semantica-agent.example/koseki/id/certificate/step/4> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:stepNumber 3 .
+
+<https://semantica-agent.example/koseki/id/condition/public-agency-request> a kos:Condition ;
+    rdfs:label "公的機関からの請求の場合"@ja ;
+    dcterms:identifier "CONDITION-PUBLIC-AGENCY-REQUEST" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r31>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r32>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r33> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r12> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R12" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "③ 請求に係る戸籍に記載されている者と請求者及び来庁者1"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r12" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r13> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R13" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "の関係を確認する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r13" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r14> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R14" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "(2) 来庁者の本人特定事項の確認 戸籍法第10条の3、戸籍法施行規則第11"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r14" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r15> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R15" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "① 戸籍法施行規則第１１条の２各号に該当する確認書類の 条の2）。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r15" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r16> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R16" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "提示を受け、本人特定事項を確認する。 ※法令に基づく本人確認書類一覧表を用意"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r16" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r17> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R17" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "② 顔写真がある書類の場合、面前の人物と同一であるか確 することが望ましい。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r17" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r18> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R18" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "認する。 ※交付請求書の余白や裏面にチェック表を"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r18" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r19> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R19" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "③ 請求書の記載と確認書類の内容が合致しているか確認す 設けることが望ましい。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r19" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r20> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R20" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "る。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r20" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r26> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R26" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "② 来庁者について(2)及び戸籍法施行規則第11条の4に規"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r26" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r27> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R27" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "定する事項の確認の実施。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r27" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r28> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R28" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "(4) 公的機関2からの請求（公用請求）の場合 戸籍法第10条の2第2項、第10条の３第"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r28" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r32> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R32" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "② 来庁者について(2)及び戸籍法施行規則第 11 条の 3 に"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r32" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r33> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R33" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "規定する事項の確認の実施。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r33" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r34> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R34" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "(5) 第三者3からの請求（第三者請求）の場合 戸籍法第10条の2第１項、第10条の3"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r34" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r11> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R11" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "② 来庁者について(2)の実施。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r11" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r2> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "② 来庁者について(2)の実施。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r2" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r22> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R22" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "② 請求内容と証明書の記載内容に相違がないか。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r22" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r27> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R27" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(3) 作成した証明書と請求内容の突合"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r27" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r28> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R28" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(4) 作成した証明書及び交付請求書、その他添付書類を整理し"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r28" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r29> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R29" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "て交付担当職員に引き継ぐ。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r29" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r31> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R31" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(2) 本人確認書類、代理権確認書類、その他確認書類のうち、"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r31" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r32> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R32" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "還付すべきもの、写しを取るべきものを判断"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r32" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r6> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R6" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(6) 特定事務受任者からの請求（弁護士等の資格者による請 戸籍法第10条の2第３項～第5項"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r6" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r7> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R7" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "求）の場合"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r7" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/condition/by-agent> a kos:Condition ;
+    rdfs:label "代理人による請求の場合"@ja ;
+    dcterms:identifier "CONDITION-BY-AGENT" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r22>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r25>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r26>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r27> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/condition/third-party-request> a kos:Condition ;
+    rdfs:label "第三者からの請求の場合"@ja ;
+    dcterms:identifier "CONDITION-THIRD-PARTY-REQUEST" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r34>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r2>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r3>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r4>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r5> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/role/certified-professional> a kos:PartyRole ;
+    rdfs:label "特定事務受任者"@ja ;
+    dcterms:identifier "ROLE-CERTIFIED-PROFESSIONAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r7>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r29> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R29" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "① (1)において、請求書に戸籍法第10条の２第2項に規定 １項、戸籍法施行規則第11条の3第1号"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r29" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r30> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R30" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "する必要事項が記載されているか確認し、請求理由が適"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r30" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r31> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R31" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "法か否かを審査する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r31" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r35> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R35" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "① (1)において、請求書に戸籍法第10条の2第１項各号及"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r35" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r36> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R36" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "び第10条の3に規定する必要事項が記載されているか"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r36" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r1> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "確認し、請求理由が適法か否かを審査する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r1" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r10> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R10" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "請求理由が適法か否かを審査する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r10" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r15> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R15" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "④ 弁護士等の資格者の所属する会が発行した統一請求書に 戸籍法施行規則第11条の2第4号"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r15" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r16> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R16" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "より請求されているか。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r16" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r17> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R17" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "⑤ 依頼主の氏名又は名称記載があるか。 ⑤は不要な場合あり。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r17" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r30> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R30" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:division "4.確認"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "(1) 作成した証明書が請求内容と一致しているか確認する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r30" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r8> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R8" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "① (1)について、請求書に戸籍法第10条の２第3項から第"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r8" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r9> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R9" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "5項までに規定する必要事項が記載されているか確認し、"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r9" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/document/identity-document> a kos:DocumentType ;
+    rdfs:label "本人確認書類"@ja ;
+    dcterms:identifier "DOCUMENT-IDENTITY-DOCUMENT" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r18>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r19>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r20>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r31>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r32> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r21> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R21" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "(3) 来庁者が請求者の代理人の場合 戸籍法第10条の3"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r21" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r22> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R22" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "① 請求者の自署又は押印のある委任状を受領する。 戸籍法施行規則第11条の4"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r22" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r12> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R12" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "③ 来庁者が請求者と異なる場合は(3)を実施するとともに"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r12" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r13> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R13" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "請求書に来庁者の氏名・住所の記載があるか、自署又は押"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r13" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r14> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R14" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "印があるか確認する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r14" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r3> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "③ 来庁者が請求者と異なる場合は(3)を実施するととも"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r3" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r4> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "に、来庁者の氏名・住所の記載があるか、自署又は押印"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r4" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p11-r5> a kos:SourceReference ;
+    dcterms:identifier "SRC-P11-R5" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 11 ;
+    kos:printedPage 10 ;
+    kos:quote "があるか確認する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p11-r5" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/condition/designated-agent-request> a kos:Condition ;
+    rdfs:label "特定事務受任者からの請求の場合"@ja ;
+    dcterms:identifier "CONDITION-DESIGNATED-AGENT-REQUEST" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r13>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r7>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/role/requester> a kos:PartyRole ;
+    rdfs:label "請求者"@ja ;
+    dcterms:identifier "ROLE-REQUESTER" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r13>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r22>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r25>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r13>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r3>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r4>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r5> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r23> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R23" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "※ 来庁者が請求者の法定代理人である場合には、戸籍"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r23" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r24> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R24" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "謄本等、後見登記等の登記事項証明書又は裁判所の謄本"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r24" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/source/manual/p10-r25> a kos:SourceReference ;
+    dcterms:identifier "SRC-P10-R25" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:businessName "戸籍謄本等の交付"@ja ;
+    kos:pdfPage 10 ;
+    kos:printedPage 9 ;
+    kos:quote "等を受領する。"@ja ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:rowId "p10-r25" ;
+    kos:sourceKind kos:ManualSource .
+
+<https://semantica-agent.example/koseki/id/document/family-register-copy> a kos:DocumentType ;
+    rdfs:label "戸籍謄本等"@ja ;
+    dcterms:identifier "DOCUMENT-FAMILY-REGISTER-COPY" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r25>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r22>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r27>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r34> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/role/visitor> a kos:PartyRole ;
+    rdfs:label "来庁者"@ja ;
+    dcterms:identifier "ROLE-VISITOR" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r13>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r18>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r26>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r27>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r32>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r33>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r11>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r13>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r2>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r3>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r4>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r5> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/document/certificate-request> a kos:DocumentType ;
+    rdfs:label "交付請求書"@ja ;
+    dcterms:identifier "DOCUMENT-CERTIFICATE-REQUEST" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r19>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r20>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r31>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r7>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r9>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r12>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r13>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r22>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r27>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r3>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r37>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r4>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r5>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:reviewStatus kos:LlmDraft .
+

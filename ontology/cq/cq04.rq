@@ -1,0 +1,10 @@
+# 法務局への照会や許可が要る場面（条件付きで法務局に向かう項目）
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?item ?condition WHERE {
+  ?item kos:escalatesTo <https://semantica-agent.example/koseki/id/organization/legal-affairs-bureau> ;
+        kos:appliesWhen ?condition .
+}

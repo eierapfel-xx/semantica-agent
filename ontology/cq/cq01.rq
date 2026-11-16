@@ -1,0 +1,11 @@
+# 出生届の審査工程にある審査項目と、その根拠条文
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?item ?provision WHERE {
+  kd:birth kos:hasStep ?step . ?step kos:stepNumber 2 ; kos:hasItem ?item .
+  ?item a kos:ReviewCheck .
+  OPTIONAL { ?item kos:citesProvision ?provision }
+}

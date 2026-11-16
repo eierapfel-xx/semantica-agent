@@ -1,0 +1,515 @@
+{
+ "base": {
+  "childBirthDate": "2026-11-02",
+  "childBirthTime": "10:30",
+  "filingDate": "2026-11-10",
+  "certBirthDate": "2026-11-02",
+  "certBirthTime": "10:30",
+  "certBirthPlace": "A市",
+  "filingMunicipality": "A市",
+  "honsekiMunicipality": "A市",
+  "birthPlaceMunicipality": "A市",
+  "notifierMunicipality": "A市",
+  "notifierRole": "father",
+  "attachedDocument": [
+   "birth-certificate"
+  ],
+  "recordedItem": [
+   "spouse-status",
+   "birth-datetime",
+   "birth-place",
+   "mother-birth-date"
+  ],
+  "statedRelationship": "嫡出子",
+  "statedFather": "現在の夫",
+  "motherBirthDate": "1990-01-01",
+  "parentsMarriageDate": "2020-01-01",
+  "familyRegisterExists": true,
+  "addressExists": true
+ },
+ "cases": [
+  {
+   "id": "ok",
+   "title": "問題の無い出生届",
+   "changes": {},
+   "decision": null,
+   "rules": [],
+   "basis": [
+    "戸籍法第49条第1項：出生の届出は、十四日以内にこれをしなければならない。"
+   ]
+  },
+  {
+   "id": "b1-wrong-place",
+   "title": "本籍地・所在地・出生地のどれでもない市区町村に届出",
+   "changes": {
+    "filingMunicipality": "B市"
+   },
+   "decision": "Reject",
+   "rules": [
+    "RULE-BIRTH-FILING-PLACE",
+    "RULE-BIRTH-NON-HONSEKI"
+   ],
+   "basis": [
+    "戸籍法第25条第1項：届出は、届出事件の本人の本籍地又は届出人の所在地でこれをしなければならない。",
+    "戸籍法第51条第1項：出生の届出は、出生地でこれをすることができる。"
+   ]
+  },
+  {
+   "id": "b12-non-honseki",
+   "title": "届出人の所在地（本籍地でない）に届出",
+   "changes": {
+    "filingMunicipality": "B市",
+    "notifierMunicipality": "B市"
+   },
+   "decision": "AdditionalProcedure",
+   "rules": [
+    "RULE-BIRTH-NON-HONSEKI"
+   ],
+   "basis": [
+    "戸籍法第25条第1項（所在地での届出は可）",
+    "手順書 出生 1.受付(2)・5.本籍地市町村への届書類の送付等（公用請求と送付）"
+   ]
+  },
+  {
+   "id": "b2-father-nonmarital",
+   "title": "嫡出でない子の出生届を父が届け出た",
+   "changes": {
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "parentsMarriageDate": null
+   },
+   "decision": "Reject",
+   "rules": [
+    "RULE-BIRTH-NOTIFIER"
+   ],
+   "basis": [
+    "戸籍法第52条第2項：嫡出でない子の出生の届出は、母がこれをしなければならない。"
+   ]
+  },
+  {
+   "id": "b2-father-after-divorce",
+   "title": "出生前に父母が離婚した嫡出子を父が届け出た",
+   "changes": {
+    "parentsMarriageDate": null,
+    "motherPrevMarriageEndDate": "2026-08-01",
+    "statedFather": "前の夫"
+   },
+   "decision": "Reject",
+   "rules": [
+    "RULE-BIRTH-NOTIFIER"
+   ],
+   "basis": [
+    "戸籍法第52条第1項：子の出生前に父母が離婚をした場合には、母がこれをしなければならない。"
+   ]
+  },
+  {
+   "id": "b2-legal-representative",
+   "title": "嫡出でない子の出生届を法定代理人が届け出た",
+   "changes": {
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "parentsMarriageDate": null,
+    "notifierRole": "legal-representative"
+   },
+   "decision": null,
+   "rules": [],
+   "basis": [
+    "戸籍法第52条第4項：届出をすべき者が届出をすることができない場合には、その者以外の法定代理人も、届出をすることができる。"
+   ]
+  },
+  {
+   "id": "b3-no-certificate",
+   "title": "出生証明書が添付されていない",
+   "changes": {
+    "attachedDocument": [],
+    "certBirthDate": null,
+    "certBirthTime": null,
+    "certBirthPlace": null
+   },
+   "decision": "NeedsInquiry",
+   "rules": [
+    "RULE-BIRTH-BIRTH-CERTIFICATE"
+   ],
+   "basis": [
+    "戸籍法第49条第3項（出生証明書の添付）",
+    "手順書 出生 2.審査：出生証明書が添付されていない場合には、法務局に受理照会する。"
+   ]
+  },
+  {
+   "id": "b4b-150days-nonmarital",
+   "title": "婚姻後150日の出生を嫡出でない子と届出（2025年）",
+   "changes": {
+    "childBirthDate": "2025-05-31",
+    "certBirthDate": "2025-05-31",
+    "filingDate": "2025-06-05",
+    "parentsMarriageDate": "2025-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-LEGITIMACY-CURRENT",
+    "RULE-BIRTH-LEGITIMACY-DIFF"
+   ],
+   "basis": [
+    "民法第772条第1項（現行）：女が婚姻前に懐胎した子であって、婚姻が成立した後に生まれたものも、同様とする。",
+    "令和4年法律第102号（2024-04-01 施行）"
+   ]
+  },
+  {
+   "id": "b4a-150days-marital-2023",
+   "title": "婚姻後150日の出生を嫡出子と届出（2023年・旧法）",
+   "changes": {
+    "childBirthDate": "2023-05-31",
+    "certBirthDate": "2023-05-31",
+    "filingDate": "2023-06-05",
+    "parentsMarriageDate": "2023-01-01"
+   },
+   "decision": null,
+   "rules": [],
+   "basis": [
+    "民法第772条（旧）：婚姻成立後200日以内の出生は嫡出推定を受けないが、推定されない嫡出子として嫡出子の届出ができる。"
+   ]
+  },
+  {
+   "id": "b4a-334days-nonmarital-2023",
+   "title": "婚姻後334日の出生を嫡出でない子と届出（2023年・旧法）",
+   "changes": {
+    "childBirthDate": "2023-12-01",
+    "certBirthDate": "2023-12-01",
+    "filingDate": "2023-12-05",
+    "parentsMarriageDate": "2023-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-LEGITIMACY-MANUAL"
+   ],
+   "basis": [
+    "民法第772条第2項（旧）：婚姻の成立の日から二百日を経過した後に生まれた子は、婚姻中に懐胎したものと推定する。"
+   ]
+  },
+  {
+   "id": "boundary-2024-03-31",
+   "title": "婚姻後90日・嫡出でない子と届出（2024-03-31 生まれ）",
+   "changes": {
+    "childBirthDate": "2024-03-31",
+    "certBirthDate": "2024-03-31",
+    "filingDate": "2024-04-05",
+    "parentsMarriageDate": "2024-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": null,
+   "rules": [],
+   "basis": [
+    "令和4年法律第102号の経過措置：施行日（2024-04-01）前に生まれた子には旧法を適用する。旧法では婚姻後200日以内の出生は嫡出推定を受けない。"
+   ]
+  },
+  {
+   "id": "boundary-2024-04-01",
+   "title": "婚姻後91日・嫡出でない子と届出（2024-04-01 生まれ）",
+   "changes": {
+    "childBirthDate": "2024-04-01",
+    "certBirthDate": "2024-04-01",
+    "filingDate": "2024-04-05",
+    "parentsMarriageDate": "2024-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-LEGITIMACY-CURRENT",
+    "RULE-BIRTH-LEGITIMACY-DIFF"
+   ],
+   "basis": [
+    "民法第772条第1項（現行）：婚姻成立後に生まれた子は夫の子と推定する。"
+   ]
+  },
+  {
+   "id": "b4b-remarried-wrong-father",
+   "title": "再婚後に出生、届書の父を前の夫と記載",
+   "changes": {
+    "childBirthDate": "2025-03-01",
+    "certBirthDate": "2025-03-01",
+    "filingDate": "2025-03-05",
+    "parentsMarriageDate": "2025-01-10",
+    "motherPrevMarriageEndDate": "2024-12-01",
+    "motherRemarriedBeforeBirth": true,
+    "statedFather": "前の夫",
+    "notifierRole": "mother"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-LEGITIMACY-CURRENT"
+   ],
+   "basis": [
+    "民法第772条第3項（現行）：二以上の婚姻をしていたときは、その出生の直近の婚姻における夫の子と推定する。"
+   ]
+  },
+  {
+   "id": "b4b-prev-husband-nonmarital",
+   "title": "前婚解消後151日（再婚なし）の出生を嫡出でない子と届出",
+   "changes": {
+    "childBirthDate": "2025-06-01",
+    "certBirthDate": "2025-06-01",
+    "filingDate": "2025-06-05",
+    "parentsMarriageDate": null,
+    "motherPrevMarriageEndDate": "2025-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-LEGITIMACY-CURRENT"
+   ],
+   "basis": [
+    "民法第772条第2項（現行）：婚姻の解消の日から三百日以内に生まれた子は、婚姻中に懐胎したものと推定する。"
+   ]
+  },
+  {
+   "id": "b5-cert-mismatch",
+   "title": "届書と出生証明書で出生日が違う",
+   "changes": {
+    "certBirthDate": "2026-11-01"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-BIRTH-RECORD-MATCH"
+   ],
+   "basis": [
+    "手順書 出生 2.審査：生まれたとき、生まれたところの記載は出生証明書の記載と一致しているか。"
+   ]
+  },
+  {
+   "id": "b6-school-age",
+   "title": "7歳の子の出生届（期間も経過）",
+   "changes": {
+    "childBirthDate": "2019-01-10",
+    "certBirthDate": "2019-01-10",
+    "parentsMarriageDate": "2015-01-01"
+   },
+   "decision": "NeedsInquiry",
+   "rules": [
+    "RULE-BIRTH-SCHOOL-AGE",
+    "RULE-BIRTH-FILING-PERIOD"
+   ],
+   "basis": [
+    "手順書 出生 2.審査：学齢に達した子の出生届については、法務局に受理照会する。",
+    "学校教育法第17条第1項（学齢）"
+   ]
+  },
+  {
+   "id": "b7-mother-51",
+   "title": "出生時の母が51歳",
+   "changes": {
+    "motherBirthDate": "1975-01-01"
+   },
+   "decision": "NeedsInquiry",
+   "rules": [
+    "RULE-BIRTH-MOTHER-AGE"
+   ],
+   "basis": [
+    "手順書 出生 2.審査：子が出生した時、母が50歳以上である場合の出生届については、法務局に受理照会するケースがある。"
+   ]
+  },
+  {
+   "id": "b8-no-register",
+   "title": "入る戸籍が存在しない",
+   "changes": {
+    "familyRegisterExists": false
+   },
+   "decision": "Reject",
+   "rules": [
+    "RULE-BIRTH-FAMILY-REGISTER"
+   ],
+   "basis": [
+    "戸籍法第18条第1項・第2項（子の入る戸籍）"
+   ]
+  },
+  {
+   "id": "b9-late",
+   "title": "届出期間を過ぎた（11-02 生まれ、11-20 届出）",
+   "changes": {
+    "filingDate": "2026-11-20"
+   },
+   "decision": "AdditionalProcedure",
+   "rules": [
+    "RULE-BIRTH-FILING-PERIOD"
+   ],
+   "basis": [
+    "戸籍法第49条第1項（十四日以内）",
+    "手順書 出生 2.審査：遅延理由書の提出を求め、管轄簡易裁判所にその旨を通知する。"
+   ]
+  },
+  {
+   "id": "b9-deadline-extended",
+   "title": "期間の末日（11-15）が日曜で、11-16 に届出",
+   "changes": {
+    "filingDate": "2026-11-16"
+   },
+   "decision": null,
+   "rules": [],
+   "basis": [
+    "戸籍法第43条第1項（発生の日から起算）",
+    "地方自治法第4条の2第4項（期限が休日なら翌日）"
+   ]
+  },
+  {
+   "id": "b9-day-after-extension",
+   "title": "延長後の期限の翌日（11-17）に届出",
+   "changes": {
+    "filingDate": "2026-11-17"
+   },
+   "decision": "AdditionalProcedure",
+   "rules": [
+    "RULE-BIRTH-FILING-PERIOD"
+   ],
+   "basis": [
+    "戸籍法第49条第1項",
+    "地方自治法第4条の2第4項"
+   ]
+  },
+  {
+   "id": "b10-no-address",
+   "title": "住所が存在する場所として確認できない",
+   "changes": {
+    "addressExists": false
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-ADDRESS"
+   ],
+   "basis": [
+    "住民基本台帳法第9条第2項（手順書の備考）"
+   ]
+  },
+  {
+   "id": "b11-missing-item",
+   "title": "母の生年月日の記載が無い",
+   "changes": {
+    "recordedItem": [
+     "spouse-status",
+     "birth-datetime",
+     "birth-place"
+    ]
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-RECORD-ITEMS"
+   ],
+   "basis": [
+    "手順書 出生 1.受付(1)①：記入例と照合して記入漏れがあれば、指摘する。"
+   ]
+  },
+  {
+   "id": "b4a-200days-nonmarital-2023",
+   "title": "婚姻後200日目の出生を嫡出でない子と届出（2023年・旧法）",
+   "changes": {
+    "childBirthDate": "2023-07-20",
+    "certBirthDate": "2023-07-20",
+    "filingDate": "2023-07-25",
+    "parentsMarriageDate": "2023-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": null,
+   "rules": [],
+   "added_after_approval": true,
+   "basis": [
+    "民法第772条第2項（旧）：婚姻の成立の日から二百日を経過した後に生まれた子を婚姻中の懐胎と推定する。民法第140条により初日を算入しないので、婚姻 1/1 なら 7/20 が二百日目で、推定は 7/21 から。"
+   ]
+  },
+  {
+   "id": "b4a-201days-nonmarital-2023",
+   "title": "婚姻後201日目の出生を嫡出でない子と届出（2023年・旧法）",
+   "changes": {
+    "childBirthDate": "2023-07-21",
+    "certBirthDate": "2023-07-21",
+    "filingDate": "2023-07-25",
+    "parentsMarriageDate": "2023-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-LEGITIMACY-MANUAL"
+   ],
+   "added_after_approval": true,
+   "basis": [
+    "民法第772条第2項（旧）・民法第140条（初日不算入）"
+   ]
+  },
+  {
+   "id": "b4b-prev-300days-nonmarital",
+   "title": "前婚解消後300日目（再婚なし）の出生を嫡出でない子と届出",
+   "changes": {
+    "childBirthDate": "2025-10-28",
+    "certBirthDate": "2025-10-28",
+    "filingDate": "2025-11-04",
+    "parentsMarriageDate": null,
+    "motherPrevMarriageEndDate": "2025-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": "NeedsCorrection",
+   "rules": [
+    "RULE-BIRTH-LEGITIMACY-CURRENT"
+   ],
+   "added_after_approval": true,
+   "basis": [
+    "民法第772条第2項（現行）：婚姻の解消の日から三百日以内に生まれた子は婚姻中の懐胎と推定する（初日不算入で 1/1 解消なら 10/28 が三百日目）。"
+   ]
+  },
+  {
+   "id": "b4b-prev-301days-nonmarital",
+   "title": "前婚解消後301日目（再婚なし）の出生を嫡出でない子と届出",
+   "changes": {
+    "childBirthDate": "2025-10-29",
+    "certBirthDate": "2025-10-29",
+    "filingDate": "2025-11-04",
+    "parentsMarriageDate": null,
+    "motherPrevMarriageEndDate": "2025-01-01",
+    "statedRelationship": "嫡出でない子",
+    "statedFather": "記載なし",
+    "notifierRole": "mother"
+   },
+   "decision": null,
+   "rules": [],
+   "added_after_approval": true,
+   "basis": [
+    "民法第772条第2項（現行）：三百日を過ぎた出生には前の夫の嫡出推定が及ばない。"
+   ]
+  },
+  {
+   "id": "missing-birth-date",
+   "title": "出生日が入力されていない（父が届出）",
+   "changes": {
+    "childBirthDate": null,
+    "certBirthDate": null
+   },
+   "decision": null,
+   "rules": [],
+   "missing": [
+    "childBirthDate"
+   ],
+   "added_after_approval": true,
+   "basis": [
+    "入力の欠落は受理不可ではなく「評価できない入力がある」として返す（最終レビューの指摘）。"
+   ]
+  }
+ ],
+ "approved_by": {
+  "reviewer": "kento.nasu",
+  "date": "2026-11-16"
+ }
+}

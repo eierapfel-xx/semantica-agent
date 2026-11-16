@@ -1,0 +1,10 @@
+# 推測（kos:Speculation）のノードと理由
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?node ?reason WHERE {
+  ?node kos:sourceKind kos:Speculation ; rdfs:comment ?reason .
+  FILTER (STRSTARTS(STR(?reason), "推測"))
+}

@@ -1,0 +1,13 @@
+# 出生届の「届出期間内の届出か」の出典と、届出期間の日数の出典
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?pdfPage ?printedPage ?quote ?provision ?days ?periodSourceKind ?url WHERE {
+  ?item kos:hasSource ?src ; kos:citesProvision ?provision .
+  ?src kos:pdfPage ?pdfPage ; kos:printedPage ?printedPage ; kos:quote ?quote .
+  FILTER (?item = <https://semantica-agent.example/koseki/id/birth/step/2/item/11>)
+  <https://semantica-agent.example/koseki/id/derived/birth-filing-period> kos:periodDays ?days ; kos:hasSource ?ps .
+  ?ps kos:sourceKind ?periodSourceKind ; kos:url ?url .
+}
