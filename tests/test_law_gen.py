@@ -196,3 +196,18 @@ def test_article_text_is_frozen():
     a = ArticleText("民法", "733", "削除", "https://laws.e-gov.go.jp/law/x", date(2026, 1, 1), "r")
     with pytest.raises(AttributeError):
         a.text = "x"
+
+
+def test_cached_get_fetches_each_url_once():
+    from semantica_agent.law_gen import cached_get
+
+    calls = []
+
+    def get(url):
+        calls.append(url)
+        return {"u": url}
+
+    g = cached_get(get)
+    assert g("a") == g("a") == {"u": "a"}
+    g("b")
+    assert calls == ["a", "b"]

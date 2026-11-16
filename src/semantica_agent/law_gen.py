@@ -346,3 +346,16 @@ def approve(g: Graph, node: URIRef, reviewer: str, on: date) -> Graph:
         new.add((src, KOS.reviewer, Literal(reviewer)))
         new.add((src, KOS.reviewedDate, Literal(on)))
     return new
+
+
+def cached_get(http_get: HttpGet | None = None) -> HttpGet:
+    """同じ URL を 1 回だけ取得する（法令の全文を条文ごとに取り直さないため）。"""
+    cache: dict[str, dict] = {}
+    base = http_get or _default_get
+
+    def get(url: str) -> dict:
+        if url not in cache:
+            cache[url] = base(url)
+        return cache[url]
+
+    return get

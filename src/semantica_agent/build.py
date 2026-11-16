@@ -194,8 +194,12 @@ def stage_amendments(ctx: Ctx, args) -> None:
     if len(instances) == 0:
         raise StageError("ontology/instances/ が空です。インスタンスを固定してから流してください")
     targets = [(a.law, str(a.article)) for t in law_gen.AMENDMENT_TARGETS for a in t.articles]
-    texts = [law_gen.fetch_article(law, art) for law, art in [*targets, *law_gen.CHECK_ARTICLES]]
-    revisions = law_gen.fetch_revisions("民法")
+    get = law_gen.cached_get()
+    texts = [
+        law_gen.fetch_article(law, art, http_get=get)
+        for law, art in [*targets, *law_gen.CHECK_ARTICLES]
+    ]
+    revisions = law_gen.fetch_revisions("民法", http_get=get)
     refs = [a for t in law_gen.AMENDMENT_TARGETS for a in t.articles]
     candidates = law_gen.treatment_candidates(instances, refs)
     ctx.announce(1)
