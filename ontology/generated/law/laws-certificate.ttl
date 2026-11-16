@@ -1,0 +1,437 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2/item/4> a kos:LegalProvision ;
+    rdfs:label "戸籍法施行規則第11条の2第4号"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-2-I4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r15> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2/item/4/version/manual> ;
+    kos:item 4 ;
+    kos:partOf <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3/item/1> a kos:LegalProvision ;
+    rdfs:label "戸籍法施行規則第11条の3第1号"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-3-I1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3/item/1/version/manual> ;
+    kos:item 1 ;
+    kos:partOf <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-4> a kos:LegalProvision ;
+    rdfs:label "戸籍法施行規則第11条の4"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:article 11 ;
+    kos:articleBranch 4 ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r22>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r26>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r27> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-4/version/manual> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/12> a kos:LegalProvision ;
+    rdfs:label "戸籍法施行規則第12条"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-12" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:article 12 ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r25>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r26> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/12/version/manual> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/14> a kos:LegalProvision ;
+    rdfs:label "戸籍法施行規則第14条"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-14" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:article 14 ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r25>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r26> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/14/version/manual> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10> a kos:LegalProvision ;
+    rdfs:label "戸籍法第10条"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-10" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:article 10 ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r7>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r9> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10/version/manual> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/1> a kos:LegalProvision ;
+    rdfs:label "戸籍法第10条の2第1項"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r34>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/1/version/manual> ;
+    kos:paragraph 1 ;
+    kos:partOf <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/2> a kos:LegalProvision ;
+    rdfs:label "戸籍法第10条の2第2項"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r31> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/2/version/manual> ;
+    kos:paragraph 2 ;
+    kos:partOf <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/3> a kos:LegalProvision ;
+    rdfs:label "戸籍法第10条の2第3項"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/3/version/manual> ;
+    kos:paragraph 3 ;
+    kos:partOf <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/4> a kos:LegalProvision ;
+    rdfs:label "戸籍法第10条の2第4項"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P4" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/4/version/manual> ;
+    kos:paragraph 4 ;
+    kos:partOf <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/5> a kos:LegalProvision ;
+    rdfs:label "戸籍法第10条の2第5項"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P5" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/5/version/manual> ;
+    kos:paragraph 5 ;
+    kos:partOf <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3/para/1> a kos:LegalProvision ;
+    rdfs:label "戸籍法第10条の3第1項"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-3-P1" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3/para/1/version/manual> ;
+    kos:paragraph 1 ;
+    kos:partOf <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2> a kos:LegalProvision ;
+    rdfs:label "戸籍法施行規則第11条の2"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:article 11 ;
+    kos:articleBranch 2 ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r18>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r19>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r15> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2/version/manual> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2/item/4/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-2-I4-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r15> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-2/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-2-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r18>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r19> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3> a kos:LegalProvision ;
+    rdfs:label "戸籍法施行規則第11条の3"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:article 11 ;
+    kos:articleBranch 3 ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r32>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r33> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3/version/manual> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3/item/1/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-3-I1-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-3/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-3-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r32>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r33> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/11-4/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-11-4-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r22>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r26>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r27> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/12/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-12-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r25>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r26> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku/art/14/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU-14-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r25>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r26> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/1/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P1-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r34>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/2/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P2-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r31> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/3/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P3-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/4/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P4-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2/para/5/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2-P5-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3> a kos:LegalProvision ;
+    rdfs:label "戸籍法第10条の3"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-3" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:article 10 ;
+    kos:articleBranch 3 ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r18>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r19>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r34>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1> ;
+    kos:hasVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3/version/manual> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3/para/1/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-3-P1-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-3/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-3-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r18>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r19>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r34>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10/version/manual> a kos:ProvisionVersion ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-VMANUAL" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r7>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r9> ;
+    kos:reviewStatus kos:LlmDraft ;
+    kos:versionStatus kos:Manual .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho/art/10-2> a kos:LegalProvision ;
+    rdfs:label "戸籍法第10条の2"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-10-2" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:article 10 ;
+    kos:articleBranch 2 ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r31>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r34>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:partOfLaw <https://semantica-agent.example/koseki/id/law/koseki-ho> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho-kisoku> a kos:Law ;
+    rdfs:label "戸籍法施行規則"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO-KISOKU" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r18>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r19>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r22>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r26>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r27>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r32>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r33>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r23>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r24>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r25>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r26> ;
+    kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/law/koseki-ho> a kos:Law ;
+    rdfs:label "戸籍法"@ja ;
+    dcterms:identifier "LAW-KOSEKI-HO" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140608> ;
+    kos:hasSource <https://semantica-agent.example/koseki/id/source/manual/p10-r14>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r15>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r16>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r17>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r18>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r19>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r21>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r28>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r29>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r30>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r31>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r34>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r35>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r36>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r7>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p10-r9>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r1>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r10>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r6>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r8>,
+        <https://semantica-agent.example/koseki/id/source/manual/p11-r9> ;
+    kos:reviewStatus kos:LlmDraft .
+
