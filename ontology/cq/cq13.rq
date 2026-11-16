@@ -1,0 +1,14 @@
+# 判定ルール B4b から、審査項目・条文の版・改正・出典まで辿る
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?check ?checkPage ?version ?amendment ?sourceKind ?url WHERE {
+  <https://semantica-agent.example/koseki/id/rule/birth/legitimacy-current>
+      kos:implementsCheck ?check ; kos:underVersion ?version .
+  ?check kos:hasSource/kos:pdfPage ?checkPage .
+  ?amendment kos:producesVersion ?version .
+  ?version kos:hasSource ?src .
+  ?src kos:sourceKind ?sourceKind ; kos:url ?url .
+}

@@ -1,0 +1,12 @@
+# 民法第733条の現行の状態と、それを変えた改正
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?status ?amendment ?validFrom WHERE {
+  ?amendment kos:amends <https://semantica-agent.example/koseki/id/law/minpo/art/733> ;
+             kos:producesVersion ?v .
+  <https://semantica-agent.example/koseki/id/law/minpo/art/733> kos:hasVersion ?v .
+  ?v kos:versionStatus ?status ; kos:validFrom ?validFrom .
+}

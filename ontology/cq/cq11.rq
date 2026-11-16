@@ -1,0 +1,11 @@
+# 戸籍法第27条の2（各項を含む）が関わる項目
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?item WHERE {
+  ?item kos:citesProvision ?p .
+  OPTIONAL { ?p kos:partOf ?art }
+  FILTER (?p = <https://semantica-agent.example/koseki/id/law/koseki-ho/art/27-2> || ?art = <https://semantica-agent.example/koseki/id/law/koseki-ho/art/27-2>)
+}

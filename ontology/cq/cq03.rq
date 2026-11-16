@@ -1,0 +1,12 @@
+# 戸籍法第48条（受理証明書）が関わる工程
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?step WHERE {
+  ?step a kos:ProcedureStep ; kos:hasItem/kos:hasSubItem* ?item .
+  ?item kos:citesProvision ?p .
+  OPTIONAL { ?p kos:partOf ?art }
+  FILTER (?p = <https://semantica-agent.example/koseki/id/law/koseki-ho/art/48> || ?art = <https://semantica-agent.example/koseki/id/law/koseki-ho/art/48>)
+}

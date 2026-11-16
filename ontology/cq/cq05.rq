@@ -1,0 +1,12 @@
+# 届出期間を過ぎたときに要る対応（書類と通知先）
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?item ?document ?organization WHERE {
+  ?item kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/late-filing> ;
+        kos:requiresDocument ?document .
+  FILTER (?document = <https://semantica-agent.example/koseki/id/document/delay-reason>)
+  OPTIONAL { ?item kos:escalatesTo ?organization }
+}

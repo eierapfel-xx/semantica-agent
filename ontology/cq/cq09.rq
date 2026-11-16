@@ -1,0 +1,11 @@
+# 戸籍謄本等の交付で、代理人が来庁したときに要る書類
+PREFIX kos: <https://semantica-agent.example/koseki/schema#>
+PREFIX kd: <https://semantica-agent.example/koseki/id/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?document WHERE {
+  kd:certificate kos:hasStep/kos:hasItem/kos:hasSubItem* ?item .
+  ?item kos:appliesWhen <https://semantica-agent.example/koseki/id/condition/by-agent> ;
+        kos:requiresDocument ?document .
+}
