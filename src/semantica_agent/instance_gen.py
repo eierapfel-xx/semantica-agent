@@ -23,6 +23,7 @@ from semantica_agent.ids import (
 from semantica_agent.instance_check import (
     InstanceValidationError,
     cite_to_ref,
+    has_article,
     ref_text,
     validate_instance_output,
 )
@@ -152,7 +153,11 @@ class _Builder:
         self.sources(self.g, iri, item["row_ids"])
         remark_rows = item.get("remark_row_ids") or item["row_ids"]
         for cite in item.get("cites") or []:
-            self.cite(iri, cite, remark_rows)
+            if has_article(cite):
+                self.cite(iri, cite, remark_rows)
+            else:
+                note = f"根拠法令（条の指定なし）：{cite.get('law')}"
+                self.g.add((iri, RDFS.comment, Literal(note, lang="ja")))
         for field, (kind, table, cls, prop) in ITEM_VOCAB_FIELDS.items():
             for name in item.get(field) or []:
                 v = self.node(self.g, vocab_iri(kind, table[name]), KOS[cls], name)

@@ -117,3 +117,15 @@ def test_generate_instances_returns_valid_output(sample, birth_rows):
     finally:
         provider_registry.unregister("fake_inst2")
     assert out["business"] == "birth" and out["metadata"]["model"] == "fake"
+
+
+def test_cite_without_article_becomes_note(sample, birth_rows):
+    import copy
+
+    out = copy.deepcopy(sample)
+    out["steps"][1]["items"][0]["cites"].append({"law": "地方公共団体の手数料の標準に関する政令"})
+    g, _ = instances_to_graph(out, birth_rows, ACT)
+    from rdflib import RDFS
+
+    notes = {str(o) for o in g.objects(item_iri("birth", 2, (1,)), RDFS.comment)}
+    assert "根拠法令（条の指定なし）：地方公共団体の手数料の標準に関する政令" in notes

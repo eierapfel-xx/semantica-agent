@@ -107,6 +107,56 @@ def test_quote_from_remarks_column_is_accepted(sample, birth_rows):
     assert validate_instance_output(out, rows) == []
 
 
-def test_cite_without_article_is_error(sample, birth_rows):
-    bad = with_item(sample, cites=[{"law": "戸籍法", "article": None}])
-    assert any("条の番号" in e for e in validate_instance_output(bad, birth_rows))
+def test_cite_without_article_is_not_error(sample, birth_rows):
+    ok = with_item(sample, cites=[{"law": "戸籍法", "article": None}])
+    assert validate_instance_output(ok, birth_rows) == []
+
+
+def test_cite_in_procedure_text_is_accepted(sample, birth_rows):
+    rows = birth_rows + [
+        Row("p2-r14", "table", "birth", "", "○戸籍法第13条に規定する事項か。", "", 2, 1, 1.0)
+    ]
+    out = copy.deepcopy(sample)
+    out["steps"][1]["items"].append(
+        {
+            **out["steps"][1]["items"][0],
+            "quote": "規定する事項か",
+            "row_ids": ["p2-r14"],
+            "remark_row_ids": [],
+            "cites": [{"law": "戸籍法", "article": 13}],
+        }
+    )
+    assert validate_instance_output(out, rows) == []
+
+
+def test_new_vocab_already_in_table_is_not_error(sample, birth_rows):
+    out = copy.deepcopy(sample)
+    out["new_vocab"] = [{"kind": "document", "name_ja": "出生証明書", "slug": "birth-certificate"}]
+    assert validate_instance_output(out, birth_rows) == []
+
+
+def test_remarks_and_procedure_do_not_merge_numbers(sample, birth_rows):
+    rows = birth_rows + [
+        Row(
+            "p2-r14",
+            "table",
+            "birth",
+            "",
+            "③ 来庁者の関係を確認する。",
+            "戸籍法施行規則第11条の3",
+            2,
+            1,
+            1.0,
+        )
+    ]
+    out = copy.deepcopy(sample)
+    out["steps"][1]["items"].append(
+        {
+            **out["steps"][1]["items"][0],
+            "quote": "来庁者の関係を確認する",
+            "row_ids": ["p2-r14"],
+            "remark_row_ids": ["p2-r14"],
+            "cites": [{"law": "戸籍法施行規則", "article": 11, "branch": 3}],
+        }
+    )
+    assert validate_instance_output(out, rows) == []

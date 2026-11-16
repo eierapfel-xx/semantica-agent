@@ -30,6 +30,10 @@ def iter_items(items: list[dict], prefix: str) -> Iterator[tuple[str, dict]]:
         yield from iter_items(item.get("children") or [], where)
 
 
+def has_article(cite: dict) -> bool:
+    return isinstance(cite.get("article"), int)
+
+
 def cite_to_ref(cite: dict) -> ProvisionRef:
     return ProvisionRef(
         cite.get("law", ""),
@@ -67,14 +71,16 @@ class _Checker:
                 found.append(self.rows[rid])
         return found
 
-    def check_cites(self, where: str, cites: list[dict], remark_rows: list[Row]) -> None:
-        remarks = "".join(r.remarks for r in remark_rows)
+    def check_cites(
+        self, where: str, cites: list[dict], remark_rows: list[Row], text_rows: list[Row]
+    ) -> None:
+        # 備考の列と、項目の業務手順の本文の両方を見る（本文で条文を引く手順があるため）
+        remarks = (
+            "".join(r.remarks for r in remark_rows) + "。" + "".join(r.procedure for r in text_rows)
+        )
         for cite in cites or []:
-            if not isinstance(cite.get("article"), int):
-                self.err(
-                    f"{where}: 条の番号の無い条文は cites でなく notes に書く: {cite.get('law')}"
-                )
-                continue
+            if not has_article(cite):
+                continue  # 条の指定の無い法令は注記にする（instance_gen）
             ref = cite_to_ref(cite)
             if ref.law not in LAW_SLUGS:
                 self.err(f"{where}: 未知の法令です（vocab.LAW_SLUGS に足すか確認）: {ref.law}")
@@ -90,7 +96,7 @@ class _Checker:
         if not quote or not any(quote in t for t in texts):
             self.err(f"{where}: quote が row_ids の行にありません: {item.get('quote')!r}")
         remark_rows = self.known_rows(where, item.get("remark_row_ids") or item.get("row_ids"))
-        self.check_cites(where, item.get("cites"), remark_rows)
+        self.check_cites(where, item.get("cites"), remark_rows, rows)
         if item.get("kind") not in ITEM_KINDS:
             self.err(f"{where}: kind は {ITEM_KINDS} のいずれか: {item.get('kind')!r}")
         if item.get("alignment", "ok") not in ALIGNMENTS:
@@ -111,7 +117,8 @@ class _Checker:
             self.err(f"工程の番号 {numbers} が手順書の区分 {divisions} と一致しません")
         for step in self.out.get("steps") or []:
             where = f"step{step.get('number')}"
-            self.check_cites(where, step.get("cites"), self.known_rows(where, step.get("row_ids")))
+            step_rows = self.known_rows(where, step.get("row_ids"))
+            self.check_cites(where, step.get("cites"), step_rows, step_rows)
             for w, item in iter_items(step.get("items"), where):
                 self.check_item(w, item)
                 target = item.get("prerequisite_for")
@@ -124,7 +131,10 @@ class _Checker:
         self.check_steps()
         for note in self.out.get("notes") or []:
             self.known_rows("notes", note.get("row_ids"))
+        tables = {kind: table for kind, table, _, _ in ITEM_VOCAB_FIELDS.values()}
         for v in self.out.get("new_vocab") or []:
+            if v.get("name_ja") in tables.get(v.get("kind"), {}):
+                continue
             self.err(
                 f"語彙の追加の提案: {v.get('kind')} 「{v.get('name_ja')}」→ {v.get('slug')}"
                 "（vocab.py に足してから再実行）"

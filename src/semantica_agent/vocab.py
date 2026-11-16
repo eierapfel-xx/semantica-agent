@@ -175,6 +175,10 @@ DOCUMENT_SLUGS: dict[str, str] = {
     "母子健康手帳": "maternal-handbook",
     "戸籍謄本等": "family-register-copy",
     "受理証明書": "acceptance-certificate",
+    "後見登記等の登記事項証明書": "guardianship-registration-certificate",
+    "裁判所の謄本": "court-copy",
+    "統一請求書": "unified-request-form",
+    "代理権確認書類": "authority-confirmation-document",
 }
 
 CONDITION_SLUGS: dict[str, str] = {
@@ -185,6 +189,17 @@ CONDITION_SLUGS: dict[str, str] = {
     "未成年者の場合": "minor",
     "出生証明書が添付されていない場合": "no-birth-certificate",
     "届出期間経過後に届出があった場合": "late-filing",
+    "学齢に達した子の出生届の場合": "school-age-child-filing",
+    "出生時に母が50歳以上の場合": "mother-aged-50-or-over-at-birth",
+    "届出人から請求があった場合": "requested-by-notifier",
+    "当事者が外国人の場合": "foreign-party",
+    "届出人本人の来庁が確認できなかった場合": "notifier-not-present",
+    "死亡診断書が添付されていない場合": "death-certificate-not-attached",
+    "有配偶者が死亡した場合": "deceased-had-spouse",
+    "出生後30日以内の死亡": "death-within-30-days-of-birth",
+    "公的機関からの請求の場合": "public-agency-request",
+    "第三者からの請求の場合": "third-party-request",
+    "特定事務受任者からの請求の場合": "designated-agent-request",
 }
 
 ROLE_SLUGS: dict[str, str] = {
@@ -204,6 +219,7 @@ ROLE_SLUGS: dict[str, str] = {
     "同居者": "cohabitant",
     "医師": "physician",
     "助産師": "midwife",
+    "請求者": "requester",
 }
 
 ORGANIZATION_SLUGS: dict[str, str] = {
@@ -219,6 +235,7 @@ RECORD_ITEM_SLUGS: dict[str, str] = {
     "出生時刻": "birth-time",
     "生存配偶者の年齢": "surviving-spouse-age",
     "配偶者の有無": "spouse-status",
+    "母の生年月日": "mother-birth-date",
 }
 
 # 項目の JSON のフィールド → (語彙の種類, 日本語名 → slug の表, クラス, プロパティ)
