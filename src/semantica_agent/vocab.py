@@ -87,6 +87,13 @@ _CASE_PROPERTIES: dict[str, str] = {
     "motherRemarriedBeforeBirth": "出生までの母の再婚",
     "familyRegisterExists": "入る戸籍の存在",
     "addressExists": "住所の存在",
+    # 派生値（コードが計算して足す。仕様 §4.6）
+    "daysFromMarriageToBirth": "婚姻から出生までの日数",
+    "daysFromPrevMarriageEndToBirth": "前婚の解消から出生までの日数",
+    "filingDeadline": "届出期間の末日",
+    "daysLate": "届出期間を過ぎた日数",
+    "motherAgeAtBirth": "出生時の母の年齢",
+    "childAgeAtFiling": "届出時の子の年齢",
 }
 
 # 仕様の表には無いが、§4.6・§6.3・§7.1 が持つと書いている値（台帳の Pre-flight の Ruling）。

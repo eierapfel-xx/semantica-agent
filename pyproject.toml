@@ -9,6 +9,7 @@ dependencies = [
     "semantica[parse-pdf,shacl,tripletstore-oxigraph,viz]>=0.7.0",
     # エージェント本体。Claude Code のログイン（Pro）で動く。
     "claude-agent-sdk>=0.2.182",
+    "jpholiday>=1.0.3",
 ]
 
 [dependency-groups]
