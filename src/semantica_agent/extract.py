@@ -190,3 +190,11 @@ def load_rows(path: Path) -> list[Row]:
     if not isinstance(data, list):
         raise ValueError(f"rows.json は配列である必要があります: {path}")
     return [_row_from_dict(d) for d in data]
+
+
+def render_rows(rows: list[Row]) -> str:
+    """プロンプトに入れる形（`row_id | 業務 | 区分 | 業務手順 | 備考`）。"""
+    return "\n".join(
+        f"{r.row_id} | {r.business or '-'} | {r.division} | {r.procedure} | {r.remarks}"
+        for r in rows
+    )
