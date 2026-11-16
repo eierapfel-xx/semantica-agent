@@ -1,0 +1,40 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://semantica-agent.example/koseki/id/artifact/beefc9a656b530d7b78ef83c4edde674808b34f13488e0320bfdc67968f4efcb> a prov:Entity ;
+    rdfs:label "/home/eiera/work/ontology/semantica-agent/ontology/generated/schema/schema.ttl" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/schema-20261116135340> ;
+    kos:sha256 "beefc9a656b530d7b78ef83c4edde674808b34f13488e0320bfdc67968f4efcb" .
+
+<https://semantica-agent.example/koseki/id/activity/schema-20261116135340> a prov:Activity ;
+    rdfs:label "schema" ;
+    dcterms:identifier "schema-20261116135340" ;
+    prov:endedAtTime "2026-11-16T13:55:03.298489+00:00"^^xsd:dateTime ;
+    prov:startedAtTime "2026-11-16T13:53:40.183077+00:00"^^xsd:dateTime ;
+    prov:used <https://semantica-agent.example/koseki/id/artifact/95168bc70e3eb24e0134676825154e33e6cfed767ad0648536475f10ed8245d1>,
+        <https://semantica-agent.example/koseki/id/artifact/cedd7a0e4e65cbb996c15f40076c0b295573ddefbfaaa1ed51aa28b84dcdbc36> ;
+    kos:model "claude-sonnet-5-5" ;
+    kos:pdfPage 1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11 ;
+    kos:promptSha256 "95168bc70e3eb24e0134676825154e33e6cfed767ad0648536475f10ed8245d1" .
+
+<https://semantica-agent.example/koseki/id/artifact/95168bc70e3eb24e0134676825154e33e6cfed767ad0648536475f10ed8245d1> a prov:Entity ;
+    rdfs:label "/home/eiera/work/ontology/semantica-agent/src/semantica_agent/prompts/schema.md" ;
+    kos:sha256 "95168bc70e3eb24e0134676825154e33e6cfed767ad0648536475f10ed8245d1" .
+
+<https://semantica-agent.example/koseki/id/artifact/cedd7a0e4e65cbb996c15f40076c0b295573ddefbfaaa1ed51aa28b84dcdbc36> a prov:Entity ;
+    rdfs:label "/home/eiera/work/ontology/semantica-agent/data/extracted/rows.json" ;
+    kos:sha256 "cedd7a0e4e65cbb996c15f40076c0b295573ddefbfaaa1ed51aa28b84dcdbc36" .
+

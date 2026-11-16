@@ -1,0 +1,713 @@
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://semantica-agent.example/koseki/schema> a owl:Ontology ;
+    owl:versionInfo "1.0" .
+
+kos:AdditionalProcedure a owl:NamedIndividual ;
+    rdfs:comment "kos:outcome の値"@ja .
+
+kos:Changed a owl:NamedIndividual ;
+    rdfs:comment "kos:currentTreatment の値"@ja .
+
+kos:Current a owl:NamedIndividual ;
+    rdfs:comment "kos:versionStatus の値"@ja .
+
+kos:CurrentLawSource a owl:NamedIndividual ;
+    rdfs:comment "kos:sourceKind の値"@ja .
+
+kos:HumanEdited a owl:NamedIndividual ;
+    rdfs:comment "kos:reviewStatus の値"@ja .
+
+kos:HumanReviewed a owl:NamedIndividual ;
+    rdfs:comment "kos:reviewStatus の値"@ja .
+
+kos:Info a owl:NamedIndividual ;
+    rdfs:comment "kos:outcome の値"@ja .
+
+kos:LlmDraft a owl:NamedIndividual ;
+    rdfs:comment "kos:reviewStatus の値"@ja .
+
+kos:Manual a owl:NamedIndividual ;
+    rdfs:comment "kos:versionStatus の値"@ja .
+
+kos:ManualSource a owl:NamedIndividual ;
+    rdfs:comment "kos:sourceKind の値"@ja .
+
+kos:NeedsCorrection a owl:NamedIndividual ;
+    rdfs:comment "kos:outcome の値"@ja .
+
+kos:NeedsInquiry a owl:NamedIndividual ;
+    rdfs:comment "kos:outcome の値"@ja .
+
+kos:Obsolete a owl:NamedIndividual ;
+    rdfs:comment "kos:currentTreatment の値"@ja .
+
+kos:Reject a owl:NamedIndividual ;
+    rdfs:comment "kos:outcome の値"@ja .
+
+kos:Repealed a owl:NamedIndividual ;
+    rdfs:comment "kos:versionStatus の値"@ja .
+
+kos:Task a owl:Class ;
+    rdfs:label "作業"@ja ;
+    rdfs:comment "窓口職員や事務担当者が行う作業の項目。例は「受理証明書を交付」「戸籍の附票作成」「本籍地市町村への通知資料発送」「届書類を目録をつけて保存」。合否を判定する項目ではない。"@ja ;
+    rdfs:subClassOf kos:StepItem .
+
+kos:Valid a owl:NamedIndividual ;
+    rdfs:comment "kos:currentTreatment の値"@ja .
+
+kos:addressExists a owl:DatatypeProperty ;
+    rdfs:label "住所の存在"@ja ;
+    rdfs:comment "届書に記載された住所が存在する場所か。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:boolean .
+
+kos:alignment a owl:DatatypeProperty ;
+    rdfs:label "対応の確かさ"@ja ;
+    rdfs:comment "手順書の記述と現行法の条文との対応の確かさ（確実、おそらく、不明など）。"@ja ;
+    rdfs:domain kos:ProvisionVersion,
+        kos:StepItem ;
+    rdfs:range xsd:string .
+
+kos:amends a owl:ObjectProperty ;
+    rdfs:label "改正する条文"@ja ;
+    rdfs:comment "改正の対象となる条文。"@ja ;
+    rdfs:domain kos:LegalAmendment ;
+    rdfs:range kos:LegalProvision .
+
+kos:appliesWhen a owl:ObjectProperty ;
+    rdfs:label "適用条件"@ja ;
+    rdfs:comment "項目・工程・ルールが適用される条件。"@ja ;
+    rdfs:domain kos:JudgmentRule,
+        kos:ProcedureStep,
+        kos:StepItem ;
+    rdfs:range kos:Condition .
+
+kos:article a owl:DatatypeProperty ;
+    rdfs:label "条"@ja ;
+    rdfs:comment "条の番号。「第49条」なら 49。"@ja ;
+    rdfs:domain kos:LegalProvision ;
+    rdfs:range xsd:integer .
+
+kos:articleBranch a owl:DatatypeProperty ;
+    rdfs:label "条の枝番"@ja ;
+    rdfs:comment "「第27条の2」の 2 のような条の枝番。"@ja ;
+    rdfs:domain kos:LegalProvision ;
+    rdfs:range xsd:integer .
+
+kos:attachedDocument a owl:ObjectProperty ;
+    rdfs:label "添付された書類"@ja ;
+    rdfs:comment "届出に添付された書類の種類。必要書類の不足を調べるのに使う。"@ja ;
+    rdfs:domain kos:Filing ;
+    rdfs:range kos:DocumentType .
+
+kos:birthPlaceMunicipality a owl:ObjectProperty ;
+    rdfs:label "出生地"@ja ;
+    rdfs:comment "出生届に記載された、生まれたところの市区町村。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range kos:Organization .
+
+kos:businessName a owl:DatatypeProperty ;
+    rdfs:label "業務名"@ja ;
+    rdfs:comment "出典の業務名。例は「戸籍届出（出生）」「戸籍謄本等の交付」。"@ja ;
+    rdfs:domain kos:Business,
+        kos:SourceReference ;
+    rdfs:range xsd:string .
+
+kos:certBirthDate a owl:DatatypeProperty ;
+    rdfs:label "出生証明書の出生日"@ja ;
+    rdfs:comment "出生証明書に記載された出生日。届書との一致の確認に使う。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:date .
+
+kos:certBirthPlace a owl:ObjectProperty ;
+    rdfs:label "出生証明書の出生地"@ja ;
+    rdfs:comment "出生証明書に記載された出生地の市区町村。届書との一致の確認に使う。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range kos:Organization .
+
+kos:certBirthTime a owl:DatatypeProperty ;
+    rdfs:label "出生証明書の出生時刻"@ja ;
+    rdfs:comment "出生証明書に記載された出生時刻。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:time .
+
+kos:childAgeAtFiling a owl:DatatypeProperty ;
+    rdfs:label "届出時の子の年齢"@ja ;
+    rdfs:comment "届出時の子の年齢。学齢に達した子の出生届では法務局に受理照会する。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:integer .
+
+kos:childBirthDate a owl:DatatypeProperty ;
+    rdfs:label "子の出生日"@ja ;
+    rdfs:comment "出生届に記載された子の出生日。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:date .
+
+kos:childBirthTime a owl:DatatypeProperty ;
+    rdfs:label "子の出生時刻"@ja ;
+    rdfs:comment "出生届に記載された子の出生時刻。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:time .
+
+kos:citesProvision a owl:ObjectProperty ;
+    rdfs:label "根拠条文"@ja ;
+    rdfs:comment "手順書の備考欄が根拠として挙げる条文。"@ja ;
+    rdfs:domain kos:DocumentType,
+        kos:ProcedureStep,
+        kos:RecordItem,
+        kos:StepItem ;
+    rdfs:range kos:LegalProvision .
+
+kos:countFirstDay a owl:DatatypeProperty ;
+    rdfs:label "初日を算入する"@ja ;
+    rdfs:comment "期間の計算で初日を算入するか。"@ja ;
+    rdfs:domain kos:DerivedValue ;
+    rdfs:range xsd:boolean .
+
+kos:currentTreatment a owl:ObjectProperty ;
+    rdfs:label "現行法での扱い"@ja ;
+    rdfs:comment "手順書の記述が現行法でも有効（Valid）か、変更された（Changed）か、不要になった（Obsolete）か。"@ja ;
+    rdfs:domain kos:ProcedureStep,
+        kos:StepItem ;
+    rdfs:range kos:CurrentTreatment .
+
+kos:currentTreatmentNote a owl:DatatypeProperty ;
+    rdfs:label "現行法での扱いの注記"@ja ;
+    rdfs:comment "現行法での扱いの理由や、手順書の記述との違いの説明。"@ja ;
+    rdfs:domain kos:ProcedureStep,
+        kos:StepItem ;
+    rdfs:range rdf:langString .
+
+kos:daysFromMarriageToBirth a owl:DatatypeProperty ;
+    rdfs:label "婚姻から出生までの日数"@ja ;
+    rdfs:comment "父母の婚姻日から子の出生日までの日数。派生値の定義から計算する。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:integer .
+
+kos:daysFromPrevMarriageEndToBirth a owl:DatatypeProperty ;
+    rdfs:label "前婚の解消から出生までの日数"@ja ;
+    rdfs:comment "母の前婚の解消日から子の出生日までの日数。派生値の定義から計算する。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:integer .
+
+kos:daysLate a owl:DatatypeProperty ;
+    rdfs:label "届出期間を過ぎた日数"@ja ;
+    rdfs:comment "届出日が届出期間の末日を過ぎた日数。期間内なら 0 以下。期間経過後は遅延理由書の提出を求める。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:integer .
+
+kos:derivedFromProperty a owl:DatatypeProperty ;
+    rdfs:label "計算に使う事案のプロパティ"@ja ;
+    rdfs:comment "派生値の計算に使う、届出の事案のプロパティの IRI。"@ja ;
+    rdfs:domain kos:DerivedValue ;
+    rdfs:range xsd:anyURI .
+
+kos:division a owl:DatatypeProperty ;
+    rdfs:label "区分"@ja ;
+    rdfs:comment "出典の区分欄の名称。例は「2.審査」。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:string .
+
+kos:effectiveDate a owl:DatatypeProperty ;
+    rdfs:label "施行日"@ja ;
+    rdfs:comment "改正が施行された日。"@ja ;
+    rdfs:domain kos:LegalAmendment ;
+    rdfs:range xsd:date .
+
+kos:escalatesTo a owl:ObjectProperty ;
+    rdfs:label "照会・通知・送付の先"@ja ;
+    rdfs:comment "受理照会、通知、書類の送付などの相手先の機関。例は法務局、管轄簡易裁判所、本籍地の市区町村。"@ja ;
+    rdfs:domain kos:StepItem ;
+    rdfs:range kos:Organization .
+
+kos:extendOnHoliday a owl:DatatypeProperty ;
+    rdfs:label "末日が休日なら延ばす"@ja ;
+    rdfs:comment "期間の末日が休日のとき、次の開庁日まで延ばすか。"@ja ;
+    rdfs:domain kos:DerivedValue ;
+    rdfs:range xsd:boolean .
+
+kos:familyRegisterExists a owl:DatatypeProperty ;
+    rdfs:label "入る戸籍の存在"@ja ;
+    rdfs:comment "子が入る戸籍（父母または母の戸籍）が存在するか。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:boolean .
+
+kos:fetchedDate a owl:DatatypeProperty ;
+    rdfs:label "取得日"@ja ;
+    rdfs:comment "現行法の出典を取得した日。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:date .
+
+kos:filingDate a owl:DatatypeProperty ;
+    rdfs:label "届出日"@ja ;
+    rdfs:comment "届出がされた日。"@ja ;
+    rdfs:domain kos:Filing ;
+    rdfs:range xsd:date .
+
+kos:filingDeadline a owl:DatatypeProperty ;
+    rdfs:label "届出期間の末日"@ja ;
+    rdfs:comment "出生日から計算した届出期間の末日。派生値の定義から計算する。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:date .
+
+kos:filingMunicipality a owl:ObjectProperty ;
+    rdfs:label "届出を受けた市区町村"@ja ;
+    rdfs:comment "届出を受けた市区町村。届出地の審査に使う。"@ja ;
+    rdfs:domain kos:Filing ;
+    rdfs:range kos:Organization .
+
+kos:hasItem a owl:ObjectProperty ;
+    rdfs:label "項目"@ja ;
+    rdfs:comment "工程または項目が直接持つ手順項目。"@ja ;
+    rdfs:domain kos:ProcedureStep,
+        kos:StepItem ;
+    rdfs:range kos:StepItem .
+
+kos:hasSource a owl:ObjectProperty ;
+    rdfs:label "出典"@ja ;
+    rdfs:comment "そのノードの根拠となった資料上の位置。"@ja ;
+    rdfs:domain kos:Business,
+        kos:Condition,
+        kos:DerivedValue,
+        kos:DocumentType,
+        kos:JudgmentRule,
+        kos:Law,
+        kos:LegalAmendment,
+        kos:LegalProvision,
+        kos:Organization,
+        kos:PartyRole,
+        kos:ProcedureStep,
+        kos:ProvisionVersion,
+        kos:RecordItem,
+        kos:StepItem ;
+    rdfs:range kos:SourceReference .
+
+kos:hasStep a owl:ObjectProperty ;
+    rdfs:label "工程"@ja ;
+    rdfs:comment "業務が持つ工程。手順書の「区分」欄の各段階。"@ja ;
+    rdfs:domain kos:Business ;
+    rdfs:range kos:ProcedureStep .
+
+kos:hasSubItem a owl:ObjectProperty ;
+    rdfs:label "下位の項目"@ja ;
+    rdfs:comment "「(1)」の下の「①」、「①」の下の「○」のように、項目の下に入れ子になる項目。"@ja ;
+    rdfs:domain kos:StepItem ;
+    rdfs:range kos:StepItem .
+
+kos:hasVersion a owl:ObjectProperty ;
+    rdfs:label "版"@ja ;
+    rdfs:comment "条文が持つ版。手順書の時点の版と現行の版を区別して持つ。"@ja ;
+    rdfs:domain kos:LegalProvision ;
+    rdfs:range kos:ProvisionVersion .
+
+kos:honsekiMunicipality a owl:ObjectProperty ;
+    rdfs:label "入る戸籍の本籍地"@ja ;
+    rdfs:comment "子が入る戸籍（父母または母の戸籍）の本籍地の市区町村。非本籍地での届出かの判断に使う。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range kos:Organization .
+
+kos:implementsCheck a owl:ObjectProperty ;
+    rdfs:label "判定する審査項目"@ja ;
+    rdfs:comment "このルールが機械的に判定する審査項目。"@ja ;
+    rdfs:domain kos:JudgmentRule ;
+    rdfs:range kos:ReviewCheck .
+
+kos:involvesRole a owl:ObjectProperty ;
+    rdfs:label "関係者"@ja ;
+    rdfs:comment "項目や条件に関わる者の立場。"@ja ;
+    rdfs:domain kos:Condition,
+        kos:StepItem ;
+    rdfs:range kos:PartyRole .
+
+kos:item a owl:DatatypeProperty ;
+    rdfs:label "号"@ja ;
+    rdfs:comment "号の番号。「第11条の3第1号」なら 1。"@ja ;
+    rdfs:domain kos:LegalProvision ;
+    rdfs:range xsd:integer .
+
+kos:itemLabel a owl:DatatypeProperty ;
+    rdfs:label "手順書上の番号"@ja ;
+    rdfs:comment "手順書に書かれた「(1)」「①」「○」などの番号や記号。"@ja ;
+    rdfs:domain kos:StepItem ;
+    rdfs:range xsd:string .
+
+kos:itemOrder a owl:DatatypeProperty ;
+    rdfs:label "出現順"@ja ;
+    rdfs:comment "同じ親の中での、手順書上の出現順。"@ja ;
+    rdfs:domain kos:StepItem ;
+    rdfs:range xsd:integer .
+
+kos:lawNumber a owl:DatatypeProperty ;
+    rdfs:label "法律番号"@ja ;
+    rdfs:comment "法令の番号。例は「昭和22年法律第224号」。"@ja ;
+    rdfs:domain kos:Law ;
+    rdfs:range xsd:string .
+
+kos:model a owl:DatatypeProperty ;
+    rdfs:label "モデル"@ja ;
+    rdfs:comment "生成に使った LLM のモデル名。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:string .
+
+kos:motherAgeAtBirth a owl:DatatypeProperty ;
+    rdfs:label "出生時の母の年齢"@ja ;
+    rdfs:comment "子の出生時の母の年齢。50 歳以上のとき法務局に受理照会するケースがある。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:integer .
+
+kos:motherBirthDate a owl:DatatypeProperty ;
+    rdfs:label "母の生年月日"@ja ;
+    rdfs:comment "母の生年月日。出生時に母が 50 歳以上のときの受理照会の判断に使う。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:date .
+
+kos:motherPrevMarriageEndDate a owl:DatatypeProperty ;
+    rdfs:label "母の前婚の解消日"@ja ;
+    rdfs:comment "母に前婚がある場合の、その解消日。嫡出子の判定（前婚解消後 300 日）に使う。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:date .
+
+kos:motherRemarriedBeforeBirth a owl:DatatypeProperty ;
+    rdfs:label "出生までの母の再婚"@ja ;
+    rdfs:comment "子の出生までに母が再婚していたか。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:boolean .
+
+kos:nextStep a owl:ObjectProperty ;
+    rdfs:label "次の工程"@ja ;
+    rdfs:comment "手順書の並び順で次にくる工程。"@ja ;
+    rdfs:domain kos:ProcedureStep ;
+    rdfs:range kos:ProcedureStep .
+
+kos:normalizationNote a owl:DatatypeProperty ;
+    rdfs:label "正規化の注記"@ja ;
+    rdfs:comment "手順書の曖昧な記述を、判定できる形にしたときの注記。"@ja ;
+    rdfs:domain kos:Condition,
+        kos:DerivedValue,
+        kos:StepItem ;
+    rdfs:range rdf:langString .
+
+kos:notifierMunicipality a owl:ObjectProperty ;
+    rdfs:label "届出人の所在地"@ja ;
+    rdfs:comment "届出人の住所の市区町村。届出地の審査に使う。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range kos:Organization .
+
+kos:notifierRole a owl:ObjectProperty ;
+    rdfs:label "届出人の資格"@ja ;
+    rdfs:comment "届出人の立場。届出義務者または届出の資格を有する者かの審査に使う。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range kos:PartyRole .
+
+kos:outcome a owl:ObjectProperty ;
+    rdfs:label "判定の種類"@ja ;
+    rdfs:comment "ルールに違反したときの結果。却下、補正、照会、追加手続、情報のどれか。"@ja ;
+    rdfs:domain kos:JudgmentRule ;
+    rdfs:range kos:JudgmentOutcome .
+
+kos:paragraph a owl:DatatypeProperty ;
+    rdfs:label "項"@ja ;
+    rdfs:comment "項の番号。「第49条第3項」なら 3。"@ja ;
+    rdfs:domain kos:LegalProvision ;
+    rdfs:range xsd:integer .
+
+kos:parentsMarriageDate a owl:DatatypeProperty ;
+    rdfs:label "父母の婚姻日"@ja ;
+    rdfs:comment "父母が婚姻した日。嫡出子の判定（婚姻後 200 日）に使う。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:date .
+
+kos:partOf a owl:ObjectProperty ;
+    rdfs:label "上位の条文"@ja ;
+    rdfs:comment "項や号が属する、より上位の条文（項に対する条、号に対する項）。"@ja ;
+    rdfs:domain kos:LegalProvision ;
+    rdfs:range kos:LegalProvision .
+
+kos:partOfLaw a owl:ObjectProperty ;
+    rdfs:label "法令"@ja ;
+    rdfs:comment "条文が属する法令。"@ja ;
+    rdfs:domain kos:LegalProvision ;
+    rdfs:range kos:Law .
+
+kos:pdfPage a owl:DatatypeProperty ;
+    rdfs:label "PDF の頁"@ja ;
+    rdfs:comment "手順書 PDF 上の頁番号。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:integer .
+
+kos:periodDays a owl:DatatypeProperty ;
+    rdfs:label "期間の日数"@ja ;
+    rdfs:comment "派生値の計算に使う期間の日数。例は 200、300。"@ja ;
+    rdfs:domain kos:DerivedValue ;
+    rdfs:range xsd:integer .
+
+kos:prerequisiteFor a owl:ObjectProperty ;
+    rdfs:label "移行先の工程"@ja ;
+    rdfs:comment "この項目の条件が全て満たされ疑義がないときに移行する工程。例は、受付の必要書類が揃い疑義がなければ審査に移行する。"@ja ;
+    rdfs:domain kos:ProcedureStep,
+        kos:StepItem ;
+    rdfs:range kos:ProcedureStep .
+
+kos:printedPage a owl:DatatypeProperty ;
+    rdfs:label "印刷頁"@ja ;
+    rdfs:comment "手順書に印刷された頁番号。目次の頁数に対応する。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:integer .
+
+kos:producesVersion a owl:ObjectProperty ;
+    rdfs:label "改正後の版"@ja ;
+    rdfs:comment "改正によって生じた条文の版。"@ja ;
+    rdfs:domain kos:LegalAmendment ;
+    rdfs:range kos:ProvisionVersion .
+
+kos:promptSha256 a owl:DatatypeProperty ;
+    rdfs:label "プロンプトのハッシュ"@ja ;
+    rdfs:comment "生成に使ったプロンプトの SHA-256 ハッシュ。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:string .
+
+kos:quote a owl:DatatypeProperty ;
+    rdfs:label "原文の引用"@ja ;
+    rdfs:comment "根拠となった手順書または条文の原文。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range rdf:langString .
+
+kos:recordedItem a owl:ObjectProperty ;
+    rdfs:label "記載のある事項"@ja ;
+    rdfs:comment "届書に記載されている事項。記載漏れを調べるのに使う。"@ja ;
+    rdfs:domain kos:Filing ;
+    rdfs:range kos:RecordItem .
+
+kos:requiresDocument a owl:ObjectProperty ;
+    rdfs:label "必要書類"@ja ;
+    rdfs:comment "項目や工程で提出・確認・受領が必要な書類。"@ja ;
+    rdfs:domain kos:ProcedureStep,
+        kos:StepItem ;
+    rdfs:range kos:DocumentType .
+
+kos:requiresRecordItem a owl:ObjectProperty ;
+    rdfs:label "確認する記載事項"@ja ;
+    rdfs:comment "審査や受付で、記載されているかを確認する事項。"@ja ;
+    rdfs:domain kos:StepItem ;
+    rdfs:range kos:RecordItem .
+
+kos:reviewStatus a owl:ObjectProperty ;
+    rdfs:label "レビューの状態"@ja ;
+    rdfs:comment "LLM の下書き（LlmDraft）か、人が確認した（HumanReviewed）か、人が直した（HumanEdited）か。"@ja ;
+    rdfs:domain kos:Condition,
+        kos:DerivedValue,
+        kos:JudgmentRule,
+        kos:LegalProvision,
+        kos:ProvisionVersion,
+        kos:SourceReference,
+        kos:StepItem ;
+    rdfs:range kos:ReviewStatus .
+
+kos:reviewedDate a owl:DatatypeProperty ;
+    rdfs:label "確認日"@ja ;
+    rdfs:comment "内容を確認した日。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:date .
+
+kos:reviewer a owl:DatatypeProperty ;
+    rdfs:label "確認者"@ja ;
+    rdfs:comment "内容を確認した人。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:string .
+
+kos:revisionId a owl:DatatypeProperty ;
+    rdfs:label "e-Gov の版の ID"@ja ;
+    rdfs:comment "e-Gov 法令 API が付ける、その版の ID。"@ja ;
+    rdfs:domain kos:ProvisionVersion ;
+    rdfs:range xsd:string .
+
+kos:rowId a owl:DatatypeProperty ;
+    rdfs:label "行の ID"@ja ;
+    rdfs:comment "入力で付けた行の ID（例 p2-r30）。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:string .
+
+kos:sha256 a owl:DatatypeProperty ;
+    rdfs:label "ファイルのハッシュ"@ja ;
+    rdfs:comment "出典のファイル（手順書 PDF など）の SHA-256 ハッシュ。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:string .
+
+kos:shape a owl:DatatypeProperty ;
+    rdfs:label "ルールの実体"@ja ;
+    rdfs:comment "判定を実行する SHACL シェイプなどの IRI。"@ja ;
+    rdfs:domain kos:JudgmentRule ;
+    rdfs:range xsd:anyURI .
+
+kos:sourceKind a owl:ObjectProperty ;
+    rdfs:label "出典の種類"@ja ;
+    rdfs:comment "手順書（ManualSource）、現行法（CurrentLawSource）、推測（Speculation）のどれか。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range kos:SourceKind .
+
+kos:statedFather a owl:DatatypeProperty ;
+    rdfs:label "届書上の父"@ja ;
+    rdfs:comment "届書に記載された父の氏名。記載がなければ値を持たない。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:string .
+
+kos:statedRelationship a owl:DatatypeProperty ;
+    rdfs:label "届書の続き柄"@ja ;
+    rdfs:comment "届書に記載された父母との続き柄（嫡出子か否か、長男・長女など）。"@ja ;
+    rdfs:domain kos:BirthFiling ;
+    rdfs:range xsd:string .
+
+kos:stepNumber a owl:DatatypeProperty ;
+    rdfs:label "区分の番号"@ja ;
+    rdfs:comment "「1.受付」「2.審査」のように、区分の名称の先頭に付く番号。"@ja ;
+    rdfs:domain kos:ProcedureStep ;
+    rdfs:range xsd:integer .
+
+kos:summary a owl:DatatypeProperty ;
+    rdfs:label "内容の要約"@ja ;
+    rdfs:comment "その版の条文の内容の要約。"@ja ;
+    rdfs:domain kos:ProvisionVersion ;
+    rdfs:range rdf:langString .
+
+kos:underVersion a owl:ObjectProperty ;
+    rdfs:label "基づく法の版"@ja ;
+    rdfs:comment "ルールが前提とする条文の版。"@ja ;
+    rdfs:domain kos:JudgmentRule ;
+    rdfs:range kos:ProvisionVersion .
+
+kos:url a owl:DatatypeProperty ;
+    rdfs:label "URL"@ja ;
+    rdfs:comment "現行法の出典の URL（e-Gov など）。"@ja ;
+    rdfs:domain kos:SourceReference ;
+    rdfs:range xsd:anyURI .
+
+kos:validFrom a owl:DatatypeProperty ;
+    rdfs:label "施行日"@ja ;
+    rdfs:comment "この版が効力を持ち始めた日。"@ja ;
+    rdfs:domain kos:ProvisionVersion ;
+    rdfs:range xsd:date .
+
+kos:validUntil a owl:DatatypeProperty ;
+    rdfs:label "効力を失った日"@ja ;
+    rdfs:comment "この版が効力を失った日。現行の版には付けない。"@ja ;
+    rdfs:domain kos:ProvisionVersion ;
+    rdfs:range xsd:date .
+
+kos:versionStatus a owl:ObjectProperty ;
+    rdfs:label "版の種類"@ja ;
+    rdfs:comment "手順書の時点の版（Manual）、現行の版（Current）、効力を失った版（Repealed）のどれか。"@ja ;
+    rdfs:domain kos:ProvisionVersion ;
+    rdfs:range kos:VersionStatus .
+
+kos:CurrentTreatment a owl:Class ;
+    rdfs:label "現行法での扱い"@ja ;
+    rdfs:comment "手順書の記述の現行法での扱いを表す列挙クラス。個体は Valid、Changed、Obsolete。"@ja,
+        "推測：currentTreatment の値域になる列挙クラスが必要。必須概念に値域のクラスが含まれていないため補った。"@ja ;
+    kos:sourceKind kos:Speculation .
+
+kos:JudgmentOutcome a owl:Class ;
+    rdfs:label "判定の種類"@ja ;
+    rdfs:comment "判定ルールの結果の種類を表す列挙クラス。個体は Reject、NeedsCorrection、NeedsInquiry、AdditionalProcedure、Info。"@ja,
+        "推測：outcome の値域になる列挙クラスが必要。必須概念に値域のクラスが含まれていないため補った。"@ja ;
+    kos:sourceKind kos:Speculation .
+
+kos:ReviewCheck a owl:Class ;
+    rdfs:label "審査項目"@ja ;
+    rdfs:comment "受理や交付ができるかを確かめるために職員が判断する項目。例は「届出地に該当しているか」「届出期間内の届出か」「必要な添付書類は揃っているか」。備考欄に根拠条文が付くことが多い。"@ja ;
+    rdfs:subClassOf kos:StepItem .
+
+kos:ReviewStatus a owl:Class ;
+    rdfs:label "レビューの状態"@ja ;
+    rdfs:comment "LLM が生成した内容を人が確認したかを表す列挙クラス。個体は LlmDraft、HumanReviewed、HumanEdited。"@ja,
+        "推測：reviewStatus の値域になる列挙クラスが必要。必須概念に値域のクラスが含まれていないため補った。"@ja ;
+    kos:sourceKind kos:Speculation .
+
+kos:SourceKind a owl:Class ;
+    rdfs:label "出典の種類"@ja ;
+    rdfs:comment "出典がどこから来たかを表す列挙クラス。個体は ManualSource、CurrentLawSource、Speculation。Speculation は手順書にない推測を示す。"@ja,
+        "推測：sourceKind の値域になる列挙クラスが必要。必須概念に値域のクラスが含まれていないため補った。"@ja ;
+    kos:sourceKind kos:Speculation .
+
+kos:VersionStatus a owl:Class ;
+    rdfs:label "版の種類"@ja ;
+    rdfs:comment "推測：versionStatus の値域になる列挙クラスが必要。必須概念に値域のクラスが含まれていないため補った。"@ja,
+        "条文の版の種類を表す列挙クラス。個体は Manual、Current、Repealed。"@ja ;
+    kos:sourceKind kos:Speculation .
+
+kos:Business a owl:Class ;
+    rdfs:label "業務"@ja ;
+    rdfs:comment "手順書が扱う業務の単位。戸籍届出（出生・婚姻・離婚・死亡）と戸籍謄本等の交付の 5 つがあり、それぞれ複数の工程を持つ。"@ja .
+
+kos:Law a owl:Class ;
+    rdfs:label "法令"@ja ;
+    rdfs:comment "手順書の備考欄が挙げる法律・政令・省令・通知など。例は戸籍法、戸籍法施行規則、民法、住基法、母子保健法施行規則、人口動態調査令、法の適用に関する通則法、墓地、埋葬等に関する法律。法律番号を持つ。"@ja .
+
+kos:PartyRole a owl:Class ;
+    rdfs:label "関係者の種類"@ja ;
+    rdfs:comment "手続に関わる者の立場。例は届出事件本人、届出人（届出義務者・届出の資格を有する者）、来庁者、使者、請求者、代理人（法定代理人を含む）、公的機関、第三者、特定事務受任者（弁護士等）、証人、父母、妻、夫。"@ja .
+
+kos:DocumentType a owl:Class ;
+    rdfs:label "書類の種類"@ja ;
+    rdfs:comment "届出や請求で提出・確認・交付する書類の種類。例は出生届、出生証明書、母子健康手帳、婚姻届、要件具備証明書、本人確認書類、委任状、死亡診断書（死体検案書）、遅延理由書、交付請求書。"@ja .
+
+kos:LegalAmendment a owl:Class ;
+    rdfs:label "改正"@ja ;
+    rdfs:comment "条文を改める法改正。改正の対象の条文、施行日、改正後の版を結ぶ。例は女性の待婚期間（民法第733条）の廃止、成年年齢の引き下げに伴う未成年者の婚姻の父母の同意の不要化。"@ja .
+
+kos:RecordItem a owl:Class ;
+    rdfs:label "記載事項"@ja ;
+    rdfs:comment "届書や証明書に記載すべき事項。例は子の氏名、生まれたとき・ところ、父母との続き柄、母の生年月日、離婚後の復氏者の復籍先または新本籍、親権者の指定、証人の署名押印、死亡当時の配偶者の有無、出生時刻。"@ja .
+
+kos:Condition a owl:Class ;
+    rdfs:label "適用条件"@ja ;
+    rdfs:comment "項目や判定が当てはまる場面の条件。例は「非本籍地に届出がされた場合」「来庁者が請求者の代理人の場合」「協議離婚の場合」「裁判離婚の場合」「当事者が外国人のとき」「未成年者の場合」。"@ja .
+
+kos:Filing a owl:Class ;
+    rdfs:label "届出の事案"@ja ;
+    rdfs:comment "審査の対象となる 1 件の届出。届出日、届出を受けた市区町村、届出人、添付書類、記載のある事項などを持つ。各業務の事案クラスの上位クラス。"@ja .
+
+kos:Speculation a owl:NamedIndividual ;
+    rdfs:comment "kos:sourceKind の値"@ja .
+
+kos:DerivedValue a owl:Class ;
+    rdfs:label "派生値の定義"@ja ;
+    rdfs:comment "届出の事案の値から計算する値の定義。例は、婚姻から出生までの日数（200 日の判定用）、前婚の解消から出生までの日数（300 日の判定用）、届出期間の末日、出生時の母の年齢。期間の日数、初日算入、末日が休日の場合の扱い、計算に使う事案のプロパティを持つ。"@ja .
+
+kos:JudgmentRule a owl:Class ;
+    rdfs:label "判定ルール"@ja ;
+    rdfs:comment "審査項目を機械的に判定するルール。実体は SHACL シェイプなどで、判定する審査項目、基づく法の版、判定の種類（却下・補正・照会・追加手続・情報）を持つ。"@ja .
+
+kos:Organization a owl:Class ;
+    rdfs:label "機関"@ja ;
+    rdfs:comment "手続の相手先や関係先の機関。例は届出を受けた市区町村、本籍地市区町村、妻の従前本籍地市区町村、法務局（管轄法務局の長）、管轄簡易裁判所、国または地方公共団体の機関。"@ja .
+
+kos:ProvisionVersion a owl:Class ;
+    rdfs:label "条文の版"@ja ;
+    rdfs:comment "ある条文の、ある時期の内容。手順書が書かれた時点の版（Manual）、現行の版（Current）、効力を失った版（Repealed）を区別する。施行日と効力を失った日を持つ。"@ja .
+
+kos:LegalProvision a owl:Class ;
+    rdfs:label "条文"@ja ;
+    rdfs:comment "法令の条・項・号。「戸籍法第49条第3項」のように、法令・条・枝番・項・号で特定する。上位の条文（条に対する項など）を持てる。"@ja .
+
+kos:ProcedureStep a owl:Class ;
+    rdfs:label "工程"@ja ;
+    rdfs:comment "手順書の「区分」欄にある大きな段階。「1.受付」「2.審査」「3.システム登録」「4.照合・決裁」「5.本籍地市町村への届書類の送付等」「6.関連事務」「7.届書類の保存、法務局への送付」などで、番号と名称を持つ。"@ja .
+
+kos:SourceReference a owl:Class ;
+    rdfs:label "出典"@ja ;
+    rdfs:comment "あるノードの根拠となった資料上の位置。手順書ならば業務名・区分・PDF の頁・行 ID・原文の引用、現行法ならば e-Gov の URL・取得日・版の ID。生成に使ったモデルやプロンプトのハッシュ、確認者と確認日も記録できる。"@ja .
+
+kos:StepItem a owl:Class ;
+    rdfs:label "手順項目"@ja ;
+    rdfs:comment "工程の中にある個々の項目。「(1)」「①」「○」などの番号や記号で並び、入れ子になる。作業と審査項目の上位クラス。"@ja .
+
+kos:BirthFiling a owl:Class ;
+    rdfs:label "出生届の事案"@ja ;
+    rdfs:comment "出生届 1 件の審査対象。届書の記載（出生日・出生時刻・出生地・続き柄・父・届出人の資格）と、出生証明書の記載、父母の婚姻日や母の前婚の解消日など嫡出子判定や届出期間の判定に使う値を持つ。"@ja ;
+    rdfs:subClassOf kos:Filing .
+
