@@ -16,7 +16,7 @@
     kos:lawNumber "平成三十年法律第五十九号" ;
     kos:producesVersion <https://semantica-agent.example/koseki/id/law/minpo/art/731/version/2022-04-01>,
         <https://semantica-agent.example/koseki/id/law/minpo/art/737/version/2022-04-01> ;
-    kos:reviewStatus kos:LlmDraft .
+    kos:reviewStatus kos:HumanReviewed .
 
 <https://semantica-agent.example/koseki/id/amendment/R4-102> a kos:LegalAmendment ;
     rdfs:label "民法等の一部を改正する法律（嫡出推定・再婚禁止期間の見直し）"@ja ;
@@ -30,7 +30,7 @@
     kos:lawNumber "令和四年法律第百二号" ;
     kos:producesVersion <https://semantica-agent.example/koseki/id/law/minpo/art/733/version/2024-04-01>,
         <https://semantica-agent.example/koseki/id/law/minpo/art/772/version/2024-04-01> ;
-    kos:reviewStatus kos:LlmDraft .
+    kos:reviewStatus kos:HumanReviewed .
 
 <https://semantica-agent.example/koseki/id/amendment/R6-33> a kos:LegalAmendment ;
     rdfs:label "民法等の一部を改正する法律（離婚後の共同親権の導入）"@ja ;
@@ -44,7 +44,7 @@
     kos:lawNumber "令和六年法律第三十三号" ;
     kos:producesVersion <https://semantica-agent.example/koseki/id/law/minpo/art/765/version/2026-04-01>,
         <https://semantica-agent.example/koseki/id/law/minpo/art/819/version/2026-04-01> ;
-    kos:reviewStatus kos:LlmDraft .
+    kos:reviewStatus kos:HumanReviewed .
 
 <https://semantica-agent.example/koseki/id/birth/step/2/item/5> kos:currentTreatment kos:Changed ;
     kos:currentTreatmentNote "嫡出子か否かの判断の根拠が民法772条の改正で変わった。婚姻前に懐胎し、婚姻成立後に生まれた子も夫の子と推定される。婚姻成立の日から二百日以内に生まれた子は婚姻前の懐胎、二百日を経過した後または婚姻解消もしくは取消しの日から三百日以内に生まれた子は婚姻中の懐胎と推定される。二以上の婚姻があるときは直近の婚姻の夫の子と推定される。手順書の判断基準は現行条文で読み替える必要がある。"@ja .
@@ -61,7 +61,7 @@
     kos:hasSource <https://semantica-agent.example/koseki/id/source/egov/chiho-jichi-ho-4-2>,
         <https://semantica-agent.example/koseki/id/source/egov/koseki-ho-49> ;
     kos:periodDays 14 ;
-    kos:reviewStatus kos:HumanEdited .
+    kos:reviewStatus kos:HumanReviewed .
 
 <https://semantica-agent.example/koseki/id/divorce/step/2/item/5.1> kos:currentTreatment kos:Valid ;
     kos:currentTreatmentNote "提示した現行の条文（民法765条）からは、離婚意思の合致や不受理申出の確認が変わったとは読み取れない。ただし民法765条は改正対象で、旧条文との差分は確かめていない。要確認。"@ja .
@@ -142,6 +142,8 @@
     kos:fetchedDate "2026-11-16"^^xsd:date ;
     kos:quote "出生の届出は、十四日以内（国外で出生があつたときは、三箇月以内）にこれをしなければならない。"@ja ;
     kos:reviewStatus kos:LlmDraft ;
+    kos:reviewedDate "2026-11-16"^^xsd:date ;
+    kos:reviewer "kento.nasu" ;
     kos:revisionId "322AC0000000224_20260903_508AC0000000027" ;
     kos:sourceKind kos:CurrentLawSource ;
     kos:url "https://laws.e-gov.go.jp/law/322AC0000000224"^^xsd:anyURI .
@@ -150,7 +152,7 @@
     dcterms:identifier "LAW-MINPO-731-V20220401" ;
     prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
     kos:hasSource <https://semantica-agent.example/koseki/id/source/egov/minpo-731> ;
-    kos:reviewStatus kos:LlmDraft ;
+    kos:reviewStatus kos:HumanReviewed ;
     kos:summary "婚姻適齢は十八歳である。年齢の条件は十八歳に達しているかどうかだけになった。"@ja ;
     kos:validFrom "2022-04-01"^^xsd:date ;
     kos:versionStatus kos:Current .
@@ -159,7 +161,7 @@
     dcterms:identifier "LAW-MINPO-733-V20240401" ;
     prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
     kos:hasSource <https://semantica-agent.example/koseki/id/source/egov/minpo-733> ;
-    kos:reviewStatus kos:LlmDraft ;
+    kos:reviewStatus kos:HumanReviewed ;
     kos:summary "条文が削除された。現行の条文には、女性の再婚禁止期間（待婚期間）の定めがない。"@ja ;
     kos:validFrom "2024-04-01"^^xsd:date ;
     kos:versionStatus kos:Repealed .
@@ -168,7 +170,7 @@
     dcterms:identifier "LAW-MINPO-737-V20220401" ;
     prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
     kos:hasSource <https://semantica-agent.example/koseki/id/source/egov/minpo-737> ;
-    kos:reviewStatus kos:LlmDraft ;
+    kos:reviewStatus kos:HumanReviewed ;
     kos:summary "条文が削除された。現行の条文には、未成年者の婚姻に父母の同意を求める定めがない。"@ja ;
     kos:validFrom "2022-04-01"^^xsd:date ;
     kos:versionStatus kos:Repealed .
@@ -177,7 +179,7 @@
     dcterms:identifier "LAW-MINPO-765-V20260401" ;
     prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
     kos:hasSource <https://semantica-agent.example/koseki/id/source/egov/minpo-765> ;
-    kos:reviewStatus kos:LlmDraft ;
+    kos:reviewStatus kos:HumanReviewed ;
     kos:summary "夫婦間に成年に達しない子がある場合、親権者の定めがあること、または親権者の指定を求める家事審判もしくは家事調停の申立てがあることを認めた後でなければ、離婚の届出を受理できない。"@ja ;
     kos:validFrom "2026-04-01"^^xsd:date ;
     kos:versionStatus kos:Current .
@@ -186,7 +188,7 @@
     dcterms:identifier "LAW-MINPO-772-V20240401" ;
     prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
     kos:hasSource <https://semantica-agent.example/koseki/id/source/egov/minpo-772> ;
-    kos:reviewStatus kos:LlmDraft ;
+    kos:reviewStatus kos:HumanReviewed ;
     kos:summary "婚姻前に懐胎し、婚姻成立後に生まれた子も夫の子と推定される。婚姻成立の日から二百日以内に生まれた子は婚姻前の懐胎、二百日を経過した後または婚姻の解消もしくは取消しの日から三百日以内に生まれた子は婚姻中の懐胎と推定される。懐胎から出生までに二以上の婚姻があるときは、直近の婚姻の夫の子と推定される。"@ja ;
     kos:validFrom "2024-04-01"^^xsd:date ;
     kos:versionStatus kos:Current .
@@ -195,7 +197,7 @@
     dcterms:identifier "LAW-MINPO-819-V20260401" ;
     prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
     kos:hasSource <https://semantica-agent.example/koseki/id/source/egov/minpo-819> ;
-    kos:reviewStatus kos:LlmDraft ;
+    kos:reviewStatus kos:HumanReviewed ;
     kos:summary "協議離婚では、協議で父母の双方または一方を親権者と定める。裁判上の離婚では、裁判所が父母の双方または一方を親権者と定める。"@ja ;
     kos:validFrom "2026-04-01"^^xsd:date ;
     kos:versionStatus kos:Current .
@@ -207,6 +209,8 @@
     kos:fetchedDate "2026-11-16"^^xsd:date ;
     kos:quote "婚姻は、十八歳にならなければ、することができない。"@ja ;
     kos:reviewStatus kos:LlmDraft ;
+    kos:reviewedDate "2026-11-16"^^xsd:date ;
+    kos:reviewer "kento.nasu" ;
     kos:revisionId "129AC0000000089_20260624_508AC0000000045" ;
     kos:sourceKind kos:CurrentLawSource ;
     kos:url "https://laws.e-gov.go.jp/law/129AC0000000089"^^xsd:anyURI .
@@ -218,6 +222,8 @@
     kos:fetchedDate "2026-11-16"^^xsd:date ;
     kos:quote "削除"@ja ;
     kos:reviewStatus kos:LlmDraft ;
+    kos:reviewedDate "2026-11-16"^^xsd:date ;
+    kos:reviewer "kento.nasu" ;
     kos:revisionId "129AC0000000089_20260624_508AC0000000045" ;
     kos:sourceKind kos:CurrentLawSource ;
     kos:url "https://laws.e-gov.go.jp/law/129AC0000000089"^^xsd:anyURI .
@@ -229,6 +235,8 @@
     kos:fetchedDate "2026-11-16"^^xsd:date ;
     kos:quote "削除"@ja ;
     kos:reviewStatus kos:LlmDraft ;
+    kos:reviewedDate "2026-11-16"^^xsd:date ;
+    kos:reviewer "kento.nasu" ;
     kos:revisionId "129AC0000000089_20260624_508AC0000000045" ;
     kos:sourceKind kos:CurrentLawSource ;
     kos:url "https://laws.e-gov.go.jp/law/129AC0000000089"^^xsd:anyURI .
@@ -240,6 +248,8 @@
     kos:fetchedDate "2026-11-16"^^xsd:date ;
     kos:quote "夫婦間に成年に達しない子がある場合には次の各号のいずれかに該当することを認めた後でなければ、受理することができない。一親権者の定めがされていること。二親権者の指定を求める家事審判又は家事調停の申立てがされていること。"@ja ;
     kos:reviewStatus kos:LlmDraft ;
+    kos:reviewedDate "2026-11-16"^^xsd:date ;
+    kos:reviewer "kento.nasu" ;
     kos:revisionId "129AC0000000089_20260624_508AC0000000045" ;
     kos:sourceKind kos:CurrentLawSource ;
     kos:url "https://laws.e-gov.go.jp/law/129AC0000000089"^^xsd:anyURI .
@@ -251,6 +261,8 @@
     kos:fetchedDate "2026-11-16"^^xsd:date ;
     kos:quote "婚姻の成立の日から二百日以内に生まれた子は、婚姻前に懐胎したものと推定し、婚姻の成立の日から二百日を経過した後又は婚姻の解消若しくは取消しの日から三百日以内に生まれた子は、婚姻中に懐胎したものと推定する。"@ja ;
     kos:reviewStatus kos:LlmDraft ;
+    kos:reviewedDate "2026-11-16"^^xsd:date ;
+    kos:reviewer "kento.nasu" ;
     kos:revisionId "129AC0000000089_20260624_508AC0000000045" ;
     kos:sourceKind kos:CurrentLawSource ;
     kos:url "https://laws.e-gov.go.jp/law/129AC0000000089"^^xsd:anyURI .
@@ -262,6 +274,8 @@
     kos:fetchedDate "2026-11-16"^^xsd:date ;
     kos:quote "父母が協議上の離婚をするときは、その協議で、その双方又は一方を親権者と定める。"@ja ;
     kos:reviewStatus kos:LlmDraft ;
+    kos:reviewedDate "2026-11-16"^^xsd:date ;
+    kos:reviewer "kento.nasu" ;
     kos:revisionId "129AC0000000089_20260624_508AC0000000045" ;
     kos:sourceKind kos:CurrentLawSource ;
     kos:url "https://laws.e-gov.go.jp/law/129AC0000000089"^^xsd:anyURI .
@@ -272,6 +286,8 @@
     kos:fetchedDate "2026-11-16"^^xsd:date ;
     kos:quote "地方公共団体の行政庁に対する申請、届出その他の行為の期限で法律又は法律に基づく命令で規定する期間（時をもつて定める期間を除く。）をもつて定めるものが第一項の規定に基づき条例で定められた地方公共団体の休日に当たるときは、地方公共団体の休日の翌日をもつてその期限とみなす。"@ja ;
     kos:reviewStatus kos:HumanEdited ;
+    kos:reviewedDate "2026-11-16"^^xsd:date ;
+    kos:reviewer "kento.nasu" ;
     kos:revisionId "322AC0000000067_20261102_508AC0000000062" ;
     kos:sourceKind kos:CurrentLawSource ;
     kos:url "https://laws.e-gov.go.jp/law/322AC0000000067"^^xsd:anyURI .
