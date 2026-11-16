@@ -121,3 +121,8 @@ def test_rules_prompt_contains_rule_table_and_versions():
 
 def test_integrity_prompt_contains_schema():
     assert "SCHEMA" in build_integrity_prompt("SCHEMA")
+
+
+def test_rules_without_cited_law_do_not_require_version():
+    specs = {r.id: r for r in RULE_TABLE}
+    assert specs["B6"].version is None and specs["B7"].version is None

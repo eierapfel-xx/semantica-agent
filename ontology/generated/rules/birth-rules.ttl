@@ -1,0 +1,504 @@
+@prefix kos: <https://semantica-agent.example/koseki/schema#> .
+@prefix kd: <https://semantica-agent.example/koseki/id/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+kd:prefixes a owl:Ontology ;
+  sh:declare [ sh:prefix "kos" ; sh:namespace "https://semantica-agent.example/koseki/schema#"^^xsd:anyURI ] ,
+             [ sh:prefix "kd" ; sh:namespace "https://semantica-agent.example/koseki/id/"^^xsd:anyURI ] ,
+             [ sh:prefix "xsd" ; sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ] .
+
+# ============================================================
+# B1 届出地
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/filing-place>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-FILING-PLACE" ;
+  rdfs:label "届出地が本籍地・届出人の所在地・出生地のいずれでもない"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/1> ;
+  kos:outcome kos:Reject ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/filing-place> ;
+  kos:underVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/25/version/manual> ,
+                   <https://semantica-agent.example/koseki/id/law/koseki-ho/art/51/version/manual> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/filing-place>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Violation ;
+  sh:message "届出地が、本籍地・届出人の所在地・出生地のいずれにも該当しないため受理できない（戸籍法25条・51条）。"@ja ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:select """
+      SELECT $this WHERE {
+        $this kos:filingMunicipality ?fm .
+        OPTIONAL { $this kos:honsekiMunicipality ?hm }
+        OPTIONAL { $this kos:notifierMunicipality ?nm }
+        OPTIONAL { $this kos:birthPlaceMunicipality ?pm }
+        OPTIONAL { $this kos:childBirthDate ?bd }
+        FILTER ( BOUND(?hm) || BOUND(?nm) || BOUND(?pm) )
+        FILTER ( !COALESCE(?fm = ?hm, false) && !COALESCE(?fm = ?nm, false) && !COALESCE(?fm = ?pm, false) )
+        FILTER EXISTS {
+          <https://semantica-agent.example/koseki/id/rule/birth/filing-place> kos:underVersion ?ver .
+          OPTIONAL { ?ver kos:validFrom ?vf }
+          OPTIONAL { ?ver kos:validUntil ?vu }
+          FILTER ( (!BOUND(?vf) || (BOUND(?bd) && ?bd >= ?vf)) && (!BOUND(?vu) || (BOUND(?bd) && ?bd < ?vu)) )
+        }
+      }
+    """
+  ] .
+
+# ============================================================
+# B2 届出人の資格
+# ※ PartyRole は rdfs:label @ja（父・母・同居者・医師・助産師・その他の立会者）で識別する仮定。
+#   実インスタンスのラベルと突き合わせて要確認。
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/notifier>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-NOTIFIER" ;
+  rdfs:label "届出人が届出義務者・届出資格者に入らない"@ja ;
+  rdfs:comment "届出人の資格（PartyRole）を日本語ラベルで判定する。嫡出でない子の出生届では父は届出人になれない。ラベルの対応は要確認。"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/2> ;
+  kos:outcome kos:Reject ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/notifier> ;
+  kos:underVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/52/para/1/version/manual> ,
+                   <https://semantica-agent.example/koseki/id/law/koseki-ho/art/52/para/2/version/manual> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/notifier>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Violation ;
+  sh:message "届出人の資格が、嫡出か否かに応じた届出義務者・届出資格者に該当しないため受理できない（戸籍法52条）。"@ja ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:select """
+      SELECT $this WHERE {
+        $this kos:notifierRole ?role ;
+              kos:statedRelationship ?rel .
+        ?role <http://www.w3.org/2000/01/rdf-schema#label> ?rl .
+        FILTER ( LANG(?rl) = "ja" )
+        OPTIONAL { $this kos:childBirthDate ?bd }
+        BIND ( CONTAINS(STR(?rel), "嫡出でない") || REGEX(STR(?rel), "^[男女]$") AS ?non )
+        BIND ( ( !?non && REGEX(STR(?rel), "[男女]$|嫡出子") ) AS ?leg )
+        FILTER (
+          ( ?leg && !( STR(?rl) IN ("父", "母", "同居者", "医師", "助産師", "その他の立会者") ) ) ||
+          ( ?non && !( STR(?rl) IN ("母", "同居者", "医師", "助産師", "その他の立会者") ) )
+        )
+        FILTER EXISTS {
+          <https://semantica-agent.example/koseki/id/rule/birth/notifier> kos:underVersion ?ver .
+          OPTIONAL { ?ver kos:validFrom ?vf }
+          OPTIONAL { ?ver kos:validUntil ?vu }
+          FILTER ( (!BOUND(?vf) || (BOUND(?bd) && ?bd >= ?vf)) && (!BOUND(?vu) || (BOUND(?bd) && ?bd < ?vu)) )
+        }
+      }
+    """
+  ] .
+
+# ============================================================
+# B3 出生証明書
+# ※ DocumentType は rdfs:label @ja "出生証明書" で識別する仮定。
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/birth-certificate>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-BIRTH-CERTIFICATE" ;
+  rdfs:label "出生証明書が添付されていない"@ja ;
+  rdfs:comment "書類の種類は日本語ラベル「出生証明書」で識別する。ラベルは要確認。"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/3> ;
+  kos:outcome kos:NeedsInquiry ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/birth-certificate> ;
+  kos:underVersion <https://semantica-agent.example/koseki/id/law/koseki-ho/art/49/para/3/version/manual> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/birth-certificate>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Warning ;
+  sh:message "出生証明書が添付されていない。法務局へ受理照会が要る（戸籍法49条3項）。"@ja ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:select """
+      SELECT $this WHERE {
+        $this a kos:BirthFiling .
+        OPTIONAL {
+          $this kos:attachedDocument ?doc .
+          ?doc <http://www.w3.org/2000/01/rdf-schema#label> ?dl .
+          FILTER ( LANG(?dl) = "ja" && STR(?dl) = "出生証明書" )
+        }
+        OPTIONAL { $this kos:childBirthDate ?bd }
+        FILTER ( !BOUND(?doc) )
+        FILTER EXISTS {
+          <https://semantica-agent.example/koseki/id/rule/birth/birth-certificate> kos:underVersion ?ver .
+          OPTIONAL { ?ver kos:validFrom ?vf }
+          OPTIONAL { ?ver kos:validUntil ?vu }
+          FILTER ( (!BOUND(?vf) || (BOUND(?bd) && ?bd >= ?vf)) && (!BOUND(?vu) || (BOUND(?bd) && ?bd < ?vu)) )
+        }
+      }
+    """
+  ] .
+
+# ============================================================
+# B4a 続き柄・嫡出子（手順書の基準）
+# 手順書の基準：推定される嫡出子＝婚姻後200日以上 または 前婚解消後300日以内。
+# 0日以上200日未満は推定されない嫡出子として、嫡出子の届出を認める（嫡出でない子の届出も妨げない）。
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/legitimacy-manual>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-LEGITIMACY-MANUAL" ;
+  rdfs:label "続き柄・嫡出子か（手順書の基準）"@ja ;
+  rdfs:comment "民法772条の手順書時点の版。2024-03-31 以前の出生にだけ適用される。届書の続き柄が、派生値（婚姻後日数・前婚解消後日数）から導く嫡出・嫡出でないの区別と合うかを見る。父欄との照合は、夫の特定に必要な値が事案に無いため含めない。"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/5> ,
+                      <https://semantica-agent.example/koseki/id/birth/step/2/item/5.3> ,
+                      <https://semantica-agent.example/koseki/id/birth/step/2/item/5.4> ;
+  kos:outcome kos:NeedsCorrection ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/legitimacy-manual> ;
+  kos:underVersion <https://semantica-agent.example/koseki/id/law/minpo/art/772/version/manual> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/legitimacy-manual>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Violation ;
+  sh:message "届書の続き柄が、手順書の基準（婚姻後200日以上・前婚解消後300日以内で嫡出推定）による嫡出・嫡出でないの区別と合わない。補正が要る（民法772条の手順書時点の版）。"@ja ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:select """
+      SELECT $this WHERE {
+        $this kos:statedRelationship ?rel ;
+              kos:childBirthDate ?bd .
+        OPTIONAL { $this kos:daysFromMarriageToBirth ?dm }
+        OPTIONAL { $this kos:daysFromPrevMarriageEndToBirth ?dp }
+        BIND ( ( CONTAINS(STR(?rel), "嫡出でない") || REGEX(STR(?rel), "^[男女]$") ) AS ?non )
+        BIND ( ( !?non && REGEX(STR(?rel), "[男女]$|嫡出子") ) AS ?leg )
+        BIND ( COALESCE(?dp >= 0 && ?dp <= 300, false) AS ?pw )
+        BIND ( ( COALESCE(?dm >= 200, false) || ?pw ) AS ?presumed )
+        BIND ( ( COALESCE(?dm >= 0, false) || ?pw ) AS ?allowedLegit )
+        FILTER ( ( ?non && ?presumed ) || ( ?leg && !?allowedLegit ) )
+        FILTER EXISTS {
+          <https://semantica-agent.example/koseki/id/rule/birth/legitimacy-manual> kos:underVersion ?ver .
+          OPTIONAL { ?ver kos:validFrom ?vf }
+          OPTIONAL { ?ver kos:validUntil ?vu }
+          FILTER ( (!BOUND(?vf) || (BOUND(?bd) && ?bd >= ?vf)) && (!BOUND(?vu) || (BOUND(?bd) && ?bd < ?vu)) )
+        }
+      }
+    """
+  ] .
+
+# ============================================================
+# B4b 続き柄・嫡出子（現行の基準）
+# 現行：婚姻中の出生は夫の子と推定。前婚解消後300日以内でも、出生までに母が再婚していれば再婚後の夫の子と推定。
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/legitimacy-current>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-LEGITIMACY-CURRENT" ;
+  rdfs:label "続き柄・嫡出子か（現行の基準）"@ja ;
+  rdfs:comment "民法772条の 2024-04-01 の版。2024-04-01 以後の出生にだけ適用される。"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/5> ;
+  kos:outcome kos:NeedsCorrection ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/legitimacy-current> ;
+  kos:underVersion <https://semantica-agent.example/koseki/id/law/minpo/art/772/version/2024-04-01> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/legitimacy-current>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Violation ;
+  sh:message "届書の続き柄が、現行の基準（婚姻中の出生は夫の子と推定。前婚解消後300日以内でも再婚していれば再婚後の夫の子と推定）による嫡出・嫡出でないの区別と合わない。補正が要る（民法772条の2024-04-01の版）。"@ja ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:select """
+      SELECT $this WHERE {
+        $this kos:statedRelationship ?rel ;
+              kos:childBirthDate ?bd .
+        OPTIONAL { $this kos:daysFromMarriageToBirth ?dm }
+        OPTIONAL { $this kos:daysFromPrevMarriageEndToBirth ?dp }
+        OPTIONAL { $this kos:motherRemarriedBeforeBirth ?rm }
+        BIND ( ( CONTAINS(STR(?rel), "嫡出でない") || REGEX(STR(?rel), "^[男女]$") ) AS ?non )
+        BIND ( ( !?non && REGEX(STR(?rel), "[男女]$|嫡出子") ) AS ?leg )
+        BIND ( COALESCE(?dp >= 0 && ?dp <= 300, false) AS ?pw )
+        BIND ( ( COALESCE(?dm >= 0, false) || ( ?pw && !COALESCE(?rm, false) ) ) AS ?presumed )
+        FILTER ( ( ?non && ?presumed ) || ( ?leg && !?presumed ) )
+        FILTER EXISTS {
+          <https://semantica-agent.example/koseki/id/rule/birth/legitimacy-current> kos:underVersion ?ver .
+          OPTIONAL { ?ver kos:validFrom ?vf }
+          OPTIONAL { ?ver kos:validUntil ?vu }
+          FILTER ( (!BOUND(?vf) || (BOUND(?bd) && ?bd >= ?vf)) && (!BOUND(?vu) || (BOUND(?bd) && ?bd < ?vu)) )
+        }
+      }
+    """
+  ] .
+
+# ============================================================
+# B4c 手順書と現行の結論の違い（参考）
+# 結論：legit（嫡出子として届出）／free（嫡出・嫡出でないのどちらも可）／non（嫡出でない子）
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/legitimacy-diff>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-LEGITIMACY-DIFF" ;
+  rdfs:label "手順書と現行で嫡出の結論が違う"@ja ;
+  rdfs:comment "2024-04-01 以後の出生で、手順書の基準と現行の基準の結論が違うときに知らせる。切替日は民法772条の2024-04-01の版の施行日をオントロジーから引く。"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/5> ;
+  kos:outcome kos:Info ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/legitimacy-diff> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/legitimacy-diff>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Info ;
+  sh:message "手順書の基準と現行の基準で嫡出の結論が違う。手順書の記述は古い可能性があるので、現行の基準で確認すること（民法772条、2024-04-01 施行）。"@ja ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:select """
+      SELECT $this WHERE {
+        $this kos:childBirthDate ?bd .
+        <https://semantica-agent.example/koseki/id/law/minpo/art/772/version/2024-04-01> kos:validFrom ?cut .
+        FILTER ( ?bd >= ?cut )
+        OPTIONAL { $this kos:daysFromMarriageToBirth ?dm }
+        OPTIONAL { $this kos:daysFromPrevMarriageEndToBirth ?dp }
+        OPTIONAL { $this kos:motherRemarriedBeforeBirth ?rm }
+        BIND ( COALESCE(?dp >= 0 && ?dp <= 300, false) AS ?pw )
+        BIND ( COALESCE(?dm >= 0, false) AS ?mar )
+        BIND ( IF( COALESCE(?dm >= 200, false) || ?pw, "legit", IF(?mar, "free", "non") ) AS ?man )
+        BIND ( IF( ?mar || ( ?pw && !COALESCE(?rm, false) ), "legit", "non" ) AS ?cur )
+        FILTER ( ?man != ?cur )
+      }
+    """
+  ] .
+
+# ============================================================
+# B5 出生日時・場所の一致
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/birth-record-match>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-BIRTH-RECORD-MATCH" ;
+  rdfs:label "届書と出生証明書で出生の日・時刻・場所が違う"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/6> ;
+  kos:outcome kos:NeedsCorrection ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/birth-record-match> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/birth-record-match>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Violation ;
+  sh:message "届書の出生の日・時刻・場所が、出生証明書の記載と一致しない。補正が要る。"@ja ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:select """
+      SELECT DISTINCT $this WHERE {
+        {
+          $this kos:childBirthDate ?a ; kos:certBirthDate ?b .
+          FILTER ( STR(?a) != STR(?b) )
+        } UNION {
+          $this kos:childBirthTime ?a ; kos:certBirthTime ?b .
+          FILTER ( STR(?a) != STR(?b) )
+        } UNION {
+          $this kos:birthPlaceMunicipality ?a ; kos:certBirthPlace ?b .
+          FILTER ( STR(?a) != STR(?b) )
+        }
+      }
+    """
+  ] .
+
+# ============================================================
+# B6 学齢に達した子
+# ※ implementsCheck 先の BIRTH-S2-I7 は種類が Task（手順書に対応する ReviewCheck が無い）。
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/school-age>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-SCHOOL-AGE" ;
+  rdfs:label "学齢（満6歳）以上の子の出生届"@ja ;
+  rdfs:comment "対応する手順項目 BIRTH-S2-I7 は Task。根拠条文が手順書に無いため underVersion は付けない。"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/7> ;
+  kos:outcome kos:NeedsInquiry ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/school-age> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/school-age>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Warning ;
+  sh:message "届出時の子が学齢（満6歳）以上である。法務局へ受理照会が要る。"@ja ;
+  sh:property [
+    sh:path kos:childAgeAtFiling ;
+    sh:maxInclusive 5 ;
+    sh:severity sh:Warning ;
+    sh:message "届出時の子が学齢（満6歳）以上である。法務局へ受理照会が要る。"@ja
+  ] .
+
+# ============================================================
+# B7 母の年齢
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/mother-age>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-MOTHER-AGE" ;
+  rdfs:label "出生時の母の年齢が50歳以上"@ja ;
+  rdfs:comment "BIRTH-S2-I9 は Task。手順書は「照会するケースがある」とするため、確認を促す警告にとどめる。根拠条文が手順書に無いため underVersion は付けない。"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/8> ,
+                      <https://semantica-agent.example/koseki/id/birth/step/2/item/9> ;
+  kos:outcome kos:NeedsInquiry ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/mother-age> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/mother-age>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Warning ;
+  sh:message "出生時の母の年齢が50歳以上である。法務局への受理照会の対象になりうる。"@ja ;
+  sh:property [
+    sh:path kos:motherAgeAtBirth ;
+    sh:maxInclusive 49 ;
+    sh:severity sh:Warning ;
+    sh:message "出生時の母の年齢が50歳以上である。法務局への受理照会の対象になりうる。"@ja
+  ] .
+
+# ============================================================
+# B8 入る戸籍
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/family-register>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-FAMILY-REGISTER" ;
+  rdfs:label "入る戸籍が存在しない"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/10> ;
+  kos:outcome kos:Reject ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/family-register> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/family-register>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Violation ;
+  sh:message "子が入る戸籍（父母又は母の戸籍）が存在しないため受理できない。"@ja ;
+  sh:property [
+    sh:path kos:familyRegisterExists ;
+    sh:in ( true ) ;
+    sh:severity sh:Violation ;
+    sh:message "子が入る戸籍（父母又は母の戸籍）が存在しないため受理できない。"@ja
+  ] .
+
+# ============================================================
+# B9 届出期間
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/filing-period>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-FILING-PERIOD" ;
+  rdfs:label "届出期間を過ぎた届出"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/11> ,
+                      <https://semantica-agent.example/koseki/id/birth/step/2/item/12> ;
+  kos:outcome kos:AdditionalProcedure ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/filing-period> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/filing-period>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Warning ;
+  sh:message "届出期間を過ぎている。受理はできるが、遅延理由書の提出を求め、管轄の簡易裁判所へ通知する。"@ja ;
+  sh:property [
+    sh:path kos:daysLate ;
+    sh:maxInclusive 0 ;
+    sh:severity sh:Warning ;
+    sh:message "届出期間を過ぎている。受理はできるが、遅延理由書の提出を求め、管轄の簡易裁判所へ通知する。"@ja
+  ] .
+
+# ============================================================
+# B10 住所
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/address>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-ADDRESS" ;
+  rdfs:label "住所が存在する場所でない"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/2/item/13> ;
+  kos:outcome kos:NeedsCorrection ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/address> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/address>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Violation ;
+  sh:message "届書の住所が存在する場所として確認できない。補正が要る。"@ja ;
+  sh:property [
+    sh:path kos:addressExists ;
+    sh:in ( true ) ;
+    sh:severity sh:Violation ;
+    sh:message "届書の住所が存在する場所として確認できない。補正が要る。"@ja
+  ] .
+
+# ============================================================
+# B11 記入漏れ
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/record-items>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-RECORD-ITEMS" ;
+  rdfs:label "必要な記載事項の記入漏れ"@ja ;
+  rdfs:comment "出生の手順項目（IRI が birth/ で始まるもの）の kos:requiresRecordItem のうち、事案の kos:recordedItem に無いものを列挙する。"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/1/item/2.1> ;
+  kos:outcome kos:NeedsCorrection ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/record-items> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/record-items>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Violation ;
+  sh:message "必要な記載事項 {?value} の記載が無い。補正が要る。"@ja ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:select """
+      SELECT DISTINCT $this ?value WHERE {
+        $this a kos:BirthFiling .
+        ?step kos:requiresRecordItem ?value .
+        FILTER ( STRSTARTS(STR(?step), "https://semantica-agent.example/koseki/id/birth/") )
+        OPTIONAL {
+          $this kos:recordedItem ?r .
+          FILTER ( ?r = ?value )
+        }
+        FILTER ( !BOUND(?r) )
+      }
+    """
+  ] .
+
+# ============================================================
+# B12 非本籍地での届出
+# ※ BIRTH-S1-I3 は Task（手順書に対応する ReviewCheck が無い）。工程5の BIRTH-S5-I1 は StepItem。
+# ============================================================
+<https://semantica-agent.example/koseki/id/rule/birth/non-honseki>
+  a kos:JudgmentRule ;
+  dcterms:identifier "RULE-BIRTH-NON-HONSEKI" ;
+  rdfs:label "非本籍地での届出"@ja ;
+  rdfs:comment "対応する手順項目 BIRTH-S1-I3 は Task。工程5（BIRTH-S5-I1.1）の本籍地への送付にもつながる。"@ja ;
+  kos:implementsCheck <https://semantica-agent.example/koseki/id/birth/step/1/item/3> ;
+  kos:outcome kos:AdditionalProcedure ;
+  kos:shape <https://semantica-agent.example/koseki/id/shape/birth/non-honseki> ;
+  kos:reviewStatus kos:LlmDraft .
+
+<https://semantica-agent.example/koseki/id/shape/birth/non-honseki>
+  a sh:NodeShape ;
+  sh:targetClass kos:BirthFiling ;
+  sh:severity sh:Warning ;
+  sh:message "届出地が本籍地でない。受理はできるが、本籍地の市区町村への公用請求（戸籍謄本等の入手）と、本籍地への通知資料の送付が要る。"@ja ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes kd:prefixes ;
+    sh:select """
+      SELECT $this WHERE {
+        $this kos:filingMunicipality ?fm ;
+              kos:honsekiMunicipality ?hm .
+        FILTER ( ?fm != ?hm )
+      }
+    """
+  ] .

@@ -94,7 +94,7 @@ RULE_TABLE: tuple[RuleSpec, ...] = (
         "学齢に達した子の出生届",
         "childAgeAtFiling が学齢（満6歳）以上 → 法務局へ受理照会",
         "NeedsInquiry",
-        "手順書時点",
+        None,  # 手順書に根拠条文が無い
     ),
     RuleSpec(
         "B7",
@@ -102,7 +102,7 @@ RULE_TABLE: tuple[RuleSpec, ...] = (
         "母の生年月日（50歳以上）",
         "motherAgeAtBirth が 50 以上 → 照会の対象になりうる",
         "NeedsInquiry",
-        "手順書時点",
+        None,  # 手順書に根拠条文が無い
     ),
     RuleSpec(
         "B8",

@@ -39,6 +39,11 @@
     prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/amendments-20261116140753> ;
     kos:sha256 "4911c959da1bea757f2434b14a38814d8c8b5bfcf4eee708aaa08188e1082713" .
 
+<https://semantica-agent.example/koseki/id/artifact/5613aaf9f92324261d93342f776e2db71e7f828c91850048b34c3884eccaf27c> a prov:Entity ;
+    rdfs:label "/home/eiera/work/ontology/semantica-agent/ontology/generated/rules/birth-rules.ttl" ;
+    prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/rules-20261116142607> ;
+    kos:sha256 "5613aaf9f92324261d93342f776e2db71e7f828c91850048b34c3884eccaf27c" .
+
 <https://semantica-agent.example/koseki/id/artifact/79db6cceb87395ecc44b325c111d130d2504237d7455edbfcac6a7dde2d38203> a prov:Entity ;
     rdfs:label "/home/eiera/work/ontology/semantica-agent/ontology/generated/instances/marriage.ttl" ;
     prov:wasGeneratedBy <https://semantica-agent.example/koseki/id/activity/instances-20261116140549> ;
@@ -124,6 +129,16 @@
     kos:model "claude-sonnet-5-5" ;
     kos:promptSha256 "914bc805c6ce4d6c15f9398b4e95891c9efbe8207e2f46a001cd695670e5473b" .
 
+<https://semantica-agent.example/koseki/id/activity/rules-20261116142607> a prov:Activity ;
+    rdfs:label "rules" ;
+    dcterms:identifier "rules-20261116142607" ;
+    prov:endedAtTime "2026-11-16T14:28:58.721069+00:00"^^xsd:dateTime ;
+    prov:startedAtTime "2026-11-16T14:26:07.882873+00:00"^^xsd:dateTime ;
+    prov:used <https://semantica-agent.example/koseki/id/artifact/2a75bc8ce4e292710f50cf3ab887a151addc1afc7107086df53af17b4f42ce4f>,
+        <https://semantica-agent.example/koseki/id/artifact/39c7c2848fd6f7e96bd337e1ab27b7a9bacba4377a0c68e1977797c7f8052196> ;
+    kos:model "claude-sonnet-5-5" ;
+    kos:promptSha256 "2a75bc8ce4e292710f50cf3ab887a151addc1afc7107086df53af17b4f42ce4f" .
+
 <https://semantica-agent.example/koseki/id/activity/schema-20261116135340> a prov:Activity ;
     rdfs:label "schema" ;
     dcterms:identifier "schema-20261116135340" ;
@@ -144,6 +159,14 @@
         10,
         11 ;
     kos:promptSha256 "95168bc70e3eb24e0134676825154e33e6cfed767ad0648536475f10ed8245d1" .
+
+<https://semantica-agent.example/koseki/id/artifact/2a75bc8ce4e292710f50cf3ab887a151addc1afc7107086df53af17b4f42ce4f> a prov:Entity ;
+    rdfs:label "/home/eiera/work/ontology/semantica-agent/src/semantica_agent/prompts/rules.md" ;
+    kos:sha256 "2a75bc8ce4e292710f50cf3ab887a151addc1afc7107086df53af17b4f42ce4f" .
+
+<https://semantica-agent.example/koseki/id/artifact/39c7c2848fd6f7e96bd337e1ab27b7a9bacba4377a0c68e1977797c7f8052196> a prov:Entity ;
+    rdfs:label "/home/eiera/work/ontology/semantica-agent/ontology/instances/birth.ttl" ;
+    kos:sha256 "39c7c2848fd6f7e96bd337e1ab27b7a9bacba4377a0c68e1977797c7f8052196" .
 
 <https://semantica-agent.example/koseki/id/artifact/914bc805c6ce4d6c15f9398b4e95891c9efbe8207e2f46a001cd695670e5473b> a prov:Entity ;
     rdfs:label "/home/eiera/work/ontology/semantica-agent/src/semantica_agent/prompts/integrity.md" ;
