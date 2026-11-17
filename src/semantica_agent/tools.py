@@ -6,7 +6,7 @@
 
 import logging
 import re
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 import anyio
@@ -14,9 +14,19 @@ from pyparsing import ParseException
 from rdflib import RDF, RDFS, Graph, Literal, URIRef
 from rdflib.plugins.sparql import prepareQuery
 
-from semantica_agent.flow import BUSINESSES
+from semantica_agent.assess import Assessment, assess, decision_name
+from semantica_agent.case_input import (
+    FIELDS_BY_NAME,
+    CaseInput,
+    CaseInputError,
+    check_quotes,
+    parse_case_input,
+)
+from semantica_agent.claims import ClaimError, verify_claims
+from semantica_agent.flow import BUSINESSES, case_states
 from semantica_agent.ids import iri_from_short_id, short_id
-from semantica_agent.namespaces import KD, KOS
+from semantica_agent.judge import Finding
+from semantica_agent.namespaces import KCASE, KD, KOS
 from semantica_agent.rule_inputs import rule_inputs
 from semantica_agent.turtle_io import load_ontology
 
@@ -219,3 +229,94 @@ async def run_sparql(k: Knowledge, query: str, timeout_s: float) -> ToolResult:
             f"時間の上限（{timeout_s} 秒）を超えました。問い合わせを絞ってください"
         ) from e
     return _referenced({"rows": rows, "truncated": truncated}, nodes)
+
+
+# ── 相談の状態と、判定・回答のツール ───────────────────────────────────
+
+
+@dataclass
+class SessionState:
+    session_id: str
+    utterances: list[str] = field(default_factory=list)
+    turn: int = 0
+    last_assessment: Assessment | None = None
+    last_case: CaseInput | None = None
+    last_case_states: dict[str, dict] = field(default_factory=dict)
+    referenced_this_turn: set[str] = field(default_factory=set)
+    judge_calls: int = 0
+
+
+def new_session(session_id: str) -> SessionState:
+    return SessionState(session_id)
+
+
+def _finding(f: Finding) -> dict:
+    return {
+        "rule": to_short(f.rule),
+        "check": to_short(f.check) if f.check is not None else None,
+        "outcome": decision_name(f.outcome),
+        "versions": [to_short(v) for v in f.versions],
+        "message": f.message,
+        "value": (to_short(f.value) or str(f.value)) if f.value is not None else None,
+        "provisional": f.provisional,
+    }
+
+
+def _judge_payload(k: Knowledge, a: Assessment) -> dict:
+    return {
+        "decision": a.decision,
+        "has_unconfirmed": a.has_unconfirmed,
+        "unconfirmed": [{"name": n, "label": FIELDS_BY_NAME[n].label_ja} for n in a.unconfirmed],
+        "unevaluated": [
+            {
+                "rule": to_short(r),
+                "check": to_short(k.rules.value(r, KOS.implementsCheck)),
+                "missing": list(missing),
+            }
+            for r, missing in a.unevaluated.items()
+        ],
+        "provisional_decision": a.provisional_decision,
+        "findings": [_finding(f) for f in a.findings],
+        "info": [_finding(f) for f in a.info],
+    }
+
+
+def judge_birth_case(k: Knowledge, s: SessionState, args: dict) -> ToolResult:
+    try:
+        case = parse_case_input(args, k.ontology)
+    except CaseInputError as e:
+        raise ToolError(str(e)) from e
+    bad = check_quotes(case, s.utterances)
+    if bad:
+        raise ToolError(
+            "引用が職員の発言に見つかりません: "
+            + ", ".join(bad)
+            + "。発言の一部をそのまま引用するか、職員に聞き返してください"
+        )
+    s.judge_calls += 1
+    case_iri = KCASE[f"{s.session_id}-{s.turn}-{s.judge_calls}"]
+    a = assess(case, case_iri, k.ontology, k.rules, k.inputs)
+    states = case_states(a, k.rules, k.ontology)
+    s.last_assessment, s.last_case, s.last_case_states = a, case, states
+    payload = _judge_payload(k, a)
+    nodes = [
+        n
+        for f in (*payload["findings"], *payload["info"])
+        for n in (f["rule"], f["check"], *f["versions"])
+        if n
+    ]
+    return ToolResult(payload, list(dict.fromkeys(nodes)), {"case_states": states})
+
+
+def submit_answer(k: Knowledge, s: SessionState, args: dict) -> ToolResult:
+    answer, raw = args.get("answer"), args.get("claims")
+    if not isinstance(answer, str) or not answer.strip():
+        raise ToolError("answer（回答の本文）が要ります")
+    if not isinstance(raw, list):
+        raise ToolError("claims（主張の一覧）が要ります")
+    try:
+        claims = verify_claims(raw, k, s)
+    except ClaimError as e:
+        raise ToolError(str(e)) from e
+    payload = {"answer": answer, "claims": [asdict(c) for c in claims]}
+    return ToolResult(payload, [], {})
