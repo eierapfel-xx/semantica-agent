@@ -57,6 +57,7 @@ def _block_real_llm(request, monkeypatch):
         raise RuntimeError("llm マーカーの無いテストで実際の Agent SDK を呼ぼうとしました")
 
     monkeypatch.setattr("semantica_agent.llm_provider.query", _blocked)
+    monkeypatch.setattr("semantica_agent.agent.ClaudeSDKClient", _blocked)
 
 
 ROOT = Path(__file__).resolve().parents[1]

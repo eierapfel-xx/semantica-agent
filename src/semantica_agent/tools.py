@@ -242,6 +242,8 @@ class SessionState:
     last_assessment: Assessment | None = None
     last_case: CaseInput | None = None
     last_case_states: dict[str, dict] = field(default_factory=dict)
+    last_judgment: dict | None = None
+    last_case_iri: URIRef | None = None
     referenced_this_turn: set[str] = field(default_factory=set)
     judge_calls: int = 0
 
@@ -297,8 +299,9 @@ def judge_birth_case(k: Knowledge, s: SessionState, args: dict) -> ToolResult:
     case_iri = KCASE[f"{s.session_id}-{s.turn}-{s.judge_calls}"]
     a = assess(case, case_iri, k.ontology, k.rules, k.inputs)
     states = case_states(a, k.rules, k.ontology)
-    s.last_assessment, s.last_case, s.last_case_states = a, case, states
     payload = _judge_payload(k, a)
+    s.last_assessment, s.last_case, s.last_case_states = a, case, states
+    s.last_judgment, s.last_case_iri = payload, case_iri
     nodes = [
         n
         for f in (*payload["findings"], *payload["info"])

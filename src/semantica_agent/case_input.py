@@ -235,3 +235,24 @@ def case_graph(case: CaseInput, case_iri: URIRef) -> Graph:
         else:
             g.add((case_iri, KOS[f.name], _literal(f, fv.value)))
     return g
+
+
+def case_record(case: CaseInput, case_iri: URIRef) -> dict:
+    """トレースに残す事案：Turtle と、項目ごとの状態・値・引用・推測。"""
+    fields = [
+        {
+            "name": fv.name,
+            "label": FIELDS_BY_NAME[fv.name].label_ja,
+            "status": fv.status,
+            "value": list(fv.value)
+            if isinstance(fv.value, tuple)
+            else (None if fv.value is None else str(fv.value)),
+            "quote": fv.quote,
+            "inferred": fv.inferred,
+            "note": fv.note,
+            "complete": fv.name in case.complete_lists,
+        }
+        for fv in case.fields
+    ]
+    turtle = case_graph(case, case_iri).serialize(format="turtle")
+    return {"iri": str(case_iri), "turtle": turtle, "fields": fields}
