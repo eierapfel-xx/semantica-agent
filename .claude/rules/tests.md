@@ -11,7 +11,7 @@ ______________________________________________________________________
 
 - テストは `tests/` に置き、`src/semantica_agent/` のモジュールと対応させる（`src/semantica_agent/foo.py` → `tests/test_foo.py`）。
 - 手順書の PDF（`docs/domain/手順書.pdf`）を丸ごと読むテストは `slow` を付ける。ロジックのテストは、数ノード程度の合成オントロジーをフィクスチャで作って代える。
-- Claude を実際に呼ぶテスト（Agent SDK の `query` 等）には `llm` マーカーを付ける。Claude Pro の利用枠を消費するので、commit-guard でも既定の `pytest` でも流さない。エージェントのロジック（ツールの入出力、プロンプトの組み立て、回答の後処理）は、ツール関数を直接呼ぶか SDK の応答をフィクスチャで差し替えてテストする。
+- Claude を実際に呼ぶテスト（Agent SDK の `query` 等）には `llm` マーカーを付ける。Claude Pro の利用枠を消費するので、commit-guard でも既定の `pytest` でも流さない。`tests/conftest.py` が、`-m` に `llm` を書いたとき以外は llm のテストを外す（ファイルを直接指定しても流れない）。エージェントのロジック（ツールの入出力、プロンプトの組み立て、回答の後処理）は、ツール関数を直接呼ぶか SDK の応答をフィクスチャで差し替えてテストする。
 - オントロジーのテストは、SHACL 検証が通ること と、competency questions を SPARQL で引いて期待する答えが返ること の両方を書く。
 - Unit（関数・小さなロジック）、Integration（オントロジーファイルの読み込みや SPARQL を含む結合）、E2E（手順書 → オントロジー → エージェントの回答、`llm`）を書く。
 - カバレッジは `src/semantica_agent/` で 80% 以上。

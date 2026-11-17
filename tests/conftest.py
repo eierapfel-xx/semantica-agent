@@ -47,6 +47,16 @@ def sample():
     return json.loads((FIXTURES / "instances_birth_sample.json").read_text(encoding="utf-8"))
 
 
+def pytest_collection_modifyitems(config, items):
+    """-m に llm を書いたときだけ llm マーカーのテストを流す（誤って利用枠を使わないため）。"""
+    if "llm" in (config.option.markexpr or ""):
+        return
+    deselected = [item for item in items if item.get_closest_marker("llm")]
+    if deselected:
+        config.hook.pytest_deselected(items=deselected)
+        items[:] = [item for item in items if not item.get_closest_marker("llm")]
+
+
 @pytest.fixture(autouse=True)
 def _block_real_llm(request, monkeypatch):
     """llm マーカーの無いテストで、実際の Agent SDK を呼ばせない（利用枠を守る）。"""
