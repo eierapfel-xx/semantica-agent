@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from rdflib import Graph, Literal
 
 from semantica_agent.namespaces import KD, KOS
@@ -45,3 +47,19 @@ def test_load_ontology_reports_broken_file(tmp_path):
 
     with pytest.raises(ValueError, match="bad.ttl"):
         load_ontology(tmp_path)
+
+
+def test_validate_integrity_real_ontology():
+    from semantica_agent.turtle_io import validate_integrity
+
+    ok, text = validate_integrity(Path(__file__).resolve().parents[1] / "ontology")
+    assert ok, text
+
+
+def test_validate_integrity_missing_shapes(tmp_path):
+    import pytest
+
+    from semantica_agent.turtle_io import validate_integrity
+
+    with pytest.raises(FileNotFoundError):
+        validate_integrity(tmp_path)

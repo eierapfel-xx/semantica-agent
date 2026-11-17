@@ -10,7 +10,6 @@ import sys
 from datetime import UTC, date, datetime
 from pathlib import Path
 
-from pyshacl import validate as shacl_validate
 from rdflib import RDF, Graph
 
 from semantica_agent import law_gen, shapes_gen
@@ -32,7 +31,7 @@ from semantica_agent.schema_gen import (
     schema_summary,
 )
 from semantica_agent.settings import ConfigError, configure_logging, load_settings
-from semantica_agent.turtle_io import load_ontology, write_turtle
+from semantica_agent.turtle_io import load_ontology, validate_integrity, write_turtle
 from semantica_agent.vocab import BUSINESS_SLUGS, LAW_SLUGS
 
 logger = logging.getLogger(__name__)
@@ -282,9 +281,7 @@ def stage_approve(ctx: Ctx, args) -> None:
 
 
 def stage_validate(ctx: Ctx, args) -> None:
-    shapes = ctx.require("shapes/integrity.ttl")
-    data = load_ontology(ctx.onto(""))
-    conforms, _, text = shacl_validate(data, shacl_graph=Graph().parse(shapes), advanced=True)
+    conforms, text = validate_integrity(ctx.onto(""))
     print(text)
     if not conforms:
         raise StageError("整合性の検証で違反があります")

@@ -12,6 +12,9 @@ dependencies = [
     "jpholiday>=1.0.3",
     # トレースの JSON の形を検証する。
     "jsonschema>=4.26",
+    # 審査支援の Web 画面（127.0.0.1 だけで待ち受ける）。
+    "fastapi>=0.163.1",
+    "uvicorn>=0.54.0",
 ]
 
 [dependency-groups]

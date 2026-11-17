@@ -3,6 +3,7 @@
 import logging
 from pathlib import Path
 
+from pyshacl import validate as shacl_validate
 from rdflib import Graph
 
 from semantica_agent.namespaces import bind_prefixes
@@ -33,3 +34,17 @@ def load_ontology(root: Path) -> Graph:
         except Exception as e:
             raise ValueError(f"Turtle を読めません: {p}: {e}") from e
     return g
+
+
+INTEGRITY_SHAPES = Path("shapes/integrity.ttl")
+
+
+def validate_integrity(onto_dir: Path) -> tuple[bool, str]:
+    """オントロジーを整合性シェイプで検証する（適合したか、結果の文）。"""
+    shapes = onto_dir / INTEGRITY_SHAPES
+    if not shapes.exists():
+        raise FileNotFoundError(f"整合性シェイプがありません: {shapes}")
+    conforms, _, text = shacl_validate(
+        load_ontology(onto_dir), shacl_graph=Graph().parse(shapes), advanced=True
+    )
+    return bool(conforms), str(text)
