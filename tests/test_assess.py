@@ -84,3 +84,15 @@ def test_matches_fixture_decision_when_complete(onto, rules, inputs, birth_cases
     a = run(onto, rules, inputs, **case_changes(case))
     want = expected[0].lower() + expected[1:] if expected else "acceptable"
     assert a.decision == want
+
+
+def test_list_none_means_confirmed_empty(onto, rules, inputs):
+    a = run(onto, rules, inputs, attachedDocument={"status": "none", "quote": "添付なし"})
+    assert "attachedDocument" not in a.unconfirmed
+    assert a.decision == "needsInquiry"
+
+
+def test_unknown_birth_date_marks_versioned_rules_unevaluated(onto, rules, inputs):
+    a = run(onto, rules, inputs, childBirthDate=UNKNOWN)
+    assert "childBirthDate" in a.unevaluated[KD["rule/birth/filing-place"]]
+    assert KD["rule/birth/legitimacy-current"] in a.unevaluated

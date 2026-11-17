@@ -57,14 +57,15 @@ def _version_covers(ontology: Graph, version, birth: date) -> bool:
 
 
 def applicable_rules(rules: Graph, ontology: Graph, birth: date | None) -> frozenset[URIRef]:
-    """出生日に適用されるルール。版の無いルールは常に、版のあるルールは出生日が版の期間に入るとき。"""
+    """出生日に適用されるルール。版の無いルールと出生日が不明のときは常に、ほかは版の期間に入るとき。"""
     out = set()
     for rule in rules.subjects(RDF.type, KOS.JudgmentRule):
         versions = list(rules.objects(rule, KOS.underVersion))
+        # 出生日が分からなければ版を選べないので外さない（未確認の扱いは assess が決める）
         if (
             not versions
-            or birth is not None
-            and any(_version_covers(ontology, v, birth) for v in versions)
+            or birth is None
+            or any(_version_covers(ontology, v, birth) for v in versions)
         ):
             out.add(rule)
     return frozenset(out)

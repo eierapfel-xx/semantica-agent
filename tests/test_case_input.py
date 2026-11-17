@@ -119,3 +119,8 @@ def test_case_graph_matches_fixture_base(onto, birth_cases):
     got = case_graph(c, KCASE.c1)
     assert set(got) == set(expected)
     assert isinstance(got, Graph)
+
+
+def test_blank_quote_rejected(onto):
+    with pytest.raises(CaseInputError, match="childBirthDate"):
+        parse_case_input({"childBirthDate": {**BIRTH, "quote": "  　"}}, onto)

@@ -132,3 +132,53 @@ async def test_default_client_is_blocked_in_tests(knowledge, settings):
     trace = (await collect(sess, "q"))[-1]["trace"]
     assert trace["status"] == "error"
     assert "llm マーカー" in next(e for e in trace["events"] if e["type"] == "error")["message"]
+
+
+async def test_result_error_marks_turn_failed(knowledge, settings):
+    from fake_sdk import result_error
+
+    f = fake_factory([text("途中まで"), result_error("error_max_turns")])
+    trace = (await collect(AgentSession(knowledge, settings, client_factory=f), "q"))[-1]["trace"]
+    assert trace["status"] == "error"
+    err = next(e for e in trace["events"] if e["type"] == "error")
+    assert "error_max_turns" in err["message"]
+
+
+async def test_unexpected_tool_exception_is_recorded(knowledge, settings, monkeypatch):
+    from fake_sdk import crash_tool
+
+    import semantica_agent.agent as agent_mod
+
+    def boom(*a, **k):
+        raise KeyError("壊れた")
+
+    monkeypatch.setattr(agent_mod, "describe_node", boom)
+    f = fake_factory([crash_tool("describe_node", {"node_id": "BIRTH-S2-I1"}), text("続き")])
+    trace = (await collect(AgentSession(knowledge, settings, client_factory=f), "q"))[-1]["trace"]
+    res = next(e for e in trace["events"] if e["type"] == "tool_result")
+    assert res["is_error"] and trace["status"] == "error"
+    assert any(e["type"] == "error" and "KeyError" in e["message"] for e in trace["events"])
+
+
+async def test_cancelled_turn_saves_trace_and_resets_client(knowledge, settings, tmp_path):
+    import asyncio
+
+    from fake_sdk import cancel
+
+    f = fake_factory([text("途中"), cancel()], [text("次")])
+    sess = AgentSession(knowledge, settings, client_factory=f, session_id="c1")
+    with pytest.raises(asyncio.CancelledError):
+        await collect(sess, "q")
+    saved = json.loads((tmp_path / "c1" / "001.json").read_text("utf-8"))
+    assert saved["status"] == "error"
+    assert f.created[0].connected is False and sess.busy is False
+    # 次のターンは新しいクライアントで始める（前のターンの応答の残りを読まない）
+    events = await collect(sess, "続き")
+    assert len(f.created) == 2 and events[-1]["trace"]["turn"] == 2
+
+
+async def test_concurrent_ask_is_rejected(knowledge, settings):
+    sess = AgentSession(knowledge, settings, client_factory=fake_factory([text("a")]))
+    sess.busy = True
+    events = await collect(sess, "q")
+    assert [e["type"] for e in events] == ["error"]

@@ -66,7 +66,7 @@ def test_applicable_rules_boundary(rules, onto, birth, manual, current):
     assert KD["rule/birth/legitimacy-diff"] in a
 
 
-def test_no_birth_date_excludes_versioned_rules(rules, onto):
+def test_no_birth_date_keeps_all_rules(rules, onto):
+    # 出生日が分からなければ版を選べないので、どのルールも外さない（評価できずは assess で決める）
     a = applicable_rules(rules, onto, None)
-    assert KD["rule/birth/filing-place"] not in a
-    assert KD["rule/birth/address"] in a
+    assert KD["rule/birth/filing-place"] in a and KD["rule/birth/legitimacy-current"] in a

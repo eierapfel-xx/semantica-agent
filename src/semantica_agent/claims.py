@@ -4,12 +4,12 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Literal
 
 from semantica_agent.ids import iri_from_short_id, short_id
-from semantica_agent.namespaces import KOS
 
 if TYPE_CHECKING:
     from semantica_agent.tools import Knowledge, SessionState
 
 KINDS = ("fact", "rule", "speculation")
+EVALUATED_STATES = ("passed", "finding")
 
 
 class ClaimError(ValueError):
@@ -39,14 +39,16 @@ def _short(node) -> str | None:
 
 
 def evaluated_rule_nodes(k: "Knowledge", s: "SessionState") -> set[str]:
-    """最後の判定で評価できたルールと、その審査項目の短い ID。"""
+    """最後の判定で評価できたルールと、状態が通過か指摘の審査項目の短い ID。
+
+    審査項目は、フローの状態（適用される判定のルールがすべて評価できたか）と同じ基準で決める。
+    """
     a = s.last_assessment
     if a is None:
         return set()
-    out = set()
-    for r in a.applicable - set(a.unevaluated):
-        out |= {_short(r), *(_short(c) for c in k.rules.objects(r, KOS.implementsCheck))}
-    return {x for x in out if x}
+    rules = {_short(r) for r in a.applicable - set(a.unevaluated)}
+    checks = {c for c, st in s.last_case_states.items() if st["state"] in EVALUATED_STATES}
+    return {x for x in rules | checks if x}
 
 
 def _parse(raw: object) -> tuple[str, str, list[str]]:

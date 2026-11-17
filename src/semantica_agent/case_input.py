@@ -166,10 +166,11 @@ def _parse_field(f: CaseField, arg: dict, ontology: Graph) -> tuple[FieldValue, 
     if status == "unknown":
         return FieldValue(f.name, "unknown"), False
     quote = arg.get("quote")
-    if not quote:
+    if not isinstance(quote, str) or not _squash(quote):
         raise CaseInputError(f"{f.name} には quote（職員の発言の引用）が要ります")
     if status == "none":
-        return FieldValue(f.name, "none", quote=quote), False
+        # 一覧の項目の none は「一つも無い」と確認したこと（空の一覧で全部）
+        return FieldValue(f.name, "none", quote=quote), f.kind == "iri_list"
     meta = {"quote": quote, "inferred": bool(arg.get("inferred")), "note": arg.get("note")}
     if f.kind == "iri_list":
         items = tuple(_enum(f, v, ontology) for v in arg.get("items") or [])

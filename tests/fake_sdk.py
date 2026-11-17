@@ -1,5 +1,7 @@
 """Agent SDK の ClaudeSDKClient の代わり。台本どおりにツールを呼び、メッセージを返す。"""
 
+import asyncio
+
 from claude_agent_sdk.types import (
     AssistantMessage,
     ResultMessage,
@@ -41,6 +43,9 @@ class FakeClient:
     async def disconnect(self):
         self.connected = False
 
+    async def interrupt(self):
+        self.interrupted = True
+
     async def query(self, prompt):
         self.prompts.append(prompt)
 
@@ -53,7 +58,7 @@ class FakeClient:
         return AssistantMessage(content=blocks, model="claude-sonnet-5-5", error=error)
 
     async def receive_response(self):
-        script = self.scripts[len(self.prompts) - 1]
+        script = self.scripts.pop(0)  # 台本はクライアントをまたいで順に使う
         for i, step in enumerate(script):
             kind = step[0]
             if kind == "tool":
@@ -71,6 +76,25 @@ class FakeClient:
                 yield self._msg([TextBlock(text="")], error=step[1])
             elif kind == "raise":
                 raise RuntimeError(step[1])
+            elif kind == "cancel":
+                raise asyncio.CancelledError()
+            elif kind == "crash_tool":
+                _, name, args = step
+                full = f"mcp__koseki__{name}"
+                yield self._msg([ToolUseBlock(id=f"t{i}", name=full, input=args)])
+                await self._hooks("PreToolUse", {"tool_name": full, "tool_input": args}, f"t{i}")
+                await self.tools[name].handler(args)
+            elif kind == "result_error":
+                yield ResultMessage(
+                    subtype=step[1],
+                    duration_ms=1,
+                    duration_api_ms=1,
+                    is_error=True,
+                    num_turns=20,
+                    session_id="x",
+                    errors=["上限に達しました"],
+                )
+                return
         yield ResultMessage(
             subtype="success",
             duration_ms=1,
@@ -82,12 +106,24 @@ class FakeClient:
 
 
 def fake_factory(*scripts):
-    created = []
+    created, queue = [], list(scripts)
 
     def factory(options, tools):
-        c = FakeClient(options, tools, list(scripts))
+        c = FakeClient(options, tools, queue)
         created.append(c)
         return c
 
     factory.created = created
     return factory
+
+
+def result_error(subtype="error_max_turns"):
+    return ("result_error", subtype)
+
+
+def cancel():
+    return ("cancel",)
+
+
+def crash_tool(name, args):
+    return ("crash_tool", name, args)

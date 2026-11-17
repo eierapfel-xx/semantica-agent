@@ -12,6 +12,7 @@ from collections.abc import AsyncIterator, Callable
 from datetime import date
 from pathlib import Path
 
+import anyio
 from claude_agent_sdk import (
     ClaudeAgentOptions,
     ClaudeSDKClient,
@@ -20,7 +21,7 @@ from claude_agent_sdk import (
     create_sdk_mcp_server,
     tool,
 )
-from claude_agent_sdk.types import AssistantMessage, TextBlock, ThinkingBlock
+from claude_agent_sdk.types import AssistantMessage, ResultMessage, TextBlock, ThinkingBlock
 from semantica.context import ContextGraph
 
 from semantica_agent.case_input import case_record, input_schema
@@ -98,6 +99,7 @@ class AgentSession:
         self.tools = build_tools(self)
         self._client = None
         self._client_factory = client_factory
+        self.busy = False
 
     @property
     def system_prompt(self) -> str:
@@ -142,27 +144,65 @@ class AgentSession:
             self.recorder.add("error", message=f"Agent SDK がエラーを返しました: {msg.error}")
         return msg.model
 
+    def _record_result(self, msg) -> None:
+        if isinstance(msg, ResultMessage) and msg.is_error:
+            detail = "、".join(str(e) for e in (msg.errors or []))
+            self.recorder.add(
+                "error", message=f"ターンが打ち切られました（{msg.subtype}）{detail}".rstrip()
+            )
+
     async def ask(self, text: str) -> AsyncIterator[dict]:
+        if self.busy:  # 同じ相談で同時に 2 つの質問は処理しない
+            yield {"type": "error", "message": "処理中です。終わってから送ってください"}
+            return
+        self.busy = True
+        try:
+            async for e in self._turn(text):
+                yield e
+        finally:
+            self.busy = False
+
+    async def _turn(self, text: str) -> AsyncIterator[dict]:
         rec = self._start_turn(text)
-        sent, texts, model, status = 0, [], None, "ok"
+        sent, texts, model = 0, [], None
         try:
             client = await self._ensure_client()
             await client.query(text)
             async for msg in client.receive_response():
                 model = self._record_message(msg, texts) or model
+                self._record_result(msg)
                 for e in rec.events[sent:]:
                     yield e
                 sent = len(rec.events)
         except Exception as e:  # SDK・通信の失敗はトレースに残して画面に返す
             logger.exception("ターンの処理に失敗しました")
             rec.add("error", message=f"{type(e).__name__}: {e}")
-        if any(e["type"] == "error" for e in rec.events):
-            status = "error"
+        except BaseException:  # 取り消し（画面の再読み込みなど）：記録を残し、クライアントを捨てる
+            rec.add("error", message="ターンが取り消されました")
+            with anyio.CancelScope(shield=True):
+                self._save(texts, model)
+                await self._drop_client()
+            raise
         for e in rec.events[sent:]:
             yield e
-        trace = self._finish(texts, model, status)
-        path = save_trace(trace, self.settings.trace_root, self.cg)
+        trace, path = self._save(texts, model)
         yield {"type": "turn_end", "trace_path": str(path), "trace": trace}
+
+    def _save(self, texts: list[str], model: str | None) -> tuple[dict, Path]:
+        failed = any(e["type"] == "error" for e in self.recorder.events)
+        trace = self._finish(texts, model, "error" if failed else "ok")
+        return trace, save_trace(trace, self.settings.trace_root, self.cg)
+
+    async def _drop_client(self) -> None:
+        """応答の途中のクライアントは捨てる（次のターンが前の応答の残りを読まないように）。"""
+        client, self._client = self._client, None
+        if client is None:
+            return
+        try:
+            await client.interrupt()
+        except Exception:
+            logger.warning("クライアントの中断に失敗しました", exc_info=True)
+        await client.disconnect()
 
     def _finish(self, texts: list[str], model: str | None, status: str) -> dict:
         s = self.state
@@ -209,6 +249,12 @@ def _wrap(sess: AgentSession, name: str, fn: Callable) -> Callable:
         except ToolError as e:
             rec.add("tool_result", tool=name, result={"error": str(e)}, nodes=[], is_error=True)
             return {"content": [{"type": "text", "text": f"エラー: {e}"}], "is_error": True}
+        except Exception as e:  # 想定外の失敗：ターンを失敗にし、LLM にもエラーで返す
+            logger.exception("ツール %s が失敗しました", name)
+            msg = f"{type(e).__name__}: {e}"
+            rec.add("tool_result", tool=name, result={"error": msg}, nodes=[], is_error=True)
+            rec.add("error", message=f"ツール {name} が失敗しました: {msg}")
+            return {"content": [{"type": "text", "text": f"内部エラー: {msg}"}], "is_error": True}
         sess.state.referenced_this_turn |= set(result.nodes)
         rec.add(
             "tool_result",

@@ -29,6 +29,7 @@ logger = logging.getLogger(__name__)
 HOST = "127.0.0.1"
 STATIC_DIR = Path(__file__).parent / "web" / "static"
 _SAFE_ID = re.compile(r"^[A-Za-z0-9_-]+$")
+MAX_SESSIONS = 20  # 古い相談から閉じる（再読み込みで放置された相談を溜めない）
 
 
 class Message(BaseModel):
@@ -72,7 +73,6 @@ def create_app(
 ) -> FastAPI:
     app = FastAPI(title="審査支援")
     app.state.sessions = {}
-    app.state.busy = set()
     shapes = {b: flow_shape(k.ontology, b) for b in BUSINESSES}
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
@@ -87,9 +87,14 @@ def create_app(
         return shapes[business]
 
     @app.post("/api/sessions")
-    def new_session():
+    async def new_session():
+        sessions = app.state.sessions
+        while len(sessions) >= MAX_SESSIONS:
+            oldest = next(iter(sessions))
+            logger.info("古い相談を閉じます: %s", oldest)
+            await sessions.pop(oldest).close()
         sess = session_factory()
-        app.state.sessions[sess.session_id] = sess
+        sessions[sess.session_id] = sess
         return {"session_id": sess.session_id}
 
     @app.delete("/api/sessions/{sid}", status_code=204)
@@ -101,30 +106,27 @@ def create_app(
         return Response(status_code=204)
 
     @app.post("/api/sessions/{sid}/messages")
-    def message(sid: str, body: Message):
+    async def message(sid: str, body: Message):
         sess = app.state.sessions.get(sid)
         if sess is None:
             raise HTTPException(404, "相談がありません")
-        if sid in app.state.busy:
+        # 処理中かどうかは相談（AgentSession.busy）が持つ。ask 自身も二重の処理を拒む。
+        if sess.busy:
             raise HTTPException(409, "処理中です。終わってから送ってください")
-        app.state.busy.add(sid)
 
         async def stream():
             # ターンの初めの事案の状態（前のターンの判定の色）。turn_end ではトレースの値を使う。
             state = getattr(sess, "state", None)
             initial = dict(getattr(state, "last_case_states", None) or {})
             seen: list[dict] = []
-            try:
-                async for e in sess.ask(body.text):
-                    if e["type"] == "turn_end":
-                        t = e["trace"]
-                        view = make_view(t.get("events", seen), t.get("flow_initial", {}), shapes)
-                    else:
-                        seen.append(e)
-                        view = make_view(seen, initial, shapes)
-                    yield _sse({**e, "view": view})
-            finally:
-                app.state.busy.discard(sid)
+            async for e in sess.ask(body.text):
+                if e["type"] == "turn_end":
+                    t = e["trace"]
+                    view = make_view(t.get("events", seen), t.get("flow_initial", {}), shapes)
+                else:
+                    seen.append(e)
+                    view = make_view(seen, initial, shapes)
+                yield _sse({**e, "view": view})
 
         return StreamingResponse(stream(), media_type="text/event-stream")
 

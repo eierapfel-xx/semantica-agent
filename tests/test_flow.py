@@ -110,3 +110,9 @@ def test_pick_business():
         pick_business(["MARRIAGE-S7", "BIRTH-S7", "MARRIAGE-S2-I4", "LAW-MINPO-733"]) == "marriage"
     )
     assert pick_business(["LAW-MINPO-733"]) == "birth"
+
+
+def test_unknown_birth_date_versioned_checks_unevaluated(onto, rules, inputs):
+    st = states(onto, rules, inputs, childBirthDate=UNKNOWN)
+    for check in ("BIRTH-S2-I1", "BIRTH-S2-I2", "BIRTH-S2-I3", "BIRTH-S2-I5"):
+        assert st[check]["state"] == "unevaluated", check

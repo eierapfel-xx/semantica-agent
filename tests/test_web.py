@@ -10,10 +10,14 @@ from semantica_agent.settings import load_settings
 
 
 class FakeSession:
+    count = 0
+
     def __init__(self, events):
-        self.session_id = "fake1"
+        FakeSession.count += 1
+        self.session_id = f"fake{FakeSession.count}"
         self.events = events
         self.closed = False
+        self.busy = False
 
     async def ask(self, text):
         for e in self.events:
@@ -74,7 +78,7 @@ def test_empty_text_rejected(client):
 
 def test_busy_session_returns_409(client):
     sid = client.post("/api/sessions").json()["session_id"]
-    client.app.state.busy.add(sid)
+    client.app.state.sessions[sid].busy = True
     assert client.post(f"/api/sessions/{sid}/messages", json={"text": "q"}).status_code == 409
 
 
@@ -176,3 +180,10 @@ def test_saved_trace_fixture_replays(client, tmp_path):
     t = client.get("/api/traces/demo/1").json()
     assert t["timeline"][-1]["flow"] == src["flow"]
     assert t["timeline"][-1]["steps"]["birth"]["BIRTH-S2"] == "finding"
+
+
+def test_old_sessions_are_closed_over_limit(client, monkeypatch):
+    monkeypatch.setattr(web, "MAX_SESSIONS", 2)
+    ids = [client.post("/api/sessions").json()["session_id"] for _ in range(3)]
+    sessions = client.app.state.sessions
+    assert ids[0] not in sessions and set(ids[1:]) <= set(sessions)

@@ -88,3 +88,19 @@ def test_submit_answer_payload(knowledge):
 def test_submit_answer_rejects_bad_args(knowledge, args):
     with pytest.raises(ToolError):
         submit_answer(knowledge, new_session("t"), args)
+
+
+def test_rule_claim_on_unevaluated_check_is_downgraded(knowledge):
+    # 続き柄が未確認：現行の嫡出のルールは評価できず、参考のルールだけ評価できる
+    s = judged(
+        knowledge,
+        childBirthDate="2025-05-31",
+        certBirthDate="2025-05-31",
+        filingDate="2025-06-05",
+        statedRelationship=UNKNOWN,
+    )
+    assert s.last_case_states["BIRTH-S2-I5"]["state"] == "unevaluated"
+    (c,) = verify_claims(
+        [{"text": "嫡出は問題ない", "kind": "rule", "nodes": ["BIRTH-S2-I5"]}], knowledge, s
+    )
+    assert c.kind == "speculation"
