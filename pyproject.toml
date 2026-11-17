@@ -10,6 +10,8 @@ dependencies = [
     # エージェント本体。Claude Code のログイン（Pro）で動く。
     "claude-agent-sdk>=0.2.182",
     "jpholiday>=1.0.3",
+    # トレースの JSON の形を検証する。
+    "jsonschema>=4.26",
 ]
 
 [dependency-groups]
@@ -41,7 +43,11 @@ testpaths = ["tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 # rdflib の XSD 名前空間を pytest が調べるときに出る無害な警告
-filterwarnings = ["ignore:Code. _mock_name is not defined in namespace XSD:UserWarning"]
+filterwarnings = [
+    "ignore:Code. _mock_name is not defined in namespace XSD:UserWarning",
+    # semantica の ContextGraph が内部で datetime.utcnow() を使う（ライブラリ側の警告）
+    "ignore:datetime.datetime.utcnow:DeprecationWarning:semantica",
+]
 markers = [
     "slow: 時間のかかるテスト",
     "llm: Claude（Agent SDK）を実際に呼ぶテスト。Pro の利用枠を消費する",

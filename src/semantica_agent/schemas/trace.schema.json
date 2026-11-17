@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "審査支援エージェントのトレース（1 ターン）",
+  "type": "object",
+  "required": [
+    "trace_version", "session_id", "turn", "status", "started", "ended", "model", "prompt",
+    "ontology", "question", "events", "flow_initial", "flow", "business", "case", "judgment",
+    "answer"
+  ],
+  "properties": {
+    "trace_version": {"const": "1"},
+    "session_id": {"type": "string", "minLength": 1},
+    "turn": {"type": "integer", "minimum": 1},
+    "status": {"enum": ["ok", "error"]},
+    "started": {"type": "string"},
+    "ended": {"type": "string"},
+    "model": {
+      "type": "object",
+      "required": ["requested", "responded"],
+      "properties": {
+        "requested": {"type": "string"},
+        "responded": {"type": ["string", "null"]}
+      }
+    },
+    "prompt": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string"}, "sha256": {"type": "string"}}
+    },
+    "ontology": {
+      "type": "object",
+      "required": ["commit", "dirty", "version_info"],
+      "properties": {
+        "commit": {"type": ["string", "null"]},
+        "dirty": {"type": ["boolean", "null"]},
+        "version_info": {"type": ["string", "null"]}
+      }
+    },
+    "question": {"type": "string"},
+    "events": {"type": "array", "items": {"$ref": "#/$defs/event"}},
+    "flow_initial": {"$ref": "#/$defs/states"},
+    "flow": {"$ref": "#/$defs/states"},
+    "business": {"enum": ["birth", "marriage", "divorce", "death", "certificate"]},
+    "case": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["iri", "turtle", "fields"],
+          "properties": {
+            "iri": {"type": "string"},
+            "turtle": {"type": "string"},
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "label", "status"],
+                "properties": {"status": {"enum": ["given", "none", "unknown"]}}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "judgment": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["decision", "has_unconfirmed", "unconfirmed", "unevaluated", "findings"],
+          "properties": {
+            "decision": {
+              "enum": ["reject", "needsCorrection", "needsInquiry", "additionalProcedure",
+                       "acceptable", "pending"]
+            }
+          }
+        }
+      ]
+    },
+    "answer": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["answer", "claims", "submitted"],
+          "properties": {
+            "answer": {"type": "string"},
+            "submitted": {"type": "boolean"},
+            "claims": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["text", "kind", "nodes", "downgraded_reason"],
+                "properties": {"kind": {"enum": ["fact", "rule", "speculation"]}}
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "states": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["state"],
+        "properties": {
+          "state": {"enum": ["finding", "unevaluated", "human", "passed", "referenced", "none"]}
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "required": ["seq", "time", "type"],
+      "properties": {
+        "seq": {"type": "integer", "minimum": 1},
+        "time": {"type": "string"},
+        "type": {
+          "enum": ["user", "assistant_text", "thinking", "tool_call", "tool_result", "answer",
+                   "error"]
+        },
+        "flow": {"type": "object"}
+      }
+    }
+  }
+}

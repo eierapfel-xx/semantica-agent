@@ -2055,6 +2055,7 @@ source = { editable = "." }
 dependencies = [
     { name = "claude-agent-sdk" },
     { name = "jpholiday" },
+    { name = "jsonschema" },
     { name = "semantica", extra = ["parse-pdf", "shacl", "tripletstore-oxigraph", "viz"] },
 ]
 
@@ -2072,6 +2073,7 @@ dev = [
 requires-dist = [
     { name = "claude-agent-sdk", specifier = ">=0.2.182" },
     { name = "jpholiday", specifier = ">=1.0.3" },
+    { name = "jsonschema", specifier = ">=4.26" },
     { name = "semantica", extras = ["parse-pdf", "shacl", "tripletstore-oxigraph", "viz"], specifier = ">=0.7.0" },
 ]
 
