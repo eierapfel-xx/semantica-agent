@@ -25,3 +25,20 @@ def test_load_settings_rejects_api_key():
 def test_load_settings_rejects_bad_log_level():
     with pytest.raises(ConfigError, match="LOG_LEVEL"):
         load_settings({"LOG_LEVEL": "LOUD"})
+
+
+def test_agent_defaults():
+    s = load_settings({})
+    assert s.agent_model == "claude-sonnet-5-5"
+    assert (s.agent_max_turns, s.web_port, s.sparql_timeout_s) == (20, 8765, 10.0)
+    assert s.trace_root == Path("output/traces")
+
+
+def test_agent_env_overrides():
+    s = load_settings({"AGENT_MODEL": "m2", "WEB_PORT": "9000"})
+    assert (s.agent_model, s.web_port) == ("m2", 9000)
+
+
+def test_bad_web_port():
+    with pytest.raises(ConfigError, match="WEB_PORT"):
+        load_settings({"WEB_PORT": "abc"})

@@ -47,6 +47,16 @@ def sample():
     return json.loads((FIXTURES / "instances_birth_sample.json").read_text(encoding="utf-8"))
 
 
+def pytest_collection_modifyitems(config, items):
+    """-m に llm を書いたときだけ llm マーカーのテストを流す（誤って利用枠を使わないため）。"""
+    if "llm" in (config.option.markexpr or ""):
+        return
+    deselected = [item for item in items if item.get_closest_marker("llm")]
+    if deselected:
+        config.hook.pytest_deselected(items=deselected)
+        items[:] = [item for item in items if not item.get_closest_marker("llm")]
+
+
 @pytest.fixture(autouse=True)
 def _block_real_llm(request, monkeypatch):
     """llm マーカーの無いテストで、実際の Agent SDK を呼ばせない（利用枠を守る）。"""
@@ -57,3 +67,33 @@ def _block_real_llm(request, monkeypatch):
         raise RuntimeError("llm マーカーの無いテストで実際の Agent SDK を呼ぼうとしました")
 
     monkeypatch.setattr("semantica_agent.llm_provider.query", _blocked)
+    monkeypatch.setattr("semantica_agent.agent.ClaudeSDKClient", _blocked)
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="session")
+def onto():
+    from semantica_agent.turtle_io import load_ontology
+
+    return load_ontology(ROOT / "ontology")
+
+
+@pytest.fixture(scope="session")
+def rules():
+    from rdflib import Graph
+
+    return Graph().parse(ROOT / "ontology/rules/birth-rules.ttl")
+
+
+@pytest.fixture(scope="session")
+def birth_cases():
+    return json.loads((FIXTURES / "birth_cases/cases.json").read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="session")
+def knowledge():
+    from semantica_agent.tools import Knowledge
+
+    return Knowledge.load(ROOT)
