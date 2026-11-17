@@ -1,5 +1,6 @@
 import json
 from dataclasses import replace
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -151,3 +152,27 @@ def test_binds_localhost_only(monkeypatch):
     monkeypatch.setattr(web.uvicorn, "run", lambda app, **kw: seen.update(kw))
     assert web.main([]) == 0
     assert seen["host"] == "127.0.0.1" and seen["port"] == 8765
+
+
+def test_index_references_local_assets_only(client):
+    html = client.get("/").text
+    assert "/static/app.js" in html and "/static/style.css" in html
+    assert "http://" not in html and "https://" not in html
+
+
+@pytest.mark.parametrize("name", ["app.js", "style.css"])
+def test_static_assets_have_no_external_urls(client, name):
+    r = client.get(f"/static/{name}")
+    assert r.status_code == 200 and "http://" not in r.text and "https://" not in r.text
+
+
+def test_saved_trace_fixture_replays(client, tmp_path):
+    from semantica_agent.trace import validate_trace
+
+    src = json.loads((Path(__file__).parent / "fixtures/traces/demo-001.json").read_text("utf-8"))
+    validate_trace(src)
+    (tmp_path / "demo").mkdir()
+    (tmp_path / "demo" / "001.json").write_text(json.dumps(src), "utf-8")
+    t = client.get("/api/traces/demo/1").json()
+    assert t["timeline"][-1]["flow"] == src["flow"]
+    assert t["timeline"][-1]["steps"]["birth"]["BIRTH-S2"] == "finding"

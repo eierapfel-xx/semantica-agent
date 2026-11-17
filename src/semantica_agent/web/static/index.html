@@ -1,1 +1,50 @@
-<!doctype html><title>審査支援</title>
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>審査支援</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="bar">
+    <h1>戸籍の審査支援</h1>
+    <div class="bar-actions">
+      <select id="trace-list" aria-label="過去のトレース">
+        <option value="">過去のトレースを開く…</option>
+      </select>
+      <button id="new-session" type="button">新しい相談</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="left" aria-label="質問と回答">
+      <div id="conversation" class="conversation"></div>
+      <form id="ask-form" class="ask">
+        <textarea id="ask-text" rows="3" placeholder="例：2026年11月2日生まれ。母が11月20日にA市で届出。本籍もA市…"></textarea>
+        <button id="ask-send" type="submit">送信</button>
+      </form>
+    </section>
+
+    <section class="right">
+      <div class="panel">
+        <h2>AIの処理 <small>（押すと、その時点の状態を表示）</small></h2>
+        <ol id="process" class="process"></ol>
+      </div>
+      <div class="panel">
+        <div class="flow-head">
+          <nav id="tabs" class="tabs" aria-label="業務"></nav>
+          <ul class="legend" id="legend"></ul>
+        </div>
+        <div id="flow" class="flow"></div>
+        <div id="others" class="others"></div>
+      </div>
+      <div class="panel">
+        <h2>ノードの詳細</h2>
+        <div id="detail" class="detail"><p class="muted">フローの項目や根拠の ID を押すと表示します。</p></div>
+      </div>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

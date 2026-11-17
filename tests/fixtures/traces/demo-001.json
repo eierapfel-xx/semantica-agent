@@ -1,0 +1,941 @@
+{
+  "trace_version": "1",
+  "session_id": "demo",
+  "turn": 1,
+  "status": "ok",
+  "started": "2026-11-17T02:55:47.514836+00:00",
+  "ended": "2026-11-17T02:55:48.097766+00:00",
+  "model": {
+    "requested": "claude-sonnet-5-5",
+    "responded": "claude-sonnet-5-5"
+  },
+  "prompt": {
+    "path": "src/semantica_agent/prompts/agent.md",
+    "sha256": "1f08d9362a1e1123b5bc434f54776ace4d26cbc36d4dc5b77506975018b1adfb"
+  },
+  "ontology": {
+    "commit": "4fb94d26e863da6a1b7942491719b4ce890f6f75",
+    "dirty": false,
+    "version_info": "1.0"
+  },
+  "question": "2026年11月2日生まれ。母が11月20日にB市で届出。本籍はA市。",
+  "events": [
+    {
+      "seq": 1,
+      "time": "2026-11-17T02:55:47.514852+00:00",
+      "type": "user",
+      "text": "2026年11月2日生まれ。母が11月20日にB市で届出。本籍はA市。"
+    },
+    {
+      "seq": 2,
+      "time": "2026-11-17T02:55:47.515052+00:00",
+      "type": "thinking",
+      "text": "事案を判定する"
+    },
+    {
+      "seq": 3,
+      "time": "2026-11-17T02:55:47.515070+00:00",
+      "type": "tool_call",
+      "tool": "judge_birth_case",
+      "args": {
+        "childBirthDate": {
+          "status": "given",
+          "value": "2026-11-02",
+          "quote": "11月20日"
+        },
+        "childBirthTime": {
+          "status": "given",
+          "value": "10:30",
+          "quote": "11月20日"
+        },
+        "filingDate": {
+          "status": "given",
+          "value": "2026-11-20",
+          "quote": "11月20日"
+        },
+        "filingMunicipality": {
+          "status": "given",
+          "value": "B市",
+          "quote": "11月20日"
+        },
+        "honsekiMunicipality": {
+          "status": "given",
+          "value": "A市",
+          "quote": "11月20日"
+        },
+        "birthPlaceMunicipality": {
+          "status": "given",
+          "value": "A市",
+          "quote": "11月20日"
+        },
+        "notifierMunicipality": {
+          "status": "given",
+          "value": "B市",
+          "quote": "11月20日"
+        },
+        "notifierRole": {
+          "status": "given",
+          "value": "ROLE-FATHER",
+          "quote": "11月20日"
+        },
+        "attachedDocument": {
+          "status": "given",
+          "items": [
+            "DOCUMENT-BIRTH-CERTIFICATE"
+          ],
+          "complete": true,
+          "quote": "11月20日"
+        },
+        "recordedItem": {
+          "status": "given",
+          "items": [
+            "RECORD-ITEM-SPOUSE-STATUS",
+            "RECORD-ITEM-BIRTH-DATETIME",
+            "RECORD-ITEM-BIRTH-PLACE",
+            "RECORD-ITEM-MOTHER-BIRTH-DATE"
+          ],
+          "complete": true,
+          "quote": "11月20日"
+        },
+        "statedRelationship": {
+          "status": "given",
+          "value": "嫡出子",
+          "quote": "11月20日"
+        },
+        "statedFather": {
+          "status": "given",
+          "value": "現在の夫",
+          "quote": "11月20日"
+        },
+        "certBirthDate": {
+          "status": "given",
+          "value": "2026-11-02",
+          "quote": "11月20日"
+        },
+        "certBirthTime": {
+          "status": "given",
+          "value": "10:30",
+          "quote": "11月20日"
+        },
+        "certBirthPlace": {
+          "status": "given",
+          "value": "A市",
+          "quote": "11月20日"
+        },
+        "parentsMarriageDate": {
+          "status": "given",
+          "value": "2020-01-01",
+          "quote": "11月20日"
+        },
+        "motherPrevMarriageEndDate": {
+          "status": "none",
+          "quote": "11月20日"
+        },
+        "motherRemarriedBeforeBirth": {
+          "status": "none",
+          "quote": "11月20日"
+        },
+        "familyRegisterExists": {
+          "status": "given",
+          "value": true,
+          "quote": "11月20日"
+        },
+        "addressExists": {
+          "status": "given",
+          "value": true,
+          "quote": "11月20日"
+        }
+      },
+      "tool_use_id": "t1",
+      "via": "hook"
+    },
+    {
+      "seq": 4,
+      "time": "2026-11-17T02:55:48.095175+00:00",
+      "type": "tool_result",
+      "tool": "judge_birth_case",
+      "result": {
+        "decision": "additionalProcedure",
+        "has_unconfirmed": true,
+        "unconfirmed": [
+          {
+            "name": "motherBirthDate",
+            "label": "母の生年月日"
+          }
+        ],
+        "unevaluated": [
+          {
+            "rule": "RULE-BIRTH-MOTHER-AGE",
+            "check": "BIRTH-S2-I8",
+            "missing": [
+              "motherBirthDate"
+            ]
+          }
+        ],
+        "provisional_decision": null,
+        "findings": [
+          {
+            "rule": "RULE-BIRTH-FILING-PERIOD",
+            "check": "BIRTH-S2-I11",
+            "outcome": "additionalProcedure",
+            "versions": [],
+            "message": "届出期間を過ぎている。受理はできるが、遅延理由書の提出を求め、管轄の簡易裁判所へ通知する。",
+            "value": "4",
+            "provisional": false
+          },
+          {
+            "rule": "RULE-BIRTH-NON-HONSEKI",
+            "check": "BIRTH-S1-I3",
+            "outcome": "additionalProcedure",
+            "versions": [],
+            "message": "届出地が本籍地でない。受理はできるが、本籍地の市区町村への公用請求（戸籍謄本等の入手）と、本籍地への通知資料の送付が要る。",
+            "value": "https://semantica-agent.example/koseki/case/demo-1-1",
+            "provisional": false
+          }
+        ],
+        "info": []
+      },
+      "nodes": [
+        "RULE-BIRTH-FILING-PERIOD",
+        "BIRTH-S2-I11",
+        "RULE-BIRTH-NON-HONSEKI",
+        "BIRTH-S1-I3"
+      ],
+      "flow": {
+        "case_states": {
+          "BIRTH-S1-I2.1": {
+            "state": "passed",
+            "badges": []
+          },
+          "BIRTH-S1-I3": {
+            "state": "finding",
+            "outcome": "additionalProcedure",
+            "badges": []
+          },
+          "BIRTH-S2-I1": {
+            "state": "passed",
+            "badges": [
+              "manual"
+            ]
+          },
+          "BIRTH-S2-I10": {
+            "state": "passed",
+            "badges": []
+          },
+          "BIRTH-S2-I11": {
+            "state": "finding",
+            "outcome": "additionalProcedure",
+            "badges": []
+          },
+          "BIRTH-S2-I13": {
+            "state": "passed",
+            "badges": []
+          },
+          "BIRTH-S2-I2": {
+            "state": "passed",
+            "badges": [
+              "manual"
+            ]
+          },
+          "BIRTH-S2-I3": {
+            "state": "passed",
+            "badges": [
+              "manual"
+            ]
+          },
+          "BIRTH-S2-I3.1": {
+            "state": "passed",
+            "badges": [
+              "manual"
+            ]
+          },
+          "BIRTH-S2-I5": {
+            "state": "passed",
+            "badges": [
+              "current"
+            ]
+          },
+          "BIRTH-S2-I5.1": {
+            "state": "passed",
+            "badges": [
+              "current"
+            ]
+          },
+          "BIRTH-S2-I5.2": {
+            "state": "passed",
+            "badges": [
+              "current"
+            ]
+          },
+          "BIRTH-S2-I5.3": {
+            "state": "passed",
+            "badges": [
+              "current"
+            ]
+          },
+          "BIRTH-S2-I5.4": {
+            "state": "passed",
+            "badges": [
+              "current"
+            ]
+          },
+          "BIRTH-S2-I6": {
+            "state": "passed",
+            "badges": []
+          },
+          "BIRTH-S2-I7": {
+            "state": "passed",
+            "badges": []
+          },
+          "BIRTH-S2-I8": {
+            "state": "unevaluated",
+            "reason": "母の生年月日が未確認",
+            "badges": []
+          },
+          "BIRTH-S1-I2": {
+            "state": "human",
+            "badges": []
+          },
+          "BIRTH-S1-I2.2": {
+            "state": "human",
+            "badges": []
+          },
+          "BIRTH-S1-I2.3": {
+            "state": "human",
+            "badges": []
+          },
+          "BIRTH-S2-I4": {
+            "state": "human",
+            "badges": []
+          },
+          "BIRTH-S4-I3": {
+            "state": "human",
+            "badges": []
+          }
+        }
+      },
+      "is_error": false
+    },
+    {
+      "seq": 5,
+      "time": "2026-11-17T02:55:48.095241+00:00",
+      "type": "tool_call",
+      "tool": "describe_node",
+      "args": {
+        "node_id": "BIRTH-S2-I12"
+      },
+      "tool_use_id": "t2",
+      "via": "hook"
+    },
+    {
+      "seq": 6,
+      "time": "2026-11-17T02:55:48.095667+00:00",
+      "type": "tool_result",
+      "tool": "describe_node",
+      "result": {
+        "id": "BIRTH-S2-I12",
+        "label": "（届出期間経過後に届出があった場合には遅延理由書の提出を求め、管轄簡易裁判所にその旨を通知する。）",
+        "classes": [
+          "Task"
+        ],
+        "parents": [
+          {
+            "id": "BIRTH-S2",
+            "label": "審査"
+          }
+        ],
+        "properties": {
+          "identifier": [
+            "BIRTH-S2-I12"
+          ],
+          "type": [
+            "Task"
+          ],
+          "wasGeneratedBy": [
+            {
+              "id": "ACTIVITY-INSTANCES-20261116140608",
+              "label": "instances"
+            }
+          ],
+          "appliesWhen": [
+            {
+              "id": "CONDITION-LATE-FILING",
+              "label": "届出期間経過後に届出があった場合"
+            }
+          ],
+          "escalatesTo": [
+            {
+              "id": "ORGANIZATION-SUMMARY-COURT",
+              "label": "管轄簡易裁判所"
+            }
+          ],
+          "itemLabel": [
+            "（）"
+          ],
+          "itemOrder": [
+            "12"
+          ],
+          "quote": [
+            "届出期間経過後に届出があった場合には遅延理由書の提出 を求め、管轄簡易裁判所にその旨を通知する。"
+          ],
+          "requiresDocument": [
+            {
+              "id": "DOCUMENT-DELAY-REASON",
+              "label": "遅延理由書"
+            }
+          ],
+          "reviewStatus": [
+            "LlmDraft"
+          ]
+        },
+        "provisions": [],
+        "rules": [],
+        "sources": [
+          {
+            "id": "SRC-P3-R6",
+            "sourceKind": "ManualSource",
+            "businessName": "戸籍届出（出生）",
+            "pdfPage": "3",
+            "printedPage": "2",
+            "rowId": "p3-r6",
+            "quote": "（届出期間経過後に届出があった場合には遅延理由書の提出"
+          },
+          {
+            "id": "SRC-P3-R7",
+            "sourceKind": "ManualSource",
+            "businessName": "戸籍届出（出生）",
+            "pdfPage": "3",
+            "printedPage": "2",
+            "rowId": "p3-r7",
+            "quote": "を求め、管轄簡易裁判所にその旨を通知する。）"
+          }
+        ]
+      },
+      "nodes": [
+        "BIRTH-S2-I12"
+      ],
+      "flow": {
+        "referenced": [
+          "BIRTH-S2-I12"
+        ]
+      },
+      "is_error": false
+    },
+    {
+      "seq": 7,
+      "time": "2026-11-17T02:55:48.095706+00:00",
+      "type": "tool_call",
+      "tool": "submit_answer",
+      "args": {
+        "answer": "期間を過ぎており、非本籍地の届出です。母の生年月日を確認してください。",
+        "claims": [
+          {
+            "text": "届出期間を過ぎている",
+            "kind": "rule",
+            "nodes": [
+              "RULE-BIRTH-FILING-PERIOD"
+            ]
+          },
+          {
+            "text": "本籍地へ送付が要る",
+            "kind": "rule",
+            "nodes": [
+              "BIRTH-S1-I3"
+            ]
+          },
+          {
+            "text": "遅延理由書が要る",
+            "kind": "fact",
+            "nodes": [
+              "BIRTH-S2-I12"
+            ]
+          }
+        ]
+      },
+      "tool_use_id": "t3",
+      "via": "hook"
+    },
+    {
+      "seq": 8,
+      "time": "2026-11-17T02:55:48.095878+00:00",
+      "type": "tool_result",
+      "tool": "submit_answer",
+      "result": {
+        "answer": "期間を過ぎており、非本籍地の届出です。母の生年月日を確認してください。",
+        "claims": [
+          {
+            "text": "届出期間を過ぎている",
+            "kind": "rule",
+            "nodes": [
+              "RULE-BIRTH-FILING-PERIOD"
+            ],
+            "downgraded_reason": null
+          },
+          {
+            "text": "本籍地へ送付が要る",
+            "kind": "rule",
+            "nodes": [
+              "BIRTH-S1-I3"
+            ],
+            "downgraded_reason": null
+          },
+          {
+            "text": "遅延理由書が要る",
+            "kind": "fact",
+            "nodes": [
+              "BIRTH-S2-I12"
+            ],
+            "downgraded_reason": null
+          }
+        ]
+      },
+      "nodes": [],
+      "flow": {},
+      "is_error": false
+    },
+    {
+      "seq": 9,
+      "time": "2026-11-17T02:55:48.095884+00:00",
+      "type": "answer",
+      "answer": "期間を過ぎており、非本籍地の届出です。母の生年月日を確認してください。",
+      "claims": [
+        {
+          "text": "届出期間を過ぎている",
+          "kind": "rule",
+          "nodes": [
+            "RULE-BIRTH-FILING-PERIOD"
+          ],
+          "downgraded_reason": null
+        },
+        {
+          "text": "本籍地へ送付が要る",
+          "kind": "rule",
+          "nodes": [
+            "BIRTH-S1-I3"
+          ],
+          "downgraded_reason": null
+        },
+        {
+          "text": "遅延理由書が要る",
+          "kind": "fact",
+          "nodes": [
+            "BIRTH-S2-I12"
+          ],
+          "downgraded_reason": null
+        }
+      ],
+      "submitted": true
+    }
+  ],
+  "flow_initial": {},
+  "flow": {
+    "BIRTH-S1-I2.1": {
+      "state": "passed",
+      "badges": []
+    },
+    "BIRTH-S1-I3": {
+      "state": "finding",
+      "outcome": "additionalProcedure",
+      "badges": []
+    },
+    "BIRTH-S2-I1": {
+      "state": "passed",
+      "badges": [
+        "manual"
+      ]
+    },
+    "BIRTH-S2-I10": {
+      "state": "passed",
+      "badges": []
+    },
+    "BIRTH-S2-I11": {
+      "state": "finding",
+      "outcome": "additionalProcedure",
+      "badges": []
+    },
+    "BIRTH-S2-I13": {
+      "state": "passed",
+      "badges": []
+    },
+    "BIRTH-S2-I2": {
+      "state": "passed",
+      "badges": [
+        "manual"
+      ]
+    },
+    "BIRTH-S2-I3": {
+      "state": "passed",
+      "badges": [
+        "manual"
+      ]
+    },
+    "BIRTH-S2-I3.1": {
+      "state": "passed",
+      "badges": [
+        "manual"
+      ]
+    },
+    "BIRTH-S2-I5": {
+      "state": "passed",
+      "badges": [
+        "current"
+      ]
+    },
+    "BIRTH-S2-I5.1": {
+      "state": "passed",
+      "badges": [
+        "current"
+      ]
+    },
+    "BIRTH-S2-I5.2": {
+      "state": "passed",
+      "badges": [
+        "current"
+      ]
+    },
+    "BIRTH-S2-I5.3": {
+      "state": "passed",
+      "badges": [
+        "current"
+      ]
+    },
+    "BIRTH-S2-I5.4": {
+      "state": "passed",
+      "badges": [
+        "current"
+      ]
+    },
+    "BIRTH-S2-I6": {
+      "state": "passed",
+      "badges": []
+    },
+    "BIRTH-S2-I7": {
+      "state": "passed",
+      "badges": []
+    },
+    "BIRTH-S2-I8": {
+      "state": "unevaluated",
+      "reason": "母の生年月日が未確認",
+      "badges": []
+    },
+    "BIRTH-S1-I2": {
+      "state": "human",
+      "badges": []
+    },
+    "BIRTH-S1-I2.2": {
+      "state": "human",
+      "badges": []
+    },
+    "BIRTH-S1-I2.3": {
+      "state": "human",
+      "badges": []
+    },
+    "BIRTH-S2-I4": {
+      "state": "human",
+      "badges": []
+    },
+    "BIRTH-S4-I3": {
+      "state": "human",
+      "badges": []
+    },
+    "BIRTH-S2-I12": {
+      "state": "referenced",
+      "badges": []
+    }
+  },
+  "business": "birth",
+  "case": {
+    "iri": "https://semantica-agent.example/koseki/case/demo-1-1",
+    "turtle": "@prefix kcase: <https://semantica-agent.example/koseki/case/> .\n@prefix kos: <https://semantica-agent.example/koseki/schema#> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n\nkcase:demo-1-1 a kos:BirthFiling ;\n    kos:addressExists true ;\n    kos:attachedDocument <https://semantica-agent.example/koseki/id/document/birth-certificate> ;\n    kos:birthPlaceMunicipality \"A市\" ;\n    kos:certBirthDate \"2026-11-02\"^^xsd:date ;\n    kos:certBirthPlace \"A市\" ;\n    kos:certBirthTime \"10:30:00\"^^xsd:time ;\n    kos:childBirthDate \"2026-11-02\"^^xsd:date ;\n    kos:childBirthTime \"10:30:00\"^^xsd:time ;\n    kos:familyRegisterExists true ;\n    kos:filingDate \"2026-11-20\"^^xsd:date ;\n    kos:filingMunicipality \"B市\" ;\n    kos:honsekiMunicipality \"A市\" ;\n    kos:notifierMunicipality \"B市\" ;\n    kos:notifierRole <https://semantica-agent.example/koseki/id/role/father> ;\n    kos:parentsMarriageDate \"2020-01-01\"^^xsd:date ;\n    kos:recordedItem <https://semantica-agent.example/koseki/id/record-item/birth-datetime>,\n        <https://semantica-agent.example/koseki/id/record-item/birth-place>,\n        <https://semantica-agent.example/koseki/id/record-item/mother-birth-date>,\n        <https://semantica-agent.example/koseki/id/record-item/spouse-status> ;\n    kos:statedFather \"現在の夫\" ;\n    kos:statedRelationship \"嫡出子\" .\n\n",
+    "fields": [
+      {
+        "name": "childBirthDate",
+        "label": "子の出生日",
+        "status": "given",
+        "value": "2026-11-02",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "childBirthTime",
+        "label": "子の出生時刻",
+        "status": "given",
+        "value": "10:30:00",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "filingDate",
+        "label": "届出日",
+        "status": "given",
+        "value": "2026-11-20",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "filingMunicipality",
+        "label": "届出を受けた市区町村",
+        "status": "given",
+        "value": "B市",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "honsekiMunicipality",
+        "label": "子が入る戸籍の本籍地",
+        "status": "given",
+        "value": "A市",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "birthPlaceMunicipality",
+        "label": "出生地",
+        "status": "given",
+        "value": "A市",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "notifierMunicipality",
+        "label": "届出人の所在地",
+        "status": "given",
+        "value": "B市",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "notifierRole",
+        "label": "届出人の資格",
+        "status": "given",
+        "value": "ROLE-FATHER",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "attachedDocument",
+        "label": "添付された書類",
+        "status": "given",
+        "value": [
+          "DOCUMENT-BIRTH-CERTIFICATE"
+        ],
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": true
+      },
+      {
+        "name": "recordedItem",
+        "label": "届書に記載のある事項",
+        "status": "given",
+        "value": [
+          "RECORD-ITEM-SPOUSE-STATUS",
+          "RECORD-ITEM-BIRTH-DATETIME",
+          "RECORD-ITEM-BIRTH-PLACE",
+          "RECORD-ITEM-MOTHER-BIRTH-DATE"
+        ],
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": true
+      },
+      {
+        "name": "statedRelationship",
+        "label": "届書の続き柄",
+        "status": "given",
+        "value": "嫡出子",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "statedFather",
+        "label": "届書上の父",
+        "status": "given",
+        "value": "現在の夫",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "certBirthDate",
+        "label": "出生証明書の出生日",
+        "status": "given",
+        "value": "2026-11-02",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "certBirthTime",
+        "label": "出生証明書の出生時刻",
+        "status": "given",
+        "value": "10:30:00",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "certBirthPlace",
+        "label": "出生証明書の出生地",
+        "status": "given",
+        "value": "A市",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "motherBirthDate",
+        "label": "母の生年月日",
+        "status": "unknown",
+        "value": null,
+        "quote": null,
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "parentsMarriageDate",
+        "label": "出生時の母の婚姻の日",
+        "status": "given",
+        "value": "2020-01-01",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "motherPrevMarriageEndDate",
+        "label": "母の前婚の解消日",
+        "status": "none",
+        "value": null,
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "motherRemarriedBeforeBirth",
+        "label": "前婚の解消後、出生までに再婚したか",
+        "status": "none",
+        "value": null,
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "familyRegisterExists",
+        "label": "入る戸籍が存在するか",
+        "status": "given",
+        "value": "True",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      },
+      {
+        "name": "addressExists",
+        "label": "住所が存在するか",
+        "status": "given",
+        "value": "True",
+        "quote": "11月20日",
+        "inferred": false,
+        "note": null,
+        "complete": false
+      }
+    ]
+  },
+  "judgment": {
+    "decision": "additionalProcedure",
+    "has_unconfirmed": true,
+    "unconfirmed": [
+      {
+        "name": "motherBirthDate",
+        "label": "母の生年月日"
+      }
+    ],
+    "unevaluated": [
+      {
+        "rule": "RULE-BIRTH-MOTHER-AGE",
+        "check": "BIRTH-S2-I8",
+        "missing": [
+          "motherBirthDate"
+        ]
+      }
+    ],
+    "provisional_decision": null,
+    "findings": [
+      {
+        "rule": "RULE-BIRTH-FILING-PERIOD",
+        "check": "BIRTH-S2-I11",
+        "outcome": "additionalProcedure",
+        "versions": [],
+        "message": "届出期間を過ぎている。受理はできるが、遅延理由書の提出を求め、管轄の簡易裁判所へ通知する。",
+        "value": "4",
+        "provisional": false
+      },
+      {
+        "rule": "RULE-BIRTH-NON-HONSEKI",
+        "check": "BIRTH-S1-I3",
+        "outcome": "additionalProcedure",
+        "versions": [],
+        "message": "届出地が本籍地でない。受理はできるが、本籍地の市区町村への公用請求（戸籍謄本等の入手）と、本籍地への通知資料の送付が要る。",
+        "value": "https://semantica-agent.example/koseki/case/demo-1-1",
+        "provisional": false
+      }
+    ],
+    "info": []
+  },
+  "answer": {
+    "answer": "期間を過ぎており、非本籍地の届出です。母の生年月日を確認してください。",
+    "claims": [
+      {
+        "text": "届出期間を過ぎている",
+        "kind": "rule",
+        "nodes": [
+          "RULE-BIRTH-FILING-PERIOD"
+        ],
+        "downgraded_reason": null
+      },
+      {
+        "text": "本籍地へ送付が要る",
+        "kind": "rule",
+        "nodes": [
+          "BIRTH-S1-I3"
+        ],
+        "downgraded_reason": null
+      },
+      {
+        "text": "遅延理由書が要る",
+        "kind": "fact",
+        "nodes": [
+          "BIRTH-S2-I12"
+        ],
+        "downgraded_reason": null
+      }
+    ],
+    "submitted": true
+  }
+}
