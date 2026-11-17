@@ -79,3 +79,10 @@ def rules():
 @pytest.fixture(scope="session")
 def birth_cases():
     return json.loads((FIXTURES / "birth_cases/cases.json").read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="session")
+def knowledge():
+    from semantica_agent.tools import Knowledge
+
+    return Knowledge.load(ROOT)
