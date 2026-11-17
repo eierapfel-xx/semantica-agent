@@ -57,3 +57,25 @@ def _block_real_llm(request, monkeypatch):
         raise RuntimeError("llm マーカーの無いテストで実際の Agent SDK を呼ぼうとしました")
 
     monkeypatch.setattr("semantica_agent.llm_provider.query", _blocked)
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="session")
+def onto():
+    from semantica_agent.turtle_io import load_ontology
+
+    return load_ontology(ROOT / "ontology")
+
+
+@pytest.fixture(scope="session")
+def rules():
+    from rdflib import Graph
+
+    return Graph().parse(ROOT / "ontology/rules/birth-rules.ttl")
+
+
+@pytest.fixture(scope="session")
+def birth_cases():
+    return json.loads((FIXTURES / "birth_cases/cases.json").read_text(encoding="utf-8"))
