@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/lifecycle-birth-judgment-20261119-165846/candidate.json",
+    "sha256": "a46187fdf1ee561d11c0b2bbbbb1e195f8657cf878d8372eadca7dca4572beac",
+    "bytes": 8273
+  },
+  "artifact": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/lifecycle-birth-judgment-20261119-165846/birth-judgment.html",
+    "sha256": "fc1da6adb11fbeacd163e86b9101ff4ee8e0ca13cd7989cc407f72d2b611357d",
+    "bytes": 859926
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [
+    {
+      "code": "i18n/locale-fallback",
+      "severity": "warning",
+      "message": "meta.locale \"ja\" has no bundled catalog and no usable meta.translations; the Viewer chrome and <html lang> fall back to English.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "path": "/meta/locale"
+      },
+      "evidence": {
+        "locale": "ja",
+        "bundledLocales": [
+          "en",
+          "zh-CN",
+          "zh-TW",
+          "es",
+          "ko",
+          "ar"
+        ]
+      },
+      "supportedFixes": [
+        "Supply meta.translations for this locale.",
+        "Use a bundled locale: en, zh-CN, zh-TW, es, ko, ar."
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/eiera/work/ontology/semantica-agent/.archify/lifecycle-birth-judgment-20261119-165846/birth-judgment.finalize.json",
+    "summaryReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/lifecycle-birth-judgment-20261119-165846/birth-judgment.finalize-summary.json",
+    "browserCheckReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/lifecycle-birth-judgment-20261119-165846/birth-judgment.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-19T02:40:39.929Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2734,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "t-validate-error",
+            "from": "validate",
+            "to": "input_error",
+            "label": "形の誤り・引用なし",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "right": {
+            "id": "t-pending-input",
+            "from": "pending",
+            "to": "input",
+            "label": "職員が答える → 再判定",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "point": [
+            358.99999999999994,
+            125.99999999999997
+          ]
+        }
+      ],
+      "detours": [],
+      "truncated": false
+    },
+    "repair": "Advisory only: this mode places or routes these relationships itself. Report them; do not remove relationships or meaning to reduce crossings."
+  }
+}

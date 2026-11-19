@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "c6d91d01-6d8f-439c-aca7-6da429ace91d",
+  "status": "current",
+  "command": "deliver",
+  "type": "class",
+  "input": "/home/eiera/work/ontology/semantica-agent/.archify/class-ontology-schema-20261119-165949/candidate.json",
+  "output": "/home/eiera/work/ontology/semantica-agent/.archify/class-ontology-schema-20261119-165949/ontology-schema.html",
+  "specification": {
+    "sha256": "0b09e97b5671ed67b57b3e2ac19d551251bbf618db61800c1766be6497bee68b",
+    "bytes": 17121
+  },
+  "artifact": {
+    "sha256": "09efb7482b854f0878da42add59ac90d7b7562dc32b5bca83d59adb3e807a663",
+    "bytes": 909248
+  }
+}

@@ -1,0 +1,924 @@
+{
+ "schema_version": 1,
+ "diagram_type": "class",
+ "meta": {
+  "title": "戸籍業務オントロジーのスキーマ（kos: のクラスとプロパティ）",
+  "locale": "ja",
+  "quality_profile": "standard",
+  "output": ".archify/class-ontology-schema-20261119-165949/ontology-schema.html",
+  "repository": {
+   "url": "https://github.com/eierapfel-xx/semantica-agent.git",
+   "provider": "github",
+   "link_mode": "web",
+   "revision": "eff17605cbc4a94a2546c6bc221c9a322d3c8b5c"
+  },
+  "legend": {
+   "entries": {
+    "association": {
+     "label": "オブジェクトプロパティ（主語 → 値）"
+    },
+    "composition": {
+     "label": "持つ（hasStep・hasItem・hasVersion）"
+    },
+    "inheritance": {
+     "label": "rdfs:subClassOf"
+    }
+   }
+  }
+ },
+ "layout": {
+  "mode": "grid"
+ },
+ "types": [
+  {
+   "id": "Business",
+   "label": "kos:Business",
+   "kind": "class",
+   "sublabel": "業務（出生・婚姻・離婚・死亡・交付）",
+   "row": 0,
+   "col": 0,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 621,
+     "end_line": 623
+    }
+   ]
+  },
+  {
+   "id": "ProcedureStep",
+   "label": "kos:ProcedureStep",
+   "kind": "class",
+   "sublabel": "工程（手順書の区分）",
+   "row": 0,
+   "col": 1,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 694,
+     "end_line": 696
+    }
+   ],
+   "attributes": [
+    {
+     "name": "stepNumber",
+     "type": "integer"
+    },
+    {
+     "name": "nextStep",
+     "type": "ProcedureStep"
+    }
+   ]
+  },
+  {
+   "id": "Condition",
+   "label": "kos:Condition",
+   "kind": "class",
+   "sublabel": "適用条件",
+   "row": 0,
+   "col": 2,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 625,
+     "end_line": 627
+    }
+   ]
+  },
+  {
+   "id": "Organization",
+   "label": "kos:Organization",
+   "kind": "class",
+   "sublabel": "機関（本籍地・法務局など）",
+   "row": 1,
+   "col": 0,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 633,
+     "end_line": 635
+    }
+   ]
+  },
+  {
+   "id": "StepItem",
+   "label": "kos:StepItem",
+   "kind": "class",
+   "sublabel": "手順項目（入れ子になる）",
+   "row": 1,
+   "col": 1,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 712,
+     "end_line": 714
+    }
+   ],
+   "attributes": [
+    {
+     "name": "itemLabel",
+     "type": "string"
+    },
+    {
+     "name": "itemOrder",
+     "type": "integer"
+    },
+    {
+     "name": "hasSubItem",
+     "type": "StepItem"
+    },
+    {
+     "name": "quote",
+     "type": "langString"
+    },
+    {
+     "name": "currentTreatment",
+     "type": "CurrentTreatment"
+    },
+    {
+     "name": "currentTreatmentNote",
+     "type": "langString"
+    },
+    {
+     "name": "normalizationNote",
+     "type": "langString"
+    }
+   ]
+  },
+  {
+   "id": "PartyRole",
+   "label": "kos:PartyRole",
+   "kind": "class",
+   "sublabel": "関係者の種類",
+   "row": 1,
+   "col": 2,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 646,
+     "end_line": 648
+    }
+   ]
+  },
+  {
+   "id": "Task",
+   "label": "kos:Task",
+   "kind": "class",
+   "sublabel": "作業（合否を判定しない）",
+   "row": 2,
+   "col": 0,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 67,
+     "end_line": 70
+    }
+   ]
+  },
+  {
+   "id": "ReviewCheck",
+   "label": "kos:ReviewCheck",
+   "kind": "class",
+   "sublabel": "審査項目",
+   "row": 2,
+   "col": 1,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 637,
+     "end_line": 640
+    }
+   ]
+  },
+  {
+   "id": "DocumentType",
+   "label": "kos:DocumentType",
+   "kind": "class",
+   "sublabel": "書類の種類",
+   "row": 2,
+   "col": 2,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 642,
+     "end_line": 644
+    }
+   ]
+  },
+  {
+   "id": "DerivedValue",
+   "label": "kos:DerivedValue",
+   "kind": "class",
+   "sublabel": "派生値の定義（日数・末日）",
+   "row": 3,
+   "col": 0,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 660,
+     "end_line": 662
+    }
+   ],
+   "attributes": [
+    {
+     "name": "periodDays",
+     "type": "integer"
+    },
+    {
+     "name": "countFirstDay",
+     "type": "boolean"
+    },
+    {
+     "name": "extendOnHoliday",
+     "type": "boolean"
+    },
+    {
+     "name": "derivedFromProperty",
+     "type": "rdf:Property"
+    }
+   ]
+  },
+  {
+   "id": "JudgmentRule",
+   "label": "kos:JudgmentRule",
+   "kind": "class",
+   "sublabel": "判定ルール（実体は SHACL）",
+   "row": 3,
+   "col": 1,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 664,
+     "end_line": 666
+    }
+   ],
+   "attributes": [
+    {
+     "name": "shape",
+     "type": "sh:Shape"
+    },
+    {
+     "name": "outcome",
+     "type": "JudgmentOutcome"
+    }
+   ]
+  },
+  {
+   "id": "RecordItem",
+   "label": "kos:RecordItem",
+   "kind": "class",
+   "sublabel": "記載事項",
+   "row": 3,
+   "col": 2,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 650,
+     "end_line": 652
+    }
+   ]
+  },
+  {
+   "id": "LegalProvision",
+   "label": "kos:LegalProvision",
+   "kind": "class",
+   "sublabel": "条文（条・枝番・項・号）",
+   "row": 4,
+   "col": 0,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 716,
+     "end_line": 718
+    }
+   ],
+   "attributes": [
+    {
+     "name": "article",
+     "type": "integer"
+    },
+    {
+     "name": "articleBranch",
+     "type": "integer"
+    },
+    {
+     "name": "paragraph",
+     "type": "integer"
+    },
+    {
+     "name": "item",
+     "type": "integer"
+    },
+    {
+     "name": "partOf",
+     "type": "LegalProvision"
+    }
+   ]
+  },
+  {
+   "id": "ProvisionVersion",
+   "label": "kos:ProvisionVersion",
+   "kind": "class",
+   "sublabel": "条文の版（手順書時点・現行・失効）",
+   "row": 4,
+   "col": 1,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 708,
+     "end_line": 710
+    }
+   ],
+   "attributes": [
+    {
+     "name": "validFrom",
+     "type": "date"
+    },
+    {
+     "name": "validUntil",
+     "type": "date"
+    },
+    {
+     "name": "summary",
+     "type": "langString"
+    },
+    {
+     "name": "versionStatus",
+     "type": "VersionStatus"
+    }
+   ]
+  },
+  {
+   "id": "Filing",
+   "label": "kos:Filing",
+   "kind": "class",
+   "sublabel": "届出の事案",
+   "row": 4,
+   "col": 2,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 690,
+     "end_line": 692
+    }
+   ],
+   "attributes": [
+    {
+     "name": "filingDate",
+     "type": "date"
+    },
+    {
+     "name": "filingMunicipality",
+     "type": "string"
+    }
+   ]
+  },
+  {
+   "id": "Law",
+   "label": "kos:Law",
+   "kind": "class",
+   "sublabel": "法令",
+   "row": 5,
+   "col": 0,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 629,
+     "end_line": 631
+    }
+   ]
+  },
+  {
+   "id": "LegalAmendment",
+   "label": "kos:LegalAmendment",
+   "kind": "class",
+   "sublabel": "改正（待婚期間の廃止など）",
+   "row": 5,
+   "col": 1,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 668,
+     "end_line": 670
+    }
+   ],
+   "attributes": [
+    {
+     "name": "effectiveDate",
+     "type": "date"
+    },
+    {
+     "name": "lawNumber",
+     "type": "string"
+    }
+   ]
+  },
+  {
+   "id": "BirthFiling",
+   "label": "kos:BirthFiling",
+   "kind": "class",
+   "sublabel": "出生届の事案（判定の入力）",
+   "row": 5,
+   "col": 2,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 724,
+     "end_line": 727
+    }
+   ],
+   "attributes": [
+    {
+     "name": "childBirthDate",
+     "type": "date"
+    },
+    {
+     "name": "childBirthTime",
+     "type": "time"
+    },
+    {
+     "name": "birthPlaceMunicipality",
+     "type": "string"
+    },
+    {
+     "name": "statedRelationship",
+     "type": "string"
+    },
+    {
+     "name": "statedFather",
+     "type": "string"
+    },
+    {
+     "name": "certBirthDate",
+     "type": "date"
+    },
+    {
+     "name": "certBirthTime",
+     "type": "time"
+    },
+    {
+     "name": "certBirthPlace",
+     "type": "string"
+    },
+    {
+     "name": "motherBirthDate",
+     "type": "date"
+    },
+    {
+     "name": "parentsMarriageDate",
+     "type": "date"
+    },
+    {
+     "name": "motherPrevMarriageEndDate",
+     "type": "date"
+    },
+    {
+     "name": "motherRemarriedBeforeBirth",
+     "type": "boolean"
+    },
+    {
+     "name": "honsekiMunicipality",
+     "type": "string"
+    },
+    {
+     "name": "notifierMunicipality",
+     "type": "string"
+    },
+    {
+     "name": "familyRegisterExists",
+     "type": "boolean"
+    },
+    {
+     "name": "addressExists",
+     "type": "boolean"
+    },
+    {
+     "name": "daysFromMarriageToBirth",
+     "type": "integer"
+    },
+    {
+     "name": "daysFromPrevMarriageEndToBirth",
+     "type": "integer"
+    },
+    {
+     "name": "filingDeadline",
+     "type": "date"
+    },
+    {
+     "name": "daysLate",
+     "type": "integer"
+    },
+    {
+     "name": "childAgeAtFiling",
+     "type": "integer"
+    },
+    {
+     "name": "motherAgeAtBirth",
+     "type": "integer"
+    }
+   ]
+  },
+  {
+   "id": "SourceReference",
+   "label": "kos:SourceReference",
+   "kind": "class",
+   "sublabel": "出典（手順書の位置・e-Gov の版）",
+   "row": 6,
+   "col": 0,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 720,
+     "end_line": 722
+    }
+   ],
+   "attributes": [
+    {
+     "name": "businessName",
+     "type": "string"
+    },
+    {
+     "name": "division",
+     "type": "string"
+    },
+    {
+     "name": "pdfPage",
+     "type": "integer"
+    },
+    {
+     "name": "printedPage",
+     "type": "integer"
+    },
+    {
+     "name": "rowId",
+     "type": "string"
+    },
+    {
+     "name": "quote",
+     "type": "langString"
+    },
+    {
+     "name": "url",
+     "type": "anyURI"
+    },
+    {
+     "name": "revisionId",
+     "type": "string"
+    },
+    {
+     "name": "fetchedDate",
+     "type": "date"
+    },
+    {
+     "name": "reviewer",
+     "type": "string"
+    },
+    {
+     "name": "reviewedDate",
+     "type": "date"
+    },
+    {
+     "name": "sourceKind",
+     "type": "SourceKind"
+    },
+    {
+     "name": "reviewStatus",
+     "type": "ReviewStatus"
+    }
+   ]
+  },
+  {
+   "id": "SourceKind",
+   "label": "kos:SourceKind",
+   "kind": "enum",
+   "sublabel": "出典の種類",
+   "row": 6,
+   "col": 1,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 678,
+     "end_line": 682
+    }
+   ],
+   "attributes": [
+    {
+     "name": "ManualSource"
+    },
+    {
+     "name": "CurrentLawSource"
+    },
+    {
+     "name": "Speculation"
+    }
+   ]
+  },
+  {
+   "id": "ReviewStatus",
+   "label": "kos:ReviewStatus",
+   "kind": "enum",
+   "sublabel": "レビューの状態",
+   "row": 6,
+   "col": 2,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 672,
+     "end_line": 676
+    }
+   ],
+   "attributes": [
+    {
+     "name": "LlmDraft"
+    },
+    {
+     "name": "HumanReviewed"
+    },
+    {
+     "name": "HumanEdited"
+    }
+   ]
+  },
+  {
+   "id": "JudgmentOutcome",
+   "label": "kos:JudgmentOutcome",
+   "kind": "enum",
+   "sublabel": "判定の種類",
+   "row": 7,
+   "col": 0,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 702,
+     "end_line": 706
+    }
+   ],
+   "attributes": [
+    {
+     "name": "Reject"
+    },
+    {
+     "name": "NeedsCorrection"
+    },
+    {
+     "name": "NeedsInquiry"
+    },
+    {
+     "name": "AdditionalProcedure"
+    },
+    {
+     "name": "Info"
+    }
+   ]
+  },
+  {
+   "id": "VersionStatus",
+   "label": "kos:VersionStatus",
+   "kind": "enum",
+   "sublabel": "版の種類",
+   "row": 7,
+   "col": 1,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 684,
+     "end_line": 688
+    }
+   ],
+   "attributes": [
+    {
+     "name": "Manual"
+    },
+    {
+     "name": "Current"
+    },
+    {
+     "name": "Repealed"
+    }
+   ]
+  },
+  {
+   "id": "CurrentTreatment",
+   "label": "kos:CurrentTreatment",
+   "kind": "enum",
+   "sublabel": "現行法での扱い",
+   "row": 7,
+   "col": 2,
+   "sources": [
+    {
+     "path": "ontology/schema.ttl",
+     "line": 654,
+     "end_line": 658
+    }
+   ],
+   "attributes": [
+    {
+     "name": "Valid"
+    },
+    {
+     "name": "Changed"
+    },
+    {
+     "name": "Obsolete"
+    }
+   ]
+  }
+ ],
+ "relationships": [
+  {
+   "id": "r1",
+   "from": "Business",
+   "to": "ProcedureStep",
+   "kind": "composition",
+   "label": "hasStep"
+  },
+  {
+   "id": "r2",
+   "from": "ProcedureStep",
+   "to": "StepItem",
+   "kind": "composition",
+   "label": "hasItem"
+  },
+  {
+   "id": "r3",
+   "from": "StepItem",
+   "to": "ProcedureStep",
+   "kind": "association",
+   "label": "prerequisiteFor"
+  },
+  {
+   "id": "r4",
+   "from": "StepItem",
+   "to": "Condition",
+   "kind": "association",
+   "label": "appliesWhen"
+  },
+  {
+   "id": "r5",
+   "from": "StepItem",
+   "to": "Organization",
+   "kind": "association",
+   "label": "escalatesTo"
+  },
+  {
+   "id": "r6",
+   "from": "StepItem",
+   "to": "PartyRole",
+   "kind": "association",
+   "label": "involvesRole"
+  },
+  {
+   "id": "r7",
+   "from": "StepItem",
+   "to": "DocumentType",
+   "kind": "association",
+   "label": "requiresDocument"
+  },
+  {
+   "id": "r8",
+   "from": "StepItem",
+   "to": "RecordItem",
+   "kind": "association",
+   "label": "requiresRecordItem"
+  },
+  {
+   "id": "r9",
+   "from": "StepItem",
+   "to": "LegalProvision",
+   "kind": "association",
+   "label": "citesProvision"
+  },
+  {
+   "id": "r10",
+   "from": "Task",
+   "to": "StepItem",
+   "kind": "inheritance"
+  },
+  {
+   "id": "r11",
+   "from": "ReviewCheck",
+   "to": "StepItem",
+   "kind": "inheritance"
+  },
+  {
+   "id": "r12",
+   "from": "JudgmentRule",
+   "to": "ReviewCheck",
+   "kind": "association",
+   "label": "implementsCheck"
+  },
+  {
+   "id": "r13",
+   "from": "JudgmentRule",
+   "to": "ProvisionVersion",
+   "kind": "association",
+   "label": "underVersion"
+  },
+  {
+   "id": "r14",
+   "from": "DerivedValue",
+   "to": "LegalProvision",
+   "kind": "association",
+   "label": "citesProvision"
+  },
+  {
+   "id": "r15",
+   "from": "LegalProvision",
+   "to": "Law",
+   "kind": "association",
+   "label": "partOfLaw"
+  },
+  {
+   "id": "r16",
+   "from": "LegalProvision",
+   "to": "ProvisionVersion",
+   "kind": "composition",
+   "label": "hasVersion"
+  },
+  {
+   "id": "r17",
+   "from": "LegalAmendment",
+   "to": "LegalProvision",
+   "kind": "association",
+   "label": "amends"
+  },
+  {
+   "id": "r18",
+   "from": "LegalAmendment",
+   "to": "ProvisionVersion",
+   "kind": "association",
+   "label": "producesVersion"
+  },
+  {
+   "id": "r19",
+   "from": "Filing",
+   "to": "DocumentType",
+   "kind": "association",
+   "label": "attachedDocument"
+  },
+  {
+   "id": "r20",
+   "from": "Filing",
+   "to": "RecordItem",
+   "kind": "association",
+   "label": "recordedItem"
+  },
+  {
+   "id": "r21",
+   "from": "BirthFiling",
+   "to": "Filing",
+   "kind": "inheritance"
+  },
+  {
+   "id": "r22",
+   "from": "BirthFiling",
+   "to": "PartyRole",
+   "kind": "association",
+   "label": "notifierRole"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "読み方",
+   "items": [
+    "箱はクラス（owl:Class）。属性はデータ型プロパティ（型は xsd の名前）と、列挙・自己参照のオブジェクトプロパティ",
+    "線はクラスをつなぐオブジェクトプロパティ。ラベルがプロパティ名",
+    "enum の箱の中身は個体（owl:NamedIndividual）"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "定義域を外したプロパティ",
+   "items": [
+    "appliesWhen・citesProvision・hasItem・involvesRole・requiresDocument・prerequisiteFor・currentTreatment などは、定義域が複数あると RDFS で積の意味になるので定義域を外している（手修正）",
+    "図の線は、インスタンスで実際に使われている主語のクラスから引いた（例：citesProvision は手順項目と派生値から）"
+   ]
+  },
+  {
+   "dot": "emerald",
+   "title": "どのノードにも付くもの",
+   "items": [
+    "hasSource → SourceReference（手順書の業務名・区分・頁・行・原文の引用、または e-Gov の URL・版）",
+    "reviewStatus → ReviewStatus（LLM の下書きか、人が確認・修正したか）",
+    "図が込み合うので、これらの線は省いた"
+   ]
+  },
+  {
+   "dot": "violet",
+   "title": "判定とのつながり",
+   "items": [
+    "JudgmentRule の shape が SHACL シェイプを指し、implementsCheck で審査項目、underVersion で条文の版につながる",
+    "BirthFiling の days… や filingDeadline は DerivedValue の定義に従って計算する派生値",
+    "法改正は LegalAmendment → ProvisionVersion で表し、手順書時点の版（Manual）と現行の版（Current）を分けて持つ"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "推測で補ったクラス",
+   "items": [
+    "SourceKind・ReviewStatus・JudgmentOutcome・VersionStatus・CurrentTreatment は、値域の列挙クラスとして推測で補った（sourceKind Speculation の注記付き）"
+   ]
+  }
+ ]
+}

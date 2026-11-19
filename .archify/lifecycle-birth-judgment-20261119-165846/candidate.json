@@ -1,0 +1,356 @@
+{
+ "schema_version": 3,
+ "diagram_type": "lifecycle",
+ "meta": {
+  "title": "出生届の事案の判定のライフサイクル（judge_birth_case 1 回ごと）",
+  "locale": "ja",
+  "quality_profile": "showcase",
+  "output": ".archify/lifecycle-birth-judgment-20261119-165846/birth-judgment.html",
+  "repository": {
+   "url": "https://github.com/eierapfel-xx/semantica-agent.git",
+   "provider": "github",
+   "link_mode": "web",
+   "revision": "eff17605cbc4a94a2546c6bc221c9a322d3c8b5c"
+  }
+ },
+ "mainPath": [
+  "input",
+  "validate",
+  "judging",
+  "aggregate",
+  "acceptable"
+ ],
+ "states": [
+  {
+   "id": "input",
+   "type": "start",
+   "label": "事案の入力",
+   "sublabel": "引用付きで項目を渡す",
+   "tag": "judge_birth_case",
+   "step": "01",
+   "sources": [
+    {
+     "path": "src/semantica_agent/agent/tools.py",
+     "line": 286,
+     "end_line": 290
+    },
+    {
+     "path": "src/semantica_agent/agent/prompts/agent.md",
+     "line": 14,
+     "end_line": 19
+    },
+    {
+     "path": "src/semantica_agent/agent/session.py",
+     "line": 179,
+     "end_line": 200
+    }
+   ]
+  },
+  {
+   "id": "validate",
+   "type": "decision",
+   "label": "入力の検証",
+   "sublabel": "形と引用の照合",
+   "tag": "コード",
+   "step": "02",
+   "sources": [
+    {
+     "path": "src/semantica_agent/review/case_input.py",
+     "line": 186,
+     "end_line": 203
+    },
+    {
+     "path": "src/semantica_agent/review/case_input.py",
+     "line": 206,
+     "end_line": 213
+    },
+    {
+     "path": "src/semantica_agent/agent/tools.py",
+     "line": 286,
+     "end_line": 297
+    }
+   ]
+  },
+  {
+   "id": "judging",
+   "type": "active",
+   "label": "SHACL で判定",
+   "sublabel": "派生値→判定シェイプ",
+   "tag": "pyshacl",
+   "step": "03",
+   "sources": [
+    {
+     "path": "src/semantica_agent/review/judge.py",
+     "line": 117,
+     "end_line": 143
+    },
+    {
+     "path": "src/semantica_agent/agent/tools.py",
+     "line": 298,
+     "end_line": 312
+    }
+   ]
+  },
+  {
+   "id": "aggregate",
+   "type": "decision",
+   "label": "全体の判定",
+   "sublabel": "最も重い指摘",
+   "tag": "decision",
+   "step": "04",
+   "sources": [
+    {
+     "path": "src/semantica_agent/review/assess.py",
+     "line": 70,
+     "end_line": 103
+    },
+    {
+     "path": "src/semantica_agent/review/judge.py",
+     "line": 15,
+     "end_line": 15
+    }
+   ]
+  },
+  {
+   "id": "acceptable",
+   "type": "success",
+   "label": "受理できる",
+   "sublabel": "全ルール評価済み",
+   "tag": "acceptable",
+   "step": "05",
+   "sources": [
+    {
+     "path": "src/semantica_agent/review/assess.py",
+     "line": 88,
+     "end_line": 89
+    }
+   ]
+  },
+  {
+   "id": "input_error",
+   "type": "failure",
+   "label": "入力エラー",
+   "sublabel": "ToolError を LLM に返す",
+   "tag": "判定しない",
+   "sources": [
+    {
+     "path": "src/semantica_agent/agent/tools.py",
+     "line": 287,
+     "end_line": 297
+    },
+    {
+     "path": "src/semantica_agent/agent/session.py",
+     "line": 210,
+     "end_line": 214
+    }
+   ]
+  },
+  {
+   "id": "pending",
+   "type": "waiting",
+   "label": "判定保留",
+   "sublabel": "未確認の項目を聞き返す",
+   "tag": "pending",
+   "sources": [
+    {
+     "path": "src/semantica_agent/review/assess.py",
+     "line": 48,
+     "end_line": 57
+    },
+    {
+     "path": "src/semantica_agent/review/assess.py",
+     "line": 80,
+     "end_line": 89
+    },
+    {
+     "path": "src/semantica_agent/agent/prompts/agent.md",
+     "line": 20,
+     "end_line": 20
+    }
+   ]
+  },
+  {
+   "id": "reject",
+   "type": "failure",
+   "label": "却下",
+   "sublabel": "受理できない",
+   "tag": "reject",
+   "sources": [
+    {
+     "path": "src/semantica_agent/review/assess.py",
+     "line": 16,
+     "end_line": 23
+    }
+   ]
+  },
+  {
+   "id": "correction",
+   "type": "waiting",
+   "label": "要補正",
+   "sublabel": "届書の補正が要る",
+   "tag": "needsCorrection",
+   "sources": [
+    {
+     "path": "src/semantica_agent/review/assess.py",
+     "line": 16,
+     "end_line": 23
+    }
+   ]
+  },
+  {
+   "id": "inquiry",
+   "type": "external",
+   "label": "要照会",
+   "sublabel": "法務局等への照会",
+   "tag": "needsInquiry",
+   "sources": [
+    {
+     "path": "src/semantica_agent/review/assess.py",
+     "line": 16,
+     "end_line": 23
+    }
+   ]
+  },
+  {
+   "id": "additional",
+   "type": "neutral",
+   "label": "追加の手続き",
+   "sublabel": "受理に別の手続きが伴う",
+   "tag": "additionalProcedure",
+   "sources": [
+    {
+     "path": "src/semantica_agent/review/assess.py",
+     "line": 16,
+     "end_line": 23
+    }
+   ]
+  }
+ ],
+ "transitions": [
+  {
+   "id": "t-input-validate",
+   "from": "input",
+   "to": "validate",
+   "label": "検証"
+  },
+  {
+   "id": "t-validate-judging",
+   "from": "validate",
+   "to": "judging",
+   "label": "引用 OK",
+   "variant": "emphasis"
+  },
+  {
+   "id": "t-judging-aggregate",
+   "from": "judging",
+   "to": "aggregate",
+   "label": "結果"
+  },
+  {
+   "id": "t-aggregate-acceptable",
+   "from": "aggregate",
+   "to": "acceptable",
+   "label": "指摘なし",
+   "variant": "emphasis"
+  },
+  {
+   "id": "t-validate-error",
+   "from": "validate",
+   "to": "input_error",
+   "label": "形の誤り・引用なし",
+   "variant": "security"
+  },
+  {
+   "id": "t-error-input",
+   "from": "input_error",
+   "to": "input",
+   "label": "引用を直す・聞き返す"
+  },
+  {
+   "id": "t-aggregate-reject",
+   "from": "aggregate",
+   "to": "reject",
+   "label": "Reject",
+   "variant": "security"
+  },
+  {
+   "id": "t-aggregate-correction",
+   "from": "aggregate",
+   "to": "correction",
+   "label": "NeedsCorrection"
+  },
+  {
+   "id": "t-aggregate-inquiry",
+   "from": "aggregate",
+   "to": "inquiry",
+   "label": "NeedsInquiry"
+  },
+  {
+   "id": "t-aggregate-additional",
+   "from": "aggregate",
+   "to": "additional",
+   "label": "AdditionalProcedure"
+  },
+  {
+   "id": "t-aggregate-pending",
+   "from": "aggregate",
+   "to": "pending",
+   "label": "未確認あり",
+   "variant": "dashed"
+  },
+  {
+   "id": "t-pending-input",
+   "from": "pending",
+   "to": "input",
+   "label": "職員が答える → 再判定",
+   "variant": "dashed"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "emerald",
+   "title": "どこから始まるか",
+   "items": [
+    "職員の発言はターンの始めに相談の発言として保持される（引用の照合に使う）",
+    "LLM が発言から事案の項目を拾い、judge_birth_case を呼んだところからこの図が始まる",
+    "触れていない項目は渡さず、計算・解釈した値は inferred: true と note を付ける"
+   ]
+  },
+  {
+   "dot": "violet",
+   "title": "全体の判定の決め方（assess）",
+   "items": [
+    "暫定でない指摘のうち最も重いもの：Reject ＞ NeedsCorrection ＞ NeedsInquiry ＞ AdditionalProcedure",
+    "指摘が無く、未確認の項目を使うルールがあれば pending（判定保留）",
+    "どちらも無ければ acceptable（受理できる）",
+    "指摘があれば、未確認の項目が残っていてもその指摘で決まる"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "未確認と判定保留",
+   "items": [
+    "職員が触れていない項目は渡さない（未確認）。値を推測で埋めない",
+    "添付書類・記載事項の一覧は「これで全部」と言われるまで未確認",
+    "前婚が無いと確認できれば、出生までの再婚の有無は問わない",
+    "pending では「受理できる」と言わない"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "判定から外れるもの",
+   "items": [
+    "provisional（未承認の現行版に基づく暫定の指摘）は全体の判定に入れず、provisional_decision として別に返す",
+    "info（手順書と現行法で結論が違う等）は参考として返し、全体の判定に入れない"
+   ]
+  },
+  {
+   "dot": "cyan",
+   "title": "再判定",
+   "items": [
+    "judge_birth_case を呼ぶたびに新しい事案 IRI（相談・ターン・回数）で判定し直し、前の判定を置き換える",
+    "回答の rule の主張は、最後の判定で評価できたルール・審査項目だけを根拠にできる"
+   ]
+  }
+ ]
+}

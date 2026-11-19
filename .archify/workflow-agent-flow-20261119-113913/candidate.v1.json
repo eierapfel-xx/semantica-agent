@@ -1,0 +1,107 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "審査支援エージェントの処理フロー（1 ターン）",
+    "locale": "ja",
+    "quality_profile": "showcase",
+    "output": ".archify/workflow-agent-flow-20261119-113913/agent-flow.html",
+    "repository": {
+      "url": "https://github.com/eierapfel-xx/semantica-agent.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "5a8ea0b3fe18f3bcff57259193c039facbdc5a7b"
+    }
+  },
+  "lanes": [
+    { "id": "ui", "label": "窓口職員・審査画面" },
+    { "id": "agent", "label": "Agent SDK（Claude）" },
+    { "id": "tools", "label": "MCP ツール（コード）" },
+    { "id": "onto", "label": "オントロジー・判定" },
+    { "id": "trace", "label": "トレース", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "受付", "fromCol": 0, "toCol": 1 },
+    { "id": "reason", "label": "ツールで調べる・判定する", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "answer", "label": "回答の検証・記録", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "judge_group", "label": "出生届の判定", "lane": "onto", "fromCol": 3, "toCol": 4, "variant": "emphasis" }
+  ],
+  "mainPath": ["staff", "web", "session", "llm", "submit", "claims", "save", "result"],
+  "nodes": [
+    { "id": "staff", "lane": "ui", "col": 0, "type": "external", "label": "窓口職員", "sublabel": "届出の内容を話す",
+      "sources": [{ "path": "src/semantica_agent/prompts/agent.md", "line": 1, "end_line": 1 }] },
+    { "id": "web", "lane": "ui", "col": 1, "type": "frontend", "label": "審査画面", "sublabel": "POST /messages → SSE",
+      "sources": [{ "path": "src/semantica_agent/web.py", "line": 108, "end_line": 131 }] },
+    { "id": "result", "lane": "ui", "col": 5, "type": "frontend", "label": "回答とフローの色", "sublabel": "turn_end で表示",
+      "sources": [{ "path": "src/semantica_agent/web.py", "line": 122, "end_line": 129 }] },
+    { "id": "session", "lane": "agent", "col": 1, "type": "backend", "label": "AgentSession", "sublabel": "ターン開始・発言を保持",
+      "sources": [{ "path": "src/semantica_agent/agent.py", "line": 114, "end_line": 132 }, { "path": "src/semantica_agent/agent.py", "line": 165, "end_line": 189 }] },
+    { "id": "llm", "lane": "agent", "col": 2, "type": "cloud", "label": "Claude", "sublabel": "agent.md の規則で計画", "tag": "組み込みツールなし",
+      "sources": [{ "path": "src/semantica_agent/agent.py", "line": 380, "end_line": 393 }, { "path": "src/semantica_agent/prompts/agent.md", "line": 3, "end_line": 28 }] },
+    { "id": "submit", "lane": "agent", "col": 4, "type": "backend", "label": "submit_answer", "sublabel": "主張・kind・nodes",
+      "sources": [{ "path": "src/semantica_agent/tools.py", "line": 314, "end_line": 325 }] },
+    { "id": "query", "lane": "tools", "col": 2, "type": "backend", "label": "問い合わせツール", "sublabel": "search / describe / cq / sparql",
+      "sources": [{ "path": "src/semantica_agent/tools.py", "line": 106, "end_line": 231 }] },
+    { "id": "judgeTool", "lane": "tools", "col": 3, "type": "security", "label": "judge_birth_case", "sublabel": "引用を発言と照合",
+      "sources": [{ "path": "src/semantica_agent/tools.py", "line": 286, "end_line": 311 }] },
+    { "id": "claims", "lane": "tools", "col": 4, "type": "security", "label": "verify_claims", "sublabel": "根拠なしは推測に下げる",
+      "sources": [{ "path": "src/semantica_agent/claims.py", "line": 65, "end_line": 77 }] },
+    { "id": "kg", "lane": "onto", "col": 2, "type": "database", "label": "オントロジー", "sublabel": "Turtle・CQ・ルール",
+      "sources": [{ "path": "src/semantica_agent/tools.py", "line": 66, "end_line": 77 }] },
+    { "id": "derive", "lane": "onto", "col": 3, "type": "backend", "label": "derive", "sublabel": "日数・年齢を計算",
+      "sources": [{ "path": "src/semantica_agent/derive.py", "line": 170, "end_line": 189 }] },
+    { "id": "shacl", "lane": "onto", "col": 4, "type": "backend", "label": "SHACL → assess", "sublabel": "指摘・未確認・decision",
+      "sources": [{ "path": "src/semantica_agent/judge.py", "line": 117, "end_line": 143 }, { "path": "src/semantica_agent/assess.py", "line": 70, "end_line": 103 }] },
+    { "id": "recorder", "lane": "trace", "col": 1, "type": "messagebus", "label": "TraceRecorder", "sublabel": "フック・_wrap が記録",
+      "sources": [{ "path": "src/semantica_agent/trace.py", "line": 48, "end_line": 65 }, { "path": "src/semantica_agent/agent.py", "line": 242, "end_line": 273 }, { "path": "src/semantica_agent/agent.py", "line": 359, "end_line": 377 }] },
+    { "id": "save", "lane": "trace", "col": 5, "type": "database", "label": "save_trace", "sublabel": "JSON・MD・PROV・判断記録",
+      "sources": [{ "path": "src/semantica_agent/trace.py", "line": 188, "end_line": 200 }, { "path": "src/semantica_agent/agent.py", "line": 191, "end_line": 194 }] }
+  ],
+  "edges": [
+    { "id": "e-staff-web", "from": "staff", "to": "web", "label": "相談" },
+    { "id": "e-web-session", "from": "web", "to": "session", "label": "ask" },
+    { "id": "e-session-llm", "from": "session", "to": "llm", "label": "query", "variant": "emphasis" },
+    { "id": "e-session-rec", "from": "session", "to": "recorder", "label": "user を記録", "variant": "dashed", "role": "branch" },
+    { "id": "e-llm-query", "from": "llm", "to": "query", "label": "手順・法令を引く", "role": "branch" },
+    { "id": "e-query-kg", "from": "query", "to": "kg", "label": "SPARQL", "role": "branch" },
+    { "id": "e-llm-judge", "from": "llm", "to": "judgeTool", "label": "事案＋引用", "variant": "emphasis", "role": "branch" },
+    { "id": "e-judge-derive", "from": "judgeTool", "to": "derive", "label": "事案グラフ", "variant": "emphasis" },
+    { "id": "e-derive-shacl", "from": "derive", "to": "shacl", "label": "派生値", "variant": "emphasis" },
+    { "id": "e-shacl-judge", "from": "shacl", "to": "judgeTool", "label": "判定結果", "role": "return" },
+    { "id": "e-llm-submit", "from": "llm", "to": "submit", "label": "最後に回答", "variant": "emphasis" },
+    { "id": "e-submit-claims", "from": "submit", "to": "claims", "label": "主張", "variant": "emphasis" },
+    { "id": "e-claims-save", "from": "claims", "to": "save", "label": "検証済み", "variant": "emphasis" },
+    { "id": "e-rec-save", "from": "recorder", "to": "save", "label": "イベント列", "variant": "dashed" },
+    { "id": "e-save-result", "from": "save", "to": "result", "label": "turn_end", "variant": "emphasis", "role": "return" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "判定はオントロジーから",
+      "items": [
+        "判定は judge_birth_case の decision をそのまま伝える（agent.md）",
+        "derive が届出期間・婚姻後日数などを計算し、birth-rules.ttl の SHACL シェイプが指摘を出す",
+        "職員が触れていない項目は未確認。使うルールは「評価できず」で decision は pending"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "pending のときの往復",
+      "items": [
+        "Claude が unconfirmed の項目を職員に聞き返す",
+        "次のターンで、これまでの内容とまとめて judge_birth_case を呼び直す"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "トレースは LLM の自己申告に頼らない",
+      "items": [
+        "PreToolUse フックが tool_call と引数、_wrap が tool_result と参照ノードを積む",
+        "submit_answer が無ければ最後の文章を推測として残す",
+        "ターンごとに 001.json・001.md・001.prov.ttl と decisions.json（ContextGraph）を保存"
+      ]
+    }
+  ]
+}

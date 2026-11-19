@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>審査の流れの再生</title>
+<style>
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --ink: #1d2330; --muted: #5d6677; --line: #c9ced8;
+  --lane: #eef1f5; --lane-alt: #e7ebf1; --lane-ex: #fbf1ee;
+  --node: #ffffff; --node-line: #9aa3b2;
+  --accent: #2563eb; --accent-soft: #dbe7ff;
+  --onto: #0f8a6a; --onto-soft: #d9f3ea;
+  --code: #7c3aed; --code-soft: #ece4fd;
+  --llm: #c2410c; --llm-soft: #fde8da;
+  --trace: #b4235a; --trace-soft: #fbe1ea;
+  --warn: #b45309; --warn-soft: #fef3c7; --bad: #b91c1c; --bad-soft: #fee2e2; --ok: #15803d; --ok-soft: #dcfce7;
+  --pre: #f3f4f7;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12151b; --panel: #1a1e26; --ink: #e6e9ef; --muted: #9aa3b2; --line: #39404d;
+    --lane: #181c23; --lane-alt: #1d222b; --lane-ex: #2a1d1d;
+    --node: #222833; --node-line: #4b5363;
+    --accent: #7aa2ff; --accent-soft: #1e2b4a;
+    --onto: #4fd1a5; --onto-soft: #143a2f;
+    --code: #b794f6; --code-soft: #2d2346;
+    --llm: #fb923c; --llm-soft: #3d2516;
+    --trace: #f472b6; --trace-soft: #3b1a2a;
+    --warn: #fbbf24; --warn-soft: #3a2e10; --bad: #f87171; --bad-soft: #3b1717; --ok: #4ade80; --ok-soft: #133622;
+    --pre: #141820;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12151b; --panel: #1a1e26; --ink: #e6e9ef; --muted: #9aa3b2; --line: #39404d;
+  --lane: #181c23; --lane-alt: #1d222b; --lane-ex: #2a1d1d;
+  --node: #222833; --node-line: #4b5363;
+  --accent: #7aa2ff; --accent-soft: #1e2b4a;
+  --onto: #4fd1a5; --onto-soft: #143a2f;
+  --code: #b794f6; --code-soft: #2d2346;
+  --llm: #fb923c; --llm-soft: #3d2516;
+  --trace: #f472b6; --trace-soft: #3b1a2a;
+  --warn: #fbbf24; --warn-soft: #3a2e10; --bad: #f87171; --bad-soft: #3b1717; --ok: #4ade80; --ok-soft: #133622;
+  --pre: #141820;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 14px/1.6 "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", system-ui, sans-serif; }
+header { padding: 16px 20px 8px; }
+h1 { font-size: 18px; margin: 0 0 6px; }
+.q { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 0; }
+.meta { color: var(--muted); font-size: 12px; margin-top: 6px; }
+.layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(360px, 1fr); gap: 16px; padding: 8px 20px 24px; }
+@media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.diagram { padding: 8px; position: sticky; top: 8px; align-self: start; }
+.diagram svg { width: 100%; height: auto; display: block; }
+.controls { display: flex; gap: 8px; align-items: center; padding: 6px 8px 2px; flex-wrap: wrap; }
+button { font: inherit; border: 1px solid var(--line); background: var(--node); color: var(--ink); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.stepno { color: var(--muted); font-size: 12px; }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); padding: 2px 8px 6px; }
+.legend i { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 4px; border-radius: 2px; }
+.steps { padding: 6px 0; max-height: 220px; overflow: auto; border-top: 1px solid var(--line); margin-top: 6px; }
+.steps ol { margin: 0; padding: 0 8px 0 34px; }
+.steps li { padding: 2px 6px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.steps li:hover { background: var(--lane); }
+.steps li.on { background: var(--accent-soft); font-weight: 600; }
+.detail { padding: 14px 16px; min-width: 0; }
+.detail h2 { font-size: 16px; margin: 0 0 4px; }
+.detail .route { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.detail p { margin: 6px 0; }
+.src { font-size: 12px; color: var(--muted); }
+.src code { font-size: 12px; }
+.block { margin-top: 12px; }
+.block h3 { font-size: 13px; margin: 0 0 4px; color: var(--muted); font-weight: 600; }
+pre { background: var(--pre); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; margin: 0;
+  font: 12px/1.5 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; overflow: auto; max-height: 360px; white-space: pre-wrap; word-break: break-all; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+th, td { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+.tbl { overflow: auto; max-height: 380px; }
+.pill { display: inline-block; padding: 0 7px; border-radius: 10px; font-size: 11.5px; white-space: nowrap; }
+.p-ok { background: var(--ok-soft); color: var(--ok); }
+.p-warn { background: var(--warn-soft); color: var(--warn); }
+.p-bad { background: var(--bad-soft); color: var(--bad); }
+.p-muted { background: var(--lane-alt); color: var(--muted); }
+.p-onto { background: var(--onto-soft); color: var(--onto); }
+.p-llm { background: var(--llm-soft); color: var(--llm); }
+.p-code { background: var(--code-soft); color: var(--code); }
+.kind { display: inline-block; font-size: 11px; padding: 0 6px; border-radius: 4px; margin-right: 6px; }
+.callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 6px 10px; border-radius: 4px; margin: 8px 0; font-size: 13px; }
+
+/* SVG */
+.lane-bg { fill: var(--lane); }
+.lane-bg.alt { fill: var(--lane-alt); }
+.lane-bg.ex { fill: var(--lane-ex); }
+.lane-label { fill: var(--muted); font-size: 11px; font-weight: 600; }
+.node rect { fill: var(--node); stroke: var(--node-line); stroke-width: 1.2; }
+.node text { fill: var(--ink); font-size: 12px; }
+.node .sub { fill: var(--muted); font-size: 10px; }
+.node.t-onto rect { stroke: var(--onto); fill: var(--onto-soft); }
+.node.t-code rect { stroke: var(--code); }
+.node.t-llm rect { stroke: var(--llm); fill: var(--llm-soft); }
+.node.t-trace rect { stroke: var(--trace); }
+.node.t-tool rect { stroke: var(--accent); }
+.node.unused { opacity: .38; }
+.node.active rect { stroke-width: 2.6; filter: drop-shadow(0 0 4px var(--accent)); }
+.node { cursor: pointer; }
+.edge path { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.edge.k-onto path { stroke-dasharray: 5 3; }
+.edge.done path { stroke: var(--node-line); }
+.edge.active path { stroke: var(--accent); stroke-width: 3; }
+.edge.active.k-onto path { stroke: var(--onto); }
+.edge.active.k-trace path { stroke: var(--trace); }
+.edge .hit { stroke: transparent; stroke-width: 12; fill: none; cursor: pointer; }
+.edge text { font-size: 10px; fill: var(--muted); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; }
+.edge.active text { fill: var(--ink); font-weight: 700; }
+.edge.unused { opacity: .3; }
+.packet { fill: var(--accent); }
+.badge-num { fill: var(--accent); font-size: 10px; font-weight: 700; }
+</style>
+</head>
+<body>
+<header>
+  <h1>審査の流れの再生：1 つの質問で、各ノードが何を受け取り何を返したか</h1>
+  <p class="q" id="question"></p>
+  <div class="meta" id="meta"></div>
+</header>
+<div class="layout">
+  <section class="card diagram">
+    <div class="controls">
+      <button id="prev" aria-label="前のステップ">◀ 前</button>
+      <button id="play" class="primary">▶ 再生</button>
+      <button id="next" aria-label="次のステップ">次 ▶</button>
+      <span class="stepno" id="stepno"></span>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--accent)"></i>呼び出し・受け渡し</span>
+      <span><i style="background:var(--onto)"></i>オントロジーから読む（点線）</span>
+      <span><i style="background:var(--trace)"></i>トレースへの記録</span>
+      <span>薄い箱：このターンでは呼ばれていない</span>
+    </div>
+    <svg id="svg" viewBox="0 0 1180 800" role="img" aria-label="審査支援エージェントの処理の流れ"></svg>
+    <div class="steps"><ol id="steplist"></ol></div>
+  </section>
+  <section class="card detail" id="detail" aria-live="polite"></section>
+</div>
+<script type="application/json" id="data">__DATA__</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const J = (o) => JSON.stringify(o, null, 2);
+
+// ── 図の配置（archify の図と同じレーン構成） ───────────────────────
+const LANES = [
+  ['ui', '窓口職員・審査画面', ''], ['agent', 'エージェント（Claude）', 'alt'], ['mcp', 'MCP ツール（koseki・6 個）', ''],
+  ['ontoCore', 'オントロジー：手順書の構造', 'alt'], ['logic', '判定・検証のコード（LLM なし）', ''],
+  ['ontoLaw', 'オントロジー：法令・ルール', 'alt'], ['trace', 'トレース', 'ex'],
+];
+const LANE_H = 108, TOP = 10, LEFT = 128, COLW = 150, NW = 132, NH = 50;
+const laneY = (id) => TOP + LANES.findIndex(l => l[0] === id) * LANE_H;
+const cx = (col) => LEFT + 10 + col * COLW + NW / 2;
+const NODES = {
+  staff: ['ui', 0, '窓口職員', '質問を入力', ''],
+  web: ['ui', 1, '審査画面', 'web/app.py', 'code'],
+  result: ['ui', 6, '回答とフローの色', 'turn_end', 'code'],
+  session: ['agent', 1, 'AgentSession', 'agent/sdk.py', 'code'],
+  llm: ['agent', 3, 'Claude', D.model.responded, 'llm'],
+  runCq: ['mcp', 0, 'run_cq', '番号で CQ', 'tool'],
+  search: ['mcp', 1, 'search_nodes', 'ラベルで探す', 'tool'],
+  describe: ['mcp', 2, 'describe_node', '詳細・条文・出典', 'tool'],
+  sparql: ['mcp', 3, 'run_sparql', 'SELECT だけ', 'tool'],
+  judgeTool: ['mcp', 4, 'judge_birth_case', '入力検証・引用照合', 'tool'],
+  submit: ['mcp', 5, 'submit_answer', 'verify_claims', 'tool'],
+  cqFile: ['ontoCore', 0, '決まった問い', 'cq/*.rq', 'onto'],
+  core: ['ontoCore', 2, '業務・工程・審査項目', 'instances/', 'onto'],
+  derive: ['logic', 3, '事案グラフ＋派生値', 'case_graph・derive', 'code'],
+  shacl: ['logic', 4, 'SHACL で判定', 'judge（pyshacl）', 'code'],
+  assess: ['logic', 5, '後処理と色', 'assess・case_states', 'code'],
+  law: ['ontoLaw', 3, '法令・版・派生値の定義', 'law/*.ttl', 'onto'],
+  rules: ['ontoLaw', 4, '判定ルール＋シェイプ', 'rules/birth-rules.ttl', 'onto'],
+  recorder: ['trace', 1, 'TraceRecorder', 'イベントを積む', 'trace'],
+  save: ['trace', 6, 'save_trace', 'JSON・MD・PROV・判断記録', 'trace'],
+};
+const UNUSED = new Set(['runCq', 'search', 'describe', 'sparql', 'cqFile']);
+const box = (id) => { const [lane, col] = NODES[id]; const x = LEFT + 10 + col * COLW, y = laneY(lane) + (LANE_H - NH) / 2;
+  return { x, y, w: NW, h: NH, cx: x + NW / 2, cy: y + NH / 2, b: y + NH, r: x + NW }; };
+// 経路は点の列。'gapBelow(lane)' はそのレーンの下の境界付近。
+const gap = (lane, d = 0) => laneY(lane) + LANE_H + d;
+function P(id, side, dx = 0, dy = 0) { const b = box(id);
+  return side === 'top' ? [b.cx + dx, b.y] : side === 'bottom' ? [b.cx + dx, b.b] : side === 'left' ? [b.x, b.cy + dy] : [b.r, b.cy + dy]; }
+const EDGES = {
+  'staff-web': { pts: () => [P('staff','right'), P('web','left')], label: '質問文' },
+  'web-session': { pts: () => [P('web','bottom'), P('session','top')], label: 'ask' },
+  'session-llm': { pts: () => [P('session','right'), P('llm','left')], label: 'query' },
+  'session-rec': { kind: 'trace', pts: () => { const a = P('session','left'); return [a, [LEFT + 2, a[1]], [LEFT + 2, box('recorder').cy], P('recorder','left')]; }, label: 'user' },
+  'llm-cq': { pts: () => { const a = P('llm','bottom',-60); return [a, [a[0], gap('agent',-14)], [cx(0), gap('agent',-14)], P('runCq','top')]; }, unused: true },
+  'llm-search': { pts: () => { const a = P('llm','bottom',-45); return [a, [a[0], gap('agent',-4)], [cx(1), gap('agent',-4)], P('search','top')]; }, unused: true },
+  'llm-describe': { pts: () => { const a = P('llm','bottom',-30); return [a, [a[0], gap('agent',6)], [cx(2), gap('agent',6)], P('describe','top')]; }, unused: true },
+  'llm-sparql': { pts: () => [P('llm','bottom'), P('sparql','top')], unused: true },
+  'llm-judge': { pts: () => { const a = P('llm','bottom',40); return [a, [a[0], gap('agent',-6)], [cx(4), gap('agent',-6)], P('judgeTool','top')]; }, label: '事案＋引用' },
+  'llm-submit': { pts: () => { const a = P('llm','right'); return [a, [cx(5), a[1]], P('submit','top')]; }, label: '回答＋主張' },
+  'judge-llm': { pts: () => { const a = P('judgeTool','top',30); return [a, [a[0], gap('agent',-20)], [P('llm','bottom',55)[0], gap('agent',-20)], P('llm','bottom',55)]; }, label: '判定結果' },
+  'cq-runcq': { kind: 'onto', pts: () => [P('cqFile','top'), P('runCq','bottom')], unused: true },
+  'core-search': { kind: 'onto', pts: () => { const a = P('core','top',-30); return [a, [a[0], gap('mcp',-6)], [cx(1), gap('mcp',-6)], P('search','bottom')]; }, unused: true },
+  'core-describe': { kind: 'onto', pts: () => [P('core','top'), P('describe','bottom')], unused: true },
+  'core-sparql': { kind: 'onto', pts: () => { const a = P('core','top',30); return [a, [a[0], gap('mcp',-6)], [cx(3), gap('mcp',-6)], P('sparql','bottom')]; }, unused: true },
+  'judge-derive': { pts: () => { const a = P('judgeTool','bottom',-40); return [a, [a[0], gap('ontoCore',-10)], [cx(3), gap('ontoCore',-10)], P('derive','top')]; }, label: '事案（入力）' },
+  'law-derive': { kind: 'onto', pts: () => [P('law','top'), P('derive','bottom')], label: '届出期間の定義' },
+  'derive-shacl': { pts: () => [P('derive','right'), P('shacl','left')], label: '＋派生値' },
+  'rules-shacl': { kind: 'onto', pts: () => [P('rules','top'), P('shacl','bottom')], label: 'シェイプ' },
+  'core-shacl': { kind: 'onto', pts: () => { const a = P('core','bottom'); return [a, [a[0], gap('ontoCore',8)], [P('shacl','top',30)[0], gap('ontoCore',8)], P('shacl','top',30)]; }, label: '記載事項の要件' },
+  'shacl-assess': { pts: () => [P('shacl','right'), P('assess','left')], label: '違反 7 件' },
+  'law-assess': { kind: 'onto', pts: () => { const a = P('law','bottom'); return [a, [a[0], gap('ontoLaw',-12)], [cx(5), gap('ontoLaw',-12)], P('assess','bottom')]; }, label: '版の有効期間' },
+  'assess-judge': { pts: () => { const a = P('assess','top'); return [a, [a[0], gap('mcp',8)], [P('judgeTool','bottom',40)[0], gap('mcp',8)], P('judgeTool','bottom',40)]; }, label: 'decision・色' },
+  'submit-save': { pts: () => { const a = P('submit','right'); return [a, [cx(6), a[1]], P('save','top')]; }, label: '検証済みの回答' },
+  'rec-save': { kind: 'trace', pts: () => [P('recorder','right'), P('save','left')], label: 'イベント列' },
+  'save-result': { pts: () => { const a = P('save','right'); const x = box('save').r + 14; return [a, [x, a[1]], [x, box('result').cy], P('result','right')]; }, label: 'turn_end' },
+};
+
+// ── ステップ（実データ） ─────────────────────────────────────
+const ev = D.events;
+const findTool = (type, tool) => ev.find(e => e.type === type && e.tool === tool);
+const statusPill = (s) => s === 'given' ? '<span class="pill p-ok">値あり</span>' : s === 'none' ? '<span class="pill p-muted">無い</span>' : '<span class="pill p-warn">未確認</span>';
+const outcomePill = (o) => {
+  const m = { Reject: ['受理不可','p-bad'], NeedsCorrection: ['補正','p-bad'], NeedsInquiry: ['照会','p-warn'], AdditionalProcedure: ['追加の手続','p-warn'], Info: ['参考','p-muted'] };
+  const [t, c] = m[o] || [o, 'p-muted']; return `<span class="pill ${c}">${t}</span>`; };
+const statePill = (s) => ({ finding: '<span class="pill p-warn">指摘</span>', passed: '<span class="pill p-ok">通過</span>',
+  unevaluated: '<span class="pill p-muted">評価できず</span>', notApplicable: '<span class="pill p-muted">適用外（版）</span>', human: '<span class="pill p-muted">人が確認</span>' }[s] || s);
+const blk = (title, html) => `<div class="block"><h3>${title}</h3>${html}</div>`;
+const pre = (s) => `<pre>${esc(s)}</pre>`;
+const table = (head, rows) => `<div class="tbl"><table><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const src = (...xs) => `<div class="src">コード：${xs.map(x => `<code>${esc(x)}</code>`).join('、')}</div>`;
+
+const jArgs = D.judge_args, jPay = D.judge_payload, sArgs = D.submit_args, sRes = D.submit_result;
+const inferred = Object.entries(jArgs).filter(([, v]) => v.inferred);
+const findingsRules = new Set(jPay.findings.map(f => f.rule).concat(jPay.info.map(f => f.rule)));
+const viol = D.violations;
+const droppedViol = viol.filter(v => !findingsRules.has(v.rule.id));
+const recEvents = ev.map(e => ({ type: e.type, tool: e.tool, via: e.via, nodes: e.nodes }));
+
+const STEPS = [
+  { edges: ['staff-web'], nodes: ['staff','web'], title: '職員が質問を入力する',
+    body: () => `<p>窓口職員が届出の内容を自然文で入力する。ここではまだ構造化されていない。</p>` + blk('渡るデータ（質問文）', pre(D.question)) },
+  { edges: ['web-session'], nodes: ['web','session'], title: '画面がエージェントに質問を渡す',
+    body: () => `<p><code>POST /api/sessions/{sid}/messages</code> で受け取り、<code>AgentSession.ask</code> を呼ぶ。応答は SSE で画面に流す。</p>` + src('web/app.py:108', 'agent/sdk.py:106') + blk('渡るデータ', pre(J({ text: D.question }))) },
+  { edges: ['session-rec'], nodes: ['session','recorder'], title: 'ターンの開始を記録する',
+    body: () => `<p><code>ReviewSession.start_turn</code> が TraceRecorder を作り、職員の発言を <code>user</code> イベントとして積む。発言は後で「引用の照合」に使うため、セッションにも保持する。</p>` + src('agent/session.py:179') +
+      blk('記録されるイベント', pre(J(ev[0]))) + blk('トレースに残すオントロジーの版', pre(J(D.ontology)))},
+  { edges: ['session-llm'], nodes: ['session','llm'], title: 'Claude に質問を送る',
+    body: () => `<p>システムプロンプト（<code>agent/prompts/agent.md</code>、今日の日付を埋め込む）と質問を Agent SDK 経由で送る。組み込みツール（Read・Bash 等）は無効で、使えるのは <code>mcp__koseki__*</code> の 6 ツールだけ。</p>` +
+      `<div class="callout">Claude は手順書や .ttl を直接読めない。オントロジーに触れる手段はツールだけ。</div>` + src('agent/sdk.py:196') +
+      blk('渡るデータ', pre(J({ model: D.model.requested, allowed_tools: ['judge_birth_case','search_nodes','describe_node','run_cq','run_sparql','submit_answer'].map(t => 'mcp__koseki__' + t), message: D.question }))) },
+  { edges: ['llm-judge'], nodes: ['llm','judgeTool'], title: 'Claude が質問を事案データに直して judge_birth_case を呼ぶ',
+    body: () => `<p><b>ここが LLM の仕事</b>。自然文を出生届の項目に割り当て、各値に<b>職員の発言の引用（quote）</b>を付ける。年を補った値などは <code>inferred: true</code> と補い方（note）を付ける。触れていない項目は渡さない（未確認のまま）。</p>` +
+      blk(`推測で補った値（${inferred.length} 件）`, table(['項目','値','補い方'], inferred.map(([k, v]) => [esc(k), esc(String(v.value)), esc(v.note || '')]))) +
+      blk('渡るデータ（ツールの引数、全文）', pre(J(jArgs))) },
+  { edges: ['judge-derive'], nodes: ['judgeTool','derive'], title: '入力を検証し、引用を発言と照合して事案グラフにする',
+    body: () => `<p><code>parse_case_input</code> が値の形と列挙（届出人の資格・書類など、語彙はオントロジーから引く）を検証する。<code>check_quotes</code> が各 quote が職員の発言に本当にあるかを照合する（照合の誤り：${D.quote_errors.length} 件）。通ったら <code>case_graph</code> が事案を RDF にする。</p>` +
+      src('review/case_input.py:186', 'review/case_input.py:206', 'review/case_input.py:224') +
+      blk('事案の項目（21 項目の状態）', table(['項目','状態','値','引用'], D.case_fields.map(f => [esc(f.name), statusPill(f.status), esc(f.value ?? ''), esc(f.quote ?? '')]))) +
+      blk(`事案グラフ（${esc(D.case_iri.split('/').pop())}）`, pre(D.case_ttl)) },
+  { edges: ['law-derive'], nodes: ['law','derive'], title: 'オントロジーから届出期間の定義を読む',
+    body: () => `<p><code>read_period_rule</code> が、届出期間の日数・初日を数えるか・休日なら延ばすかを<b>コードに書かず、オントロジーのノード</b>から読む。根拠の条文（戸籍法49条、地方自治法4条の2）と出典もこのノードに付いている。</p>` + src('review/derive.py:123') +
+      blk(`読むノード（${esc(D.period.node)}）`, pre(D.excerpts.period)) + blk('コードに渡る値', pre(D.period.raw)) },
+  { edges: ['derive-shacl'], nodes: ['derive','shacl'], title: '派生値を計算して事案グラフに足す',
+    body: () => `<p><code>derive</code> が日付から日数や期限を計算し、事案グラフに足す。各派生値には PROV-O で「どの定義から・どの項目から作ったか」を付ける。</p>` + src('review/derive.py:176') +
+      blk('派生値', table(['派生値','値','入力','根拠の条文'], D.derived.map(d => [esc(d.label) + `<br><code>${esc(d.name)}</code>`, d.value == null ? '<span class="pill p-muted">計算せず（入力なし）</span>' : `<b>${esc(d.value)}</b>`, esc(d.inputs.join(', ')), esc(d.provisions.map(p => p.label || p.id).join('、'))]))) +
+      `<div class="callout">届出期間の末日 ${esc(D.derived.find(d => d.name === 'filingDeadline').value)}、届出日 ${esc(jArgs.filingDate.value)} → 遅れ ${esc(D.derived.find(d => d.name === 'daysLate').value)} 日。婚姻から出生まで ${esc(D.derived.find(d => d.name === 'daysFromMarriageToBirth').value)} 日。</div>` },
+  { edges: ['rules-shacl', 'core-shacl'], nodes: ['rules','core','law','shacl'], title: 'オントロジーの判定ルール（SHACL シェイプ）を当てる',
+    body: () => `<p>事案グラフ＋派生値＋オントロジー全体を 1 つのデータにして、<code>birth-rules.ttl</code> のシェイプで pyshacl が検証する。シェイプの中の SPARQL は、事案だけでなく<b>オントロジーのノードも参照</b>する（記載事項のシェイプは工程の <code>requiresRecordItem</code>、嫡出の差分のシェイプは民法772条の版の <code>validFrom</code>）。</p>` + src('review/judge.py:117') +
+      blk('違反を出したシェイプ（オントロジーから）', pre(D.excerpts.shapes)) + blk('シェイプが参照する法令の版（law/）', pre(D.excerpts.versions)) },
+  { edges: ['shacl-assess'], nodes: ['shacl','assess'], title: 'SHACL の違反から、ルール・審査項目・法令の版を逆引きする',
+    body: () => `<p>違反の <code>sh:sourceShape</code> から、<code>kos:shape</code> を逆にたどってルールを特定し、<code>kos:implementsCheck</code> で審査項目、<code>kos:underVersion</code> で法令の版を引く。<b>「なぜこの指摘か」がグラフをたどるだけで出る</b>。</p>` + src('review/judge.py:62', 'review/judge.py:84') +
+      blk(`違反（${viol.length} 件）→ ルール → 審査項目`, table(['シェイプ','重さ','値','ルール','判定の種類','審査項目'], viol.map(v => [esc(v.shape), esc(v.severity), esc(v.value && v.value.startsWith('http') ? '事案' : v.value || ''), esc(v.rule.id) + '<br>' + esc(v.rule.label), outcomePill(v.outcome), esc(v.check.id) + '<br>' + esc(v.check.label)]))) },
+  { edges: ['law-assess'], nodes: ['law','assess'], title: '出生日で法令の版を選び、使うルールを決める',
+    body: () => `<p><code>applicable_rules</code> が、出生日 ${esc(D.birth)} がルールの版（<code>validFrom</code>〜<code>validUntil</code>）に入るかで、使うルールを選ぶ。嫡出のルールは手順書時点の版と現行版（2024-04-01〜）があり、この出生日では手順書時点のルールは<b>適用外</b>になる。</p>` + src('review/rule_inputs.py:52', 'review/rule_inputs.py:59') +
+      blk('全ルールの扱い（14 本）', table(['ルール','審査項目','版','結果'], D.rules.map(r => [esc(r.id) + '<br>' + esc(r.label), esc(r.check.id), r.versions.length ? r.versions.map(v => `${esc(v.id)}<br><span class="src">${esc(v.validFrom || '')}〜${esc(v.validUntil || '')} ${esc(v.status)}</span>`).join('<br>') : '<span class="src">版なし（常に適用）</span>', statePill(r.state) + (r.missing.length ? `<br><span class="src">未確認：${esc(r.missing.join(', '))}</span>` : '')]))) },
+  { edges: ['assess-judge'], nodes: ['assess','judgeTool'], title: '未確認の入力を使うルールを「評価できず」にし、全体の判定と色を決める',
+    body: () => `<p>SHACL は入力が無いと「違反なし」や「違反あり」を機械的に出すので、<code>assess</code> がルールごとに使う入力（シェイプから前もって抜き出した <code>rule_inputs</code>）を見て、未確認の項目を使うルールの結果を捨てる。今回は記載事項の違反 ${droppedViol.length} 件が「評価できず」に回された。残った指摘のうち最も重いものが全体の判定になる。</p>` +
+      `<div class="callout">判定：<b>${esc(jPay.decision)}</b>（受理できるが追加の手続が要る）。未確認：${esc(jPay.unconfirmed.map(u => u.label).join('、'))}</div>` +
+      src('review/assess.py:70', 'review/flow.py:105') +
+      blk('SHACL では違反だが捨てた結果', table(['ルール','値','理由'], droppedViol.map(v => [esc(v.rule.id), esc(v.value), '入力（recordedItem）が未確認'])) ) +
+      blk('審査項目ごとの状態（画面の色、手順書の構造の hasSubItem に沿って子にも付く）', table(['審査項目','状態','補足'], Object.entries(D.case_states).map(([k, v]) => [esc(k), statePill(v.state), esc((v.outcome || '') + ' ' + (v.reason || '') + ' ' + (v.badges || []).join(' '))]))) },
+  { edges: ['judge-llm'], nodes: ['judgeTool','llm','recorder'], title: '判定結果を Claude に返し、参照したノードを記録する',
+    body: () => `<p>Claude が受け取るのは下の JSON だけ。同時に <code>call_tool</code>（コード）が、結果と<b>参照したノードの ID</b>をトレースに積む。どのノードを使ったかは LLM の申告ではなくコードが記録する。</p>` + src('agent/tools.py:286', 'agent/session.py:206') +
+      blk('記録される参照ノード', pre(J(D.judge_nodes))) + blk('Claude に返るデータ（全文）', pre(J(jPay))) },
+  { edges: ['llm-submit'], nodes: ['llm','submit'], title: 'Claude が回答と主張を submit_answer で出す',
+    body: () => `<p>Claude は回答文と、主張ごとに<b>根拠の種類（kind）と根拠ノード（nodes）</b>を付けて出す。ここは LLM の申告なので、次のステップでコードが検証する。</p>` +
+      blk('主張（Claude の申告）', table(['主張','種類','根拠ノード'], sArgs.claims.map(c => [esc(c.text), `<span class="kind p-llm">${esc(c.kind)}</span>`, esc(c.nodes.join(', '))]))) +
+      blk('回答文', pre(sArgs.answer)) },
+  { edges: [], nodes: ['submit'], title: 'verify_claims が主張の根拠を確かめる',
+    body: () => `<p><code>rule</code> の主張は「最後の判定で<b>評価できた</b>ルール・審査項目」を、<code>fact</code> は「このターンでツールの結果に出たノード」を指していなければ、<b>推測（speculation）に下げる</b>。今回は「評価できず」のルールを根拠にした 3 件が下げられた（評価していないので、ルールの判定とは言えない）。</p>` + src('agent/claims.py:65') +
+      blk('検証の結果', table(['主張','申告','検証後','理由'], sRes.claims.map((c, i) => [esc(c.text), `<span class="kind p-llm">${esc(sArgs.claims[i].kind)}</span>`, `<span class="kind ${c.kind === 'speculation' ? 'p-warn' : 'p-ok'} pill">${esc(c.kind)}</span>`, esc(c.downgraded_reason || '')]))) +
+      blk('照合に使った集合：評価できたルール・審査項目', pre(J(D.evaluated_rule_nodes))) },
+  { edges: ['submit-save', 'rec-save'], nodes: ['submit','recorder','save'], title: 'トレースを保存する',
+    body: () => `<p>ターンの終わりに、イベント列・事案・判定・検証済みの回答をまとめて保存する。PROV-O の記録では、このターンの活動が<b>参照したオントロジーのノード</b>と、オントロジーの git のコミットを <code>prov:used</code> で持つ。判定は semantica の <code>ContextGraph.record_decision</code> にも残す。</p>` + src('agent/trace.py:194', 'agent/trace.py:154', 'agent/trace.py:172') +
+      blk('保存したファイル', pre(D.saved.files.map(f => 'output/traces/flow-replay/' + f).join('\n'))) +
+      blk('イベント列（概要）', table(['#','種類','ツール','記録した経路','参照ノード'], recEvents.map((e, i) => [i + 1, esc(e.type), esc(e.tool || ''), esc(e.via || ''), esc((e.nodes || []).join(', '))]))) +
+      blk('001.prov.ttl', pre(D.saved.prov)) },
+  { edges: ['save-result'], nodes: ['save','result'], title: '画面に回答とフローの色を出す',
+    body: () => `<p><code>turn_end</code> でトレースごと画面に送り、回答と、審査項目ごとの色（指摘・通過・評価できず・人が確認）を描く。保存したトレースを開き直すと同じ図を再生できる。</p>` +
+      blk('人が読む報告（001.md）', pre(D.saved.report_md)) },
+];
+
+// ── 描画 ─────────────────────────────────────────────
+const svg = $('#svg'); const NS = 'http://www.w3.org/2000/svg';
+const mk = (tag, attrs, parent) => { const el = document.createElementNS(NS, tag); for (const k in attrs) el.setAttribute(k, attrs[k]); (parent || svg).appendChild(el); return el; };
+LANES.forEach(([id, label, cls], i) => {
+  mk('rect', { x: 0, y: TOP + i * LANE_H, width: 1180, height: LANE_H, class: 'lane-bg ' + cls });
+  const t = mk('text', { x: 10, y: TOP + i * LANE_H + 20, class: 'lane-label' }); t.textContent = label;
+});
+const edgeEls = {};
+const pathD = (pts) => pts.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1]).join(' ');
+for (const [id, e] of Object.entries(EDGES)) {
+  const g = mk('g', { class: `edge k-${e.kind || 'call'}` + (e.unused ? ' unused' : ''), 'data-id': id });
+  const pts = e.pts(); const d = pathD(pts);
+  mk('path', { d, 'marker-end': 'url(#arrow)' }, g);
+  mk('path', { d, class: 'hit' }, g);
+  if (e.label) {
+    let best = 0, bl = -1; for (let i = 0; i < pts.length - 1; i++) { const l = Math.abs(pts[i+1][0]-pts[i][0]) + Math.abs(pts[i+1][1]-pts[i][1]); if (l > bl) { bl = l; best = i; } }
+    const a = pts[best], b = pts[best + 1]; const t = mk('text', { x: (a[0] + b[0]) / 2 + (a[0] === b[0] ? 4 : 0), y: (a[1] + b[1]) / 2 - 3, 'text-anchor': a[0] === b[0] ? 'start' : 'middle' }, g);
+    t.textContent = e.label;
+  }
+  g.addEventListener('click', () => { const i = STEPS.findIndex(s => s.edges.includes(id)); if (i >= 0) go(i); });
+  edgeEls[id] = g;
+}
+const defs = mk('defs', {}); const m = mk('marker', { id: 'arrow', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse' }, defs);
+mk('path', { d: 'M0 0 L10 5 L0 10 z', fill: 'context-stroke' }, m);
+const nodeEls = {};
+for (const [id, [lane, col, label, sub, t]] of Object.entries(NODES)) {
+  const b = box(id);
+  const g = mk('g', { class: `node t-${t}` + (UNUSED.has(id) ? ' unused' : ''), 'data-id': id, tabindex: 0 });
+  mk('rect', { x: b.x, y: b.y, width: b.w, height: b.h, rx: 7 }, g);
+  const t1 = mk('text', { x: b.cx, y: b.y + 21, 'text-anchor': 'middle' }, g); t1.textContent = label;
+  const t2 = mk('text', { x: b.cx, y: b.y + 37, 'text-anchor': 'middle', class: 'sub' }, g); t2.textContent = sub;
+  g.addEventListener('click', () => showNode(id));
+  nodeEls[id] = g;
+}
+const packet = mk('circle', { r: 5, class: 'packet', opacity: 0 });
+
+// ── 操作 ─────────────────────────────────────────────
+let cur = 0, timer = null;
+const list = $('#steplist');
+STEPS.forEach((s, i) => { const li = document.createElement('li'); li.textContent = s.title; li.addEventListener('click', () => go(i)); list.appendChild(li); });
+function animate(ids) {
+  const id = ids[0]; if (!id) { packet.setAttribute('opacity', 0); return; }
+  const path = edgeEls[id].querySelector('path'); const L = path.getTotalLength(); const t0 = performance.now();
+  packet.setAttribute('opacity', 1);
+  const tick = (now) => { const k = Math.min(1, (now - t0) / 900); const p = path.getPointAtLength(L * k); packet.setAttribute('cx', p.x); packet.setAttribute('cy', p.y);
+    if (k < 1 && cur === stepOf(id)) requestAnimationFrame(tick); else if (k >= 1) packet.setAttribute('opacity', 0); };
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(tick); else packet.setAttribute('opacity', 0);
+}
+const stepOf = (edge) => STEPS.findIndex(s => s.edges.includes(edge));
+function go(i) {
+  cur = Math.max(0, Math.min(STEPS.length - 1, i)); const s = STEPS[cur];
+  for (const [id, g] of Object.entries(edgeEls)) { g.classList.toggle('active', s.edges.includes(id)); g.classList.toggle('done', STEPS.slice(0, cur).some(x => x.edges.includes(id))); }
+  for (const [id, g] of Object.entries(nodeEls)) g.classList.toggle('active', s.nodes.includes(id));
+  [...list.children].forEach((li, k) => li.classList.toggle('on', k === cur));
+  list.children[cur].scrollIntoView({ block: 'nearest' });
+  const route = s.edges.map(e => { const [a, b] = e.split('-'); return e; });
+  $('#detail').innerHTML = `<div class="stepno">ステップ ${cur + 1} / ${STEPS.length}</div><h2>${esc(s.title)}</h2>` +
+    `<div class="route">${s.nodes.map(n => esc(NODES[n][2])).join(' → ')}</div>` + s.body();
+  $('#stepno').textContent = `${cur + 1} / ${STEPS.length}`;
+  animate(s.edges);
+}
+function showNode(id) {
+  const steps = STEPS.map((s, i) => [s, i]).filter(([s]) => s.nodes.includes(id));
+  const [lane, col, label, sub] = NODES[id];
+  let html = `<div class="stepno">ノード</div><h2>${esc(label)}</h2><div class="route">${esc(sub)}</div>`;
+  if (UNUSED.has(id)) html += `<div class="callout">このターンでは呼ばれていない。Claude は判定ツールの結果だけで答えた。手順や法令を聞く質問（例：「戸籍法施行規則第48条が関わる工程は？」）ではここが使われる。</div>`;
+  html += steps.length ? blk('このノードが関わるステップ', `<ol>${steps.map(([s, i]) => `<li><a href="#" data-i="${i}">${esc(s.title)}</a></li>`).join('')}</ol>`) : '';
+  $('#detail').innerHTML = html;
+  $('#detail').querySelectorAll('a[data-i]').forEach(a => a.addEventListener('click', (e) => { e.preventDefault(); go(+a.dataset.i); }));
+}
+$('#prev').onclick = () => { stop(); go(cur - 1); };
+$('#next').onclick = () => { stop(); go(cur + 1); };
+function stop() { clearInterval(timer); timer = null; $('#play').textContent = '▶ 再生'; }
+$('#play').onclick = () => { if (timer) return stop(); $('#play').textContent = '■ 停止'; if (cur >= STEPS.length - 1) go(0);
+  timer = setInterval(() => { if (cur >= STEPS.length - 1) return stop(); go(cur + 1); }, 2600); };
+document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { stop(); go(cur + 1); } if (e.key === 'ArrowLeft') { stop(); go(cur - 1); } });
+
+$('#question').textContent = D.question;
+$('#meta').textContent = `モデル ${D.model.responded} ／ 実行 ${D.started.replace('T', ' ').slice(0, 19)} UTC ／ オントロジー ${D.ontology.commit ? D.ontology.commit.slice(0, 7) : ''} ／ トレース ${D.trace_path} ／ 判定の途中は同じ引数で LLM なしに再実行して取得`;
+go(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "startedAt": "2026-11-19T07:48:59.171Z",
+  "specification": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/candidate.json",
+    "sha256": "3937bd76146022551e6732cc8c2ef630e8730a55d300d2fa223d2f21c2cebfb0",
+    "bytes": 15824
+  },
+  "artifact": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+    "sha256": "92c9b6e36e8d7f12e9e4bd007c9f6db9cb895af676c5fdd509ec87c5d0b7f34b",
+    "bytes": 885859
+  },
+  "stages": {
+    "validate": {
+      "status": "not-run",
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "fail",
+      "exitCode": 0,
+      "durationMs": 490,
+      "command": [
+        "/home/eiera/.nvm/versions/node/v26.13.1/bin/node",
+        "/home/eiera/.claude/skills/archify/bin/archify.mjs",
+        "deliver",
+        "sequence",
+        "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/candidate.json",
+        "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/eiera/work/ontology/semantica-agent",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "fdddf11d-a8a0-4d1c-a8c4-c67c5bcff7f1",
+        "ok": true,
+        "command": "deliver",
+        "type": "sequence",
+        "input": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/candidate.json",
+        "output": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+        "specification": {
+          "sha256": "3937bd76146022551e6732cc8c2ef630e8730a55d300d2fa223d2f21c2cebfb0",
+          "bytes": 15824
+        },
+        "artifact": {
+          "sha256": "92c9b6e36e8d7f12e9e4bd007c9f6db9cb895af676c5fdd509ec87c5d0b7f34b",
+          "bytes": 885859
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 1,
+          "compositionIssues": [
+            {
+              "severity": "warning",
+              "code": "composition/viewport-height",
+              "readerFit": null,
+              "viewBoxWidth": 1084,
+              "viewBoxHeight": 3219,
+              "viewportWidth": 1440,
+              "viewportHeight": 900,
+              "ratio": 0.34,
+              "wideRatio": 1.55,
+              "svgWidthPx": 1346,
+              "svgHeightPx": 3997,
+              "fixedChromePx": 126,
+              "pageHeightPx": 4123,
+              "overflowPx": 3223,
+              "detail": "[composition/viewport-height] Preserve every node, relationship, and label. This 1084x3219 canvas (ratio 0.34) declares no intrinsic-height fit and is below the 1.55 wide ratio, so the desktop Reader can neither narrow it nor accept vertical scroll: it renders 3997px tall at the full 1346px width and the page reaches 4123px before cards against 900px, a certain visual-check failure. Either compact vertical spacing so meta.viewBox height is at most 699 at this width, or spread content sideways so the width is at least 4990 at this height; for architecture and readable-v2 workflow, omitting meta.viewBox lets the renderer size the canvas and declare the fit."
+            }
+          ]
+        },
+        "evidence": {
+          "verified": true,
+          "repository": "https://github.com/eierapfel-xx/semantica-agent",
+          "revision": "eff17605cbc4a94a2546c6bc221c9a322d3c8b5c",
+          "references": 16
+        },
+        "diagnostics": [
+          {
+            "code": "i18n/locale-fallback",
+            "severity": "warning",
+            "message": "meta.locale \"ja\" has no bundled catalog and no usable meta.translations; the Viewer chrome and <html lang> fall back to English.",
+            "subject": {
+              "diagramType": "sequence",
+              "path": "/meta/locale"
+            },
+            "evidence": {
+              "locale": "ja",
+              "bundledLocales": [
+                "en",
+                "zh-CN",
+                "zh-TW",
+                "es",
+                "ko",
+                "ar"
+              ]
+            },
+            "supportedFixes": [
+              "Supply meta.translations for this locale.",
+              "Use a bundled locale: en, zh-CN, zh-TW, es, ko, ar."
+            ]
+          }
+        ],
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "stderr": "archify: meta.locale \"ja\" has no bundled catalog and no usable meta.translations; the Viewer chrome and <html lang> fall back to English."
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "composition/viewport-height",
+      "severity": "error",
+      "message": "Showcase delivery reported composition/viewport-height; zero warnings are required.",
+      "subject": {
+        "stage": "deliver",
+        "check": "composition"
+      },
+      "evidence": {
+        "reportedSeverity": "warning",
+        "readerFit": null,
+        "viewBoxWidth": 1084,
+        "viewBoxHeight": 3219,
+        "viewportWidth": 1440,
+        "viewportHeight": 900,
+        "ratio": 0.34,
+        "wideRatio": 1.55,
+        "svgWidthPx": 1346,
+        "svgHeightPx": 3997,
+        "fixedChromePx": 126,
+        "pageHeightPx": 4123,
+        "overflowPx": 3223
+      },
+      "supportedFixes": [
+        "Preserve every node, relationship, and label. This 1084x3219 canvas (ratio 0.34) declares no intrinsic-height fit and is below the 1.55 wide ratio, so the desktop Reader can neither narrow it nor accept vertical scroll: it renders 3997px tall at the full 1346px width and the page reaches 4123px before cards against 900px, a certain visual-check failure. Either compact vertical spacing so meta.viewBox height is at most 699 at this width, or spread content sideways so the width is at least 4990 at this height; for architecture and readable-v2 workflow, omitting meta.viewBox lets the renderer size the canvas and declare the fit."
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.finalize.json",
+    "summaryReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "deliver",
+  "finishedAt": "2026-11-19T07:48:59.742Z",
+  "durationMs": 571,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-19T02:40:39.929Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}
