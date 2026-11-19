@@ -191,3 +191,28 @@ def test_prov_uses_node_iris(tmp_path):
     save_trace(finished(), tmp_path)
     text = (tmp_path / "s" / "001.prov.ttl").read_text("utf-8")
     assert "koseki/id/birth/step/2/item/8" in text and "urn:git:commit:c" in text
+
+
+def test_trace_without_runtime_is_still_valid():
+    t = json.loads((ROOT / "tests/fixtures/traces/demo-001.json").read_text("utf-8"))
+    assert "runtime" not in t
+    validate_trace(t)
+
+
+def test_runtime_is_carried_and_on_add_called():
+    seen = []
+    r = recorder()
+    r.runtime = {"kind": "claude-code", "cli_version": "2.1.325"}
+    r.on_add = seen.append
+    e = r.add("user", text="a")
+    assert seen == [e]
+    t = finished(r)
+    assert t["runtime"] == {"kind": "claude-code", "cli_version": "2.1.325"}
+    validate_trace(t)
+
+
+def test_bad_runtime_kind_is_rejected():
+    t = finished()
+    t["runtime"] = {"kind": "other", "cli_version": None}
+    with pytest.raises(TraceError):
+        validate_trace(t)

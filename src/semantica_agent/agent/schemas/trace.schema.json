@@ -14,6 +14,14 @@
     "status": {"enum": ["ok", "error"]},
     "started": {"type": "string"},
     "ended": {"type": "string"},
+    "runtime": {
+      "type": "object",
+      "required": ["kind", "cli_version"],
+      "properties": {
+        "kind": {"enum": ["agent-sdk", "claude-code"]},
+        "cli_version": {"type": ["string", "null"]}
+      }
+    },
     "model": {
       "type": "object",
       "required": ["requested", "responded"],

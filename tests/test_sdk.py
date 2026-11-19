@@ -147,7 +147,7 @@ async def test_result_error_marks_turn_failed(knowledge, settings):
 async def test_unexpected_tool_exception_is_recorded(knowledge, settings, monkeypatch):
     from fake_sdk import crash_tool
 
-    import semantica_agent.agent.sdk as agent_mod
+    import semantica_agent.agent.session as agent_mod
 
     def boom(*a, **k):
         raise KeyError("壊れた")
@@ -182,3 +182,16 @@ async def test_concurrent_ask_is_rejected(knowledge, settings):
     sess.busy = True
     events = await collect(sess, "q")
     assert [e["type"] for e in events] == ["error"]
+
+
+def test_options_disable_claude_md_and_memory(knowledge, settings):
+    sess = AgentSession(knowledge, settings, client_factory=fake_factory())
+    env = build_options(sess).env
+    assert env["CLAUDE_CODE_DISABLE_CLAUDE_MDS"] == "1"
+    assert env["CLAUDE_CODE_DISABLE_AUTO_MEMORY"] == "1"
+
+
+async def test_trace_runtime_is_agent_sdk(knowledge, settings):
+    f = fake_factory([text("a")])
+    trace = (await collect(AgentSession(knowledge, settings, client_factory=f), "q"))[-1]["trace"]
+    assert trace["runtime"]["kind"] == "agent-sdk"

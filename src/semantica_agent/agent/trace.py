@@ -6,6 +6,7 @@
 import json
 import logging
 import subprocess
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -56,12 +57,16 @@ class TraceRecorder:
     initial_case_states: dict
     events: list[dict] = field(default_factory=list)
     started: str = field(default_factory=_now)
+    runtime: dict | None = None
+    on_add: Callable[[dict], None] | None = None
 
     def add(self, type: str, **fields) -> dict:
         if type not in EVENT_TYPES:
             raise TraceError(f"知らないイベントの種類です: {type}")
         event = {"seq": len(self.events) + 1, "time": _now(), "type": type, **fields}
         self.events.append(event)
+        if self.on_add is not None:
+            self.on_add(event)
         return event
 
     def finish(
@@ -74,7 +79,7 @@ class TraceRecorder:
     ) -> dict:
         flow = replay(self.events, self.initial_case_states)
         touched = [n for e in self.events for n in e.get("nodes", [])]
-        return {
+        trace = {
             "trace_version": TRACE_VERSION,
             "session_id": self.session_id,
             "turn": self.turn,
@@ -93,6 +98,7 @@ class TraceRecorder:
             "judgment": judgment,
             "answer": answer,
         }
+        return trace if self.runtime is None else {**trace, "runtime": self.runtime}
 
 
 def validate_trace(trace: dict) -> None:
