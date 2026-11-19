@@ -31,6 +31,8 @@ Agent SDK 版（`python -m semantica_agent.web`）と同じツール・同じシ
 | スキル・スラッシュコマンド              | `--disable-slash-commands`                                                                      |
 | ツールの許可                            | `--allowedTools "mcp__koseki__*"`、`--permission-mode dontAsk`                                  |
 
+絞り込めないもの：Claude Code 本体が自動で付ける文脈（作業ディレクトリ・OS などの環境、ログインしたアカウントのメールアドレス、環境上の注意書き）と、本体に組み込まれたプラグイン（`…@builtin`）は残る。どちらも同じ CLI で動く SDK 版にも入るので、2 つの版の条件の差にはならない（2026-11-19 の E2E で確認）。
+
 ## 記録の仕組み
 
 | 何を                         | 誰が                                                   |
