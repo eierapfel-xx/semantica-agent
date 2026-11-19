@@ -21,6 +21,7 @@ from claude_agent_sdk import (
 )
 from claude_agent_sdk.types import AssistantMessage, ResultMessage, TextBlock, ThinkingBlock
 
+from semantica_agent.agent.claude_code import ISOLATION_ENV, bundled_cli_version
 from semantica_agent.agent.session import TOOL_NAMES, ReviewSession, tool_specs
 from semantica_agent.agent.tools import Knowledge
 from semantica_agent.core.settings import Settings
@@ -28,8 +29,6 @@ from semantica_agent.core.settings import Settings
 logger = logging.getLogger(__name__)
 
 MCP_SERVER = "koseki"
-ISOLATION_ENV = {"CLAUDE_CODE_DISABLE_CLAUDE_MDS": "1", "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"}
-RUNTIME = {"kind": "agent-sdk", "cli_version": None}
 
 
 def allowed_tool_names() -> list[str]:
@@ -57,7 +56,11 @@ class AgentSession:
     ):
         self.k, self.settings = k, settings
         self.review = ReviewSession(
-            k, settings, session_id or uuid.uuid4().hex[:12], today or date.today(), RUNTIME
+            k,
+            settings,
+            session_id or uuid.uuid4().hex[:12],
+            today or date.today(),
+            {"kind": "agent-sdk", "cli_version": bundled_cli_version()},
         )
         self.session_id = self.review.session_id
         self.state = self.review.state

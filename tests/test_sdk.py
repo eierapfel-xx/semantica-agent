@@ -195,3 +195,12 @@ async def test_trace_runtime_is_agent_sdk(knowledge, settings):
     f = fake_factory([text("a")])
     trace = (await collect(AgentSession(knowledge, settings, client_factory=f), "q"))[-1]["trace"]
     assert trace["runtime"]["kind"] == "agent-sdk"
+
+
+async def test_trace_runtime_has_bundled_cli_version(knowledge, settings, monkeypatch):
+    import semantica_agent.agent.sdk as sdk
+
+    monkeypatch.setattr(sdk, "bundled_cli_version", lambda cli=None: "9.9.9")
+    f = fake_factory([text("a")])
+    trace = (await collect(AgentSession(knowledge, settings, client_factory=f), "q"))[-1]["trace"]
+    assert trace["runtime"] == {"kind": "agent-sdk", "cli_version": "9.9.9"}

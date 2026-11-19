@@ -1,24 +1,123 @@
-"""Claude Code 版の hook の処理と起動。仕様（2026-11-19）§5.1・§5.3。
+"""Claude Code 版の起動と hook の処理。仕様（2026-11-19）§5.1・§5.3。
 
+起動：`claude-code-agent/run.sh [質問]`（中身は `... claude_code launch`）。
 hook：`uv run python -m semantica_agent.agent.claude_code hook <prompt|pre-tool|stop>`
 （stdin に Claude Code の hook の JSON）。hook の失敗はターンを止めない。
 """
 
 import argparse
+import functools
+import hashlib
 import json
 import logging
 import os
+import subprocess
 import sys
-from collections.abc import Mapping
+import uuid
+from collections.abc import Callable, Mapping
+from dataclasses import dataclass
+from datetime import date
+from pathlib import Path
 
-from semantica_agent.agent.session import TOOL_NAMES
+import claude_agent_sdk
+
+from semantica_agent.agent.session import PROMPT_PATH, TOOL_NAMES, render_prompt
 from semantica_agent.agent.spool import Spool, now
+from semantica_agent.agent.tools import Knowledge
+from semantica_agent.agent.trace import ontology_info
 from semantica_agent.agent.turn_close import close_turn
+from semantica_agent.core.paths import REPO_ROOT
 from semantica_agent.core.settings import ConfigError, Settings, configure_logging, load_settings
+from semantica_agent.core.turtle_io import validate_integrity
 
 logger = logging.getLogger(__name__)
 
 MCP_PREFIX = "mcp__koseki__"
+AGENT_DIR = REPO_ROOT / "claude-code-agent"
+SDK_DIR = Path(claude_agent_sdk.__file__).parent
+ISOLATION_ENV = {"CLAUDE_CODE_DISABLE_CLAUDE_MDS": "1", "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"}
+Runner = Callable[..., subprocess.CompletedProcess]
+
+
+def bundled_cli(sdk_dir: Path | None = None) -> Path:
+    path = (sdk_dir or SDK_DIR) / "_bundled" / "claude"
+    if not path.exists():
+        raise ConfigError(
+            f"Agent SDK 同梱の Claude Code が見つかりません: {path}。uv sync を確かめてください"
+        )
+    return path
+
+
+@functools.cache
+def bundled_cli_version(cli: Path | None = None) -> str | None:
+    try:
+        cli = cli or bundled_cli()
+        out = subprocess.run([str(cli), "--version"], capture_output=True, text=True, timeout=30)
+        return out.stdout.split()[0] if out.returncode == 0 and out.stdout.strip() else None
+    except (ConfigError, OSError, subprocess.SubprocessError) as e:
+        logger.warning("同梱の Claude Code の版を取れません: %s", e)
+        return None
+
+
+def installed_plugin_ids(cli: Path, run: Runner = subprocess.run) -> list[str]:
+    out = run([str(cli), "plugin", "list", "--json"], capture_output=True, text=True)
+    if out.returncode != 0:
+        raise ConfigError(f"インストール済みのプラグインの一覧を取れません: {out.stderr.strip()}")
+    try:
+        ids = [p["id"] for p in json.loads(out.stdout)]
+    except (json.JSONDecodeError, KeyError, TypeError) as e:
+        raise ConfigError(f"プラグインの一覧の形が読めません: {e}") from e
+    return list(dict.fromkeys(ids))
+
+
+@dataclass(frozen=True)
+class LaunchPlan:
+    cli: Path
+    argv: list[str]
+    env: dict[str, str]
+    cwd: Path
+    session_id: str
+    prompt_file: Path
+
+
+def _absolute(path: Path) -> Path:
+    return path if path.is_absolute() else REPO_ROOT / path
+
+
+def build_launch_plan(
+    settings: Settings,
+    session_id: str,
+    prompt_file: Path,
+    plugin_ids: list[str],
+    question: str | None,
+    base_env: Mapping[str, str],
+    cli: Path,
+) -> LaunchPlan:
+    plugins = json.dumps({"enabledPlugins": {p: False for p in plugin_ids}})
+    argv = [
+        str(cli),
+        "--session-id", session_id,
+        "--model", settings.agent_model,
+        "--system-prompt-file", str(prompt_file),
+        "--tools", "",
+        "--strict-mcp-config", "--mcp-config", ".mcp.json",
+        "--setting-sources", "project",
+        "--disable-slash-commands",
+        "--allowedTools", "mcp__koseki__*",
+        "--permission-mode", "dontAsk",
+        "--settings", plugins,
+    ]  # fmt: skip
+    if question:
+        argv += ["-p", question, "--max-turns", str(settings.agent_max_turns)]
+    env = {
+        **base_env,
+        **ISOLATION_ENV,
+        "KOSEKI_SESSION_ID": session_id,
+        "KOSEKI_REPO_ROOT": str(REPO_ROOT),
+        "KOSEKI_SPOOL_ROOT": str(_absolute(settings.spool_root)),
+        "KOSEKI_TRACE_ROOT": str(_absolute(settings.trace_root)),
+    }
+    return LaunchPlan(cli, argv, env, AGENT_DIR, session_id, prompt_file)
 
 
 def _on_prompt(spool: Spool, payload: dict, settings: Settings) -> None:
@@ -74,6 +173,55 @@ def handle_hook(name: str, payload: dict, env: Mapping[str, str], settings: Sett
     return 0
 
 
+def _prepare(settings: Settings, today: date) -> tuple[Spool, Path]:
+    """相談の置き場を作り、システムプロンプトと相談の情報を書く。"""
+    Knowledge.load(REPO_ROOT)  # 読めないオントロジーなら起動しない
+    conforms, text = validate_integrity(REPO_ROOT / "ontology")
+    if not conforms:
+        raise ConfigError(f"オントロジーの整合性の検証で違反があります\n{text}")
+    spool = Spool(_absolute(settings.spool_root), str(uuid.uuid4()))
+    template = PROMPT_PATH.read_text("utf-8")
+    spool.dir.mkdir(parents=True, exist_ok=True)
+    prompt_file = spool.dir / "prompt.md"
+    prompt_file.write_text(render_prompt(template, today), encoding="utf-8")
+    spool.write_session(
+        {
+            "model_requested": settings.agent_model,
+            "prompt_path": str(PROMPT_PATH.relative_to(REPO_ROOT)),
+            "prompt_hash": hashlib.sha256(template.encode()).hexdigest(),
+            "ontology_info": ontology_info(REPO_ROOT),
+            "runtime": {"kind": "claude-code", "cli_version": bundled_cli_version()},
+        }
+    )
+    return spool, prompt_file
+
+
+def launch(
+    argv: list[str] | None = None,
+    env: Mapping[str, str] = os.environ,
+    run: Runner = subprocess.run,
+    today: date | None = None,
+) -> int:
+    question = " ".join(argv or []).strip() or None
+    try:
+        settings = load_settings(env)
+        configure_logging(settings)
+        cli = bundled_cli()
+        plugins = installed_plugin_ids(cli, run)
+        spool, prompt_file = _prepare(settings, today or date.today())
+    except (ConfigError, FileNotFoundError, ValueError) as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        return 1
+    plan = build_launch_plan(settings, spool.session_id, prompt_file, plugins, question, env, cli)
+    logger.info("Claude Code 版を起動します（相談 %s）", plan.session_id)
+    code = run(plan.argv, env=plan.env, cwd=plan.cwd).returncode
+    trace_root = _absolute(settings.trace_root)
+    for turn in spool.open_turns():  # Stop が届かないまま終わったターン
+        close_turn(spool, turn, trace_root, interrupted=True)
+    print(f"トレース: {trace_root / plan.session_id}", file=sys.stderr)
+    return code
+
+
 def _hook_main(name: str) -> int:
     try:
         payload = json.loads(sys.stdin.read())
@@ -90,7 +238,11 @@ def main(argv: list[str] | None = None) -> int:
     sub = p.add_subparsers(dest="command", required=True)
     h = sub.add_parser("hook", help="Claude Code の hook から呼ぶ")
     h.add_argument("name", choices=sorted(HOOKS))
+    lp = sub.add_parser("launch", help="Claude Code 版を起動する（質問を渡すと 1 問で終わる）")
+    lp.add_argument("question", nargs="*")
     args = p.parse_args(argv)
+    if args.command == "launch":
+        return launch(args.question)
     return _hook_main(args.name)
 
 
