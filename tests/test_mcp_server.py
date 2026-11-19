@@ -135,3 +135,12 @@ async def test_stdio_server_answers_list_tools(tmp_path):
         await client.initialize()
         names = {t.name for t in (await client.list_tools()).tools}
     assert len(names) == 6 and "judge_birth_case" in names
+
+
+async def test_call_tool_after_turn_done_is_refused(sess, settings):
+    hook("prompt", settings, prompt="問い")
+    await sess.call_tool("search_nodes", {"text": "出生"})
+    hook("stop", settings, last_assistant_message="答え")
+    before = sess.spool.read_events(1)
+    out = await sess.call_tool("search_nodes", {"text": "出生"})  # /clear 後の別の会話から
+    assert out.is_error and sess.spool.read_events(1) == before

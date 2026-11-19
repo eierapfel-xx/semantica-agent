@@ -172,3 +172,22 @@ def test_replayed_flow_matches(tmp_path):
     trace = json.loads(close_turn(s, turn, tmp_path / "traces").read_text("utf-8"))
     assert replay(trace["events"], trace["flow_initial"]) == trace["flow"]
     assert trace["flow"]["MARRIAGE-S8"]["state"] == "referenced"
+
+
+def test_last_message_added_when_transcript_lacks_it(tmp_path):
+    tx = transcript(tmp_path, [("2026-11-19T02:00:01Z", "text", "途中")])
+    s, turn = setup(tmp_path, tx=tx)
+    trace = json.loads(
+        close_turn(s, turn, tmp_path / "traces", last_message="最後").read_text("utf-8")
+    )
+    texts = [e["text"] for e in trace["events"] if e["type"] == "assistant_text"]
+    assert texts == ["途中", "最後"]
+
+
+def test_last_message_not_duplicated(tmp_path):
+    tx = transcript(tmp_path, [("2026-11-19T02:00:05Z", "text", "最後")])
+    s, turn = setup(tmp_path, tx=tx)
+    trace = json.loads(
+        close_turn(s, turn, tmp_path / "traces", last_message="最後").read_text("utf-8")
+    )
+    assert [e["text"] for e in trace["events"] if e["type"] == "assistant_text"] == ["最後"]

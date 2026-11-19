@@ -25,7 +25,10 @@ from semantica_agent.review.case_input import case_record
 logger = logging.getLogger(__name__)
 
 SERVER_NAME = "koseki"
-NO_TURN = "エラー: ターンが始まっていません（UserPromptSubmit の hook が動いていない可能性）"
+NO_TURN = (
+    "エラー: 記録中のターンがありません（UserPromptSubmit の hook が動いていないか、"
+    "/clear などで会話が切り替わった可能性）。run.sh から起動し直してください"
+)
 
 
 class SpoolBackedSession:
@@ -46,7 +49,9 @@ class SpoolBackedSession:
 
     def _follow_turn(self) -> bool:
         cur = self.spool.current_turn()
-        if cur is None:
+        if cur is None or self.spool.is_done(
+            cur["turn"]
+        ):  # 閉じたターンには書かない（/clear 後など）
             return False
         if cur["turn"] != self._turn:
             self._turn = cur["turn"]

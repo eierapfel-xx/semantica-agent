@@ -125,3 +125,31 @@ def test_main_hook_bad_json_does_not_block(settings, monkeypatch, capsys):
     monkeypatch.setattr("sys.stdin", io.StringIO("not json"))
     assert claude_code.main(["hook", "prompt"]) == 0
     assert "JSON" in capsys.readouterr().err
+
+
+def test_pre_tool_other_session_is_denied(settings, spool, capsys):
+    p = {
+        **payload("PreToolUse", tool_name="mcp__koseki__run_cq", tool_input={}, tool_use_id="t"),
+        "session_id": "other",
+    }
+    assert handle_hook("pre-tool", p, ENV, settings) == 0
+    out = json.loads(capsys.readouterr().out)["hookSpecificOutput"]
+    assert out["hookEventName"] == "PreToolUse" and out["permissionDecision"] == "deny"
+
+
+def test_prompt_other_session_tells_user(settings, spool, capsys):
+    p = {**payload("UserPromptSubmit", prompt="問い"), "session_id": "other"}
+    handle_hook("prompt", p, ENV, settings)
+    assert "記録" in json.loads(capsys.readouterr().out)["systemMessage"]
+
+
+def test_failed_close_still_starts_new_turn(settings, spool, monkeypatch):
+    def boom(*a, **k):
+        raise RuntimeError("閉じられない")
+
+    handle_hook("prompt", payload("UserPromptSubmit", prompt="一"), ENV, settings)
+    monkeypatch.setattr(claude_code, "close_turn", boom)
+    handle_hook("prompt", payload("UserPromptSubmit", prompt="二"), ENV, settings)
+    assert spool.current_turn()["turn"] == 2
+    assert spool.open_turns() == [2]
+    assert "閉じられない" in (spool.dir / "hook-errors.log").read_text("utf-8")

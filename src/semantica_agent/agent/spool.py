@@ -89,9 +89,16 @@ class Spool:
     def is_done(self, turn: int) -> bool:
         return self._turn_file(turn, "done").exists()
 
+    def mark_failed(self, turn: int) -> None:
+        """閉じられなかったターン（hook-errors.log に理由）。もう閉じ直さない。"""
+        self.dir.mkdir(parents=True, exist_ok=True)
+        self._turn_file(turn, "failed").touch()
+
     def open_turns(self) -> list[int]:
         turns = sorted(int(p.name[5:8]) for p in self.dir.glob("turn-*.events.jsonl"))
-        return [t for t in turns if not self.is_done(t)]
+        return [
+            t for t in turns if not self.is_done(t) and not self._turn_file(t, "failed").exists()
+        ]
 
     def log_error(self, message: str) -> None:
         self.dir.mkdir(parents=True, exist_ok=True)

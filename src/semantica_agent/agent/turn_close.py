@@ -30,7 +30,8 @@ def _merge_events(
     path = info.get("transcript_path")
     msgs = read_turn_messages(Path(path) if path else None, info["started"])
     extra = [{"type": i.type, "text": i.text, "time": i.time} for i in msgs.items]
-    if last_message and not any(e["type"] == "assistant_text" for e in extra):
+    texts = [e["text"] for e in extra if e["type"] == "assistant_text"]
+    if last_message and (not texts or texts[-1] != last_message):  # Stop の時点で未記録の最後の文
         extra.append({"type": "assistant_text", "text": last_message, "time": now()})
     events = sorted(spool.read_events(turn) + extra, key=_time)  # 安定ソート
     if interrupted:

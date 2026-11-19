@@ -120,9 +120,19 @@ def build_launch_plan(
     return LaunchPlan(cli, argv, env, AGENT_DIR, session_id, prompt_file)
 
 
+def _close_open_turns(spool: Spool, trace_root: Path) -> None:
+    """Stop が届かなかったターンを閉じる。閉じられないターンは印を付けて先へ進む。"""
+    for turn in spool.open_turns():
+        try:
+            close_turn(spool, turn, trace_root, interrupted=True)
+        except Exception as e:  # 1 つの失敗で以降のターンの記録を止めない
+            logger.exception("ターン %d を閉じられません", turn)
+            spool.log_error(f"ターン {turn} を閉じられません: {type(e).__name__}: {e}")
+            spool.mark_failed(turn)
+
+
 def _on_prompt(spool: Spool, payload: dict, settings: Settings) -> None:
-    for turn in spool.open_turns():  # Stop が届かなかったターンを閉じる
-        close_turn(spool, turn, settings.trace_root, interrupted=True)
+    _close_open_turns(spool, settings.trace_root)
     prompt = payload.get("prompt", "")
     turn = spool.begin_turn(prompt, payload.get("transcript_path"))
     spool.append_event(turn, {"type": "user", "text": prompt, "time": now()})
@@ -152,15 +162,32 @@ def _on_stop(spool: Spool, payload: dict, settings: Settings) -> None:
 
 
 HOOKS = {"prompt": _on_prompt, "pre-tool": _on_pre_tool, "stop": _on_stop}
+OTHER_SESSION = (
+    "koseki: 会話のセッション ID が起動時と変わったので（/clear・/resume など）、記録できません。"
+    "run.sh から起動し直してください"
+)
+
+
+def _refuse_other_session(name: str, session_id: str | None) -> None:
+    """記録できない会話では、ツールを止め、利用者に知らせる（hook の stdout の JSON）。"""
+    print(f"{OTHER_SESSION}（{session_id}）", file=sys.stderr)
+    if name == "pre-tool":
+        out = {
+            "hookSpecificOutput": {
+                "hookEventName": "PreToolUse",
+                "permissionDecision": "deny",
+                "permissionDecisionReason": OTHER_SESSION,
+            }
+        }
+    else:
+        out = {"systemMessage": OTHER_SESSION}
+    print(json.dumps(out, ensure_ascii=False))
 
 
 def handle_hook(name: str, payload: dict, env: Mapping[str, str], settings: Settings) -> int:
     sid = env.get("KOSEKI_SESSION_ID", "")
     if not sid or payload.get("session_id") != sid:
-        print(
-            f"koseki: セッション ID が起動時と違うので記録しません（{payload.get('session_id')}）",
-            file=sys.stderr,
-        )
+        _refuse_other_session(name, payload.get("session_id"))
         return 0
     spool = Spool(settings.spool_root, sid)
     try:
@@ -216,8 +243,7 @@ def launch(
     logger.info("Claude Code 版を起動します（相談 %s）", plan.session_id)
     code = run(plan.argv, env=plan.env, cwd=plan.cwd).returncode
     trace_root = _absolute(settings.trace_root)
-    for turn in spool.open_turns():  # Stop が届かないまま終わったターン
-        close_turn(spool, turn, trace_root, interrupted=True)
+    _close_open_turns(spool, trace_root)  # Stop が届かないまま終わったターン
     print(f"トレース: {trace_root / plan.session_id}", file=sys.stderr)
     return code
 
