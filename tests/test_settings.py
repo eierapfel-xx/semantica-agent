@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from semantica_agent.settings import DEFAULT_GEN_MODEL, ConfigError, load_settings
+from semantica_agent.core.settings import DEFAULT_GEN_MODEL, ConfigError, load_settings
 
 
 def test_defaults():

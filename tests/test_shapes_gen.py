@@ -1,14 +1,14 @@
 from rdflib import RDF, RDFS, Graph, Literal
 
-from semantica_agent.ids import item_iri, rule_iri
-from semantica_agent.namespaces import KD, KOS
-from semantica_agent.shapes_gen import (
+from semantica_agent.build.shapes_gen import (
     RULE_TABLE,
     build_integrity_prompt,
     build_rules_prompt,
     check_shapes_text,
     extract_turtle,
 )
+from semantica_agent.core.ids import item_iri, rule_iri
+from semantica_agent.core.namespaces import KD, KOS
 
 PREFIX = """
 @base <https://semantica-agent.example/koseki/> .

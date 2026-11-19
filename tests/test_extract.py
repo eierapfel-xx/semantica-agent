@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from semantica_agent.extract import (
+from semantica_agent.build.extract import (
     ColumnBounds,
     Row,
     assign_columns,

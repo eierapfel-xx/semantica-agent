@@ -1,7 +1,7 @@
 import copy
 
-from semantica_agent.extract import Row
-from semantica_agent.instance_check import validate_instance_output
+from semantica_agent.build.extract import Row
+from semantica_agent.build.instance_check import validate_instance_output
 
 
 def with_item(sample, step=1, index=0, **changes):

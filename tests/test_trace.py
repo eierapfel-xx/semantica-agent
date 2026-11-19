@@ -5,8 +5,7 @@ import pytest
 from rdflib import Graph
 from semantica.context import ContextGraph
 
-from semantica_agent.flow import replay
-from semantica_agent.trace import (
+from semantica_agent.agent.trace import (
     TraceError,
     TraceRecorder,
     ontology_info,
@@ -15,6 +14,7 @@ from semantica_agent.trace import (
     save_trace,
     validate_trace,
 )
+from semantica_agent.review.flow import replay
 
 ROOT = Path(__file__).resolve().parents[1]
 JUDGMENT = {

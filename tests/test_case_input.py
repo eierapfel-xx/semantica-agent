@@ -2,7 +2,8 @@ import pytest
 from rdflib import Graph
 from test_birth_rules import build_case
 
-from semantica_agent.case_input import (
+from semantica_agent.core.namespaces import KCASE, KOS
+from semantica_agent.review.case_input import (
     CASE_FIELDS,
     CaseInputError,
     case_graph,
@@ -10,7 +11,6 @@ from semantica_agent.case_input import (
     input_schema,
     parse_case_input,
 )
-from semantica_agent.namespaces import KCASE, KOS
 
 BIRTH = {"status": "given", "value": "2024-04-01", "quote": "4月1日生まれ"}
 VOCAB_PREFIX = {

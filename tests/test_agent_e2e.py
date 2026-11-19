@@ -5,10 +5,10 @@ from pathlib import Path
 
 import pytest
 
-from semantica_agent.agent import AgentSession
-from semantica_agent.settings import load_settings
-from semantica_agent.tools import Knowledge
-from semantica_agent.trace import validate_trace
+from semantica_agent.agent.sdk import AgentSession
+from semantica_agent.agent.tools import Knowledge
+from semantica_agent.agent.trace import validate_trace
+from semantica_agent.core.settings import load_settings
 
 pytestmark = pytest.mark.llm
 ROOT = Path(__file__).resolve().parents[1]

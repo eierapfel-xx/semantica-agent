@@ -50,7 +50,7 @@ uv run python -m semantica_agent.web      # http://127.0.0.1:8765/ を開く
 
 質問 1 回ごとに `output/traces/<相談>/<ターン>` に残る（git 管理外）。
 
-- `.json`：入力、ツールの呼び出しと結果、触れたノード、判定、回答と主張の検証。形は `src/semantica_agent/schemas/trace.schema.json`。
+- `.json`：入力、ツールの呼び出しと結果、触れたノード、判定、回答と主張の検証。形は `src/semantica_agent/agent/schemas/trace.schema.json`。
 - `.md`：人が読む報告。
 - `.prov.ttl`：PROV-O。
 - `decisions.json`：semantica の判断記録。

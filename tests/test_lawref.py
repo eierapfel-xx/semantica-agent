@@ -1,5 +1,5 @@
-from semantica_agent.ids import ProvisionRef as P
-from semantica_agent.lawref import normalize, parse_provisions, provision_appears_in
+from semantica_agent.build.lawref import normalize, parse_provisions, provision_appears_in
+from semantica_agent.core.ids import ProvisionRef as P
 
 
 def test_parse_single():

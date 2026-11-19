@@ -3,7 +3,13 @@ from rdflib import RDF, Literal
 from rdflib.namespace import DCTERMS, PROV
 from semantica.semantic_extract.registry import provider_registry
 
-from semantica_agent.ids import (
+from semantica_agent.build.instance_check import InstanceValidationError
+from semantica_agent.build.instance_gen import (
+    build_instance_prompt,
+    generate_instances,
+    instances_to_graph,
+)
+from semantica_agent.core.ids import (
     ProvisionRef,
     article_iri,
     item_iri,
@@ -13,14 +19,8 @@ from semantica_agent.ids import (
     version_iri,
     vocab_iri,
 )
-from semantica_agent.instance_check import InstanceValidationError
-from semantica_agent.instance_gen import (
-    build_instance_prompt,
-    generate_instances,
-    instances_to_graph,
-)
-from semantica_agent.namespaces import KD, KOS
-from semantica_agent.turtle_io import write_turtle
+from semantica_agent.core.namespaces import KD, KOS
+from semantica_agent.core.turtle_io import write_turtle
 
 ACT = KD["activity/t"]
 

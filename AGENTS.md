@@ -117,7 +117,12 @@ PostToolUse hook の `format-on-edit` が、編集した `.py` を `ruff format`
 - `docs/specs/`、`docs/plans/`：仕様と計画（直下に置く）
 - `docs/domain/`：題材の原本（`手順書.pdf`）と、業務・法令の背景知識のメモ
 - `ontology/`：オントロジー（スキーマ・SHACL・インスタンス）の Turtle ファイル。git 管理する
-- `src/semantica_agent/`：オントロジー構築とエージェントのコード
+- `src/semantica_agent/`：オントロジー構築とエージェントのコード。サブパッケージで分ける（依存は `core` ← `review` ← `agent` ← `web`、`core`・`review` ← `build`。`tests/test_layers.py` で固定）
+  - `core/`：名前空間・ID・語彙・設定・Turtle の読み書き
+  - `review/`：判定ロジック（事案の変換、ルールの判定、フローの状態。LLM を使わない）
+  - `build/`：オントロジーの生成パイプライン（`python -m semantica_agent.build`）
+  - `agent/`：審査支援エージェント（ツール、トレース、Agent SDK 版、Claude Code 版）
+  - `web/`：Web 画面（`python -m semantica_agent.web`）
 - `tests/`：テスト
 - `data/`、`output/`：中間生成物と実行結果。git 管理外（commit-guard もコミットを止める）
 

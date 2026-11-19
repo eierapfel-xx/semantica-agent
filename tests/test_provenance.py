@@ -3,8 +3,8 @@ from datetime import UTC, datetime
 from rdflib import RDF, Graph, Literal
 from rdflib.namespace import PROV
 
-from semantica_agent.namespaces import KD, KOS
-from semantica_agent.provenance import file_sha256, record_activity
+from semantica_agent.build.provenance import file_sha256, record_activity
+from semantica_agent.core.namespaces import KD, KOS
 
 
 def _record(tmp_path, g=None):

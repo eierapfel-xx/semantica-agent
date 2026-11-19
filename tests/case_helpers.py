@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from semantica_agent.case_input import CASE_FIELDS, parse_case_input
+from semantica_agent.review.case_input import CASE_FIELDS, parse_case_input
 
 CASES = json.loads((Path(__file__).parent / "fixtures/birth_cases/cases.json").read_text("utf-8"))
 UNKNOWN = object()  # 項目を省く（未確認）

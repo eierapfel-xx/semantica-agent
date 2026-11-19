@@ -3,9 +3,9 @@ from datetime import date
 import pytest
 from rdflib import Graph
 
-from semantica_agent.ids import short_id
-from semantica_agent.namespaces import KD
-from semantica_agent.rule_inputs import applicable_rules, rule_inputs
+from semantica_agent.core.ids import short_id
+from semantica_agent.core.namespaces import KD
+from semantica_agent.review.rule_inputs import applicable_rules, rule_inputs
 
 LEGIT = {"childBirthDate", "parentsMarriageDate", "motherPrevMarriageEndDate"}
 EXPECTED = {

@@ -1,8 +1,8 @@
 import pytest
 from case_helpers import UNKNOWN, full_args
 
-from semantica_agent.claims import verify_claims
-from semantica_agent.tools import ToolError, judge_birth_case, new_session, submit_answer
+from semantica_agent.agent.claims import verify_claims
+from semantica_agent.agent.tools import ToolError, judge_birth_case, new_session, submit_answer
 
 
 def judged(knowledge, **changes):

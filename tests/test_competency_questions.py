@@ -5,9 +5,9 @@ from pathlib import Path
 import pytest
 from rdflib import URIRef
 
-from semantica_agent.ids import short_id
-from semantica_agent.namespaces import KD
-from semantica_agent.turtle_io import load_ontology
+from semantica_agent.core.ids import short_id
+from semantica_agent.core.namespaces import KD
+from semantica_agent.core.turtle_io import load_ontology
 
 ROOT = Path(__file__).resolve().parents[1]
 

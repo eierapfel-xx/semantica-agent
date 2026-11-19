@@ -5,7 +5,7 @@ from claude_agent_sdk import AssistantMessage, TextBlock
 from semantica.semantic_extract.registry import provider_registry
 from semantica.utils.exceptions import ProcessingError
 
-from semantica_agent.llm_provider import (
+from semantica_agent.build.llm_provider import (
     PROVIDER_NAME,
     ClaudeAgentSDKProvider,
     extract_json,
