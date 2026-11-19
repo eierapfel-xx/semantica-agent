@@ -7,6 +7,8 @@ import shutil
 import sys
 from dataclasses import dataclass
 
+from semantica_agent.core.settings import ConfigError
+
 logger = logging.getLogger(__name__)
 
 REQUIRED_MODULES = ("semantica", "semantica.ontology", "rdflib", "pyshacl", "claude_agent_sdk")
@@ -66,8 +68,21 @@ def check_claude_cli() -> CheckResult:
     return CheckResult("claude CLI", True, path)
 
 
+def check_bundled_cli() -> CheckResult:
+    # Claude Code 版（claude-code-agent/run.sh）は、SDK 版と同じ同梱の CLI で動かす。
+    from semantica_agent.agent.claude_code import bundled_cli, bundled_cli_version
+
+    name = "Claude Code（SDK 同梱）"
+    try:
+        cli = bundled_cli()
+    except ConfigError as e:
+        return CheckResult(name, False, str(e))
+    version = bundled_cli_version(cli)
+    return CheckResult(name, version is not None, version or f"版を取れません: {cli}")
+
+
 def run_checks() -> list[CheckResult]:
-    return [*check_imports(), check_ontology_roundtrip(), check_claude_cli()]
+    return [*check_imports(), check_ontology_roundtrip(), check_claude_cli(), check_bundled_cli()]
 
 
 def main() -> int:

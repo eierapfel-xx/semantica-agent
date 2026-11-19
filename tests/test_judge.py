@@ -5,8 +5,8 @@ import pytest
 from rdflib import RDF, Graph, Literal
 from rdflib.namespace import XSD
 
-from semantica_agent.judge import JudgeError, judge
-from semantica_agent.namespaces import KCASE, KD, KOS
+from semantica_agent.core.namespaces import KCASE, KD, KOS
+from semantica_agent.review.judge import JudgeError, judge
 
 FX = Path(__file__).parent / "fixtures"
 

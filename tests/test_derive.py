@@ -5,7 +5,9 @@ import pytest
 from rdflib import RDF, Graph, Literal
 from rdflib.namespace import PROV, XSD
 
-from semantica_agent.derive import (
+from semantica_agent.core.ids import derived_iri
+from semantica_agent.core.namespaces import KCASE, KOS
+from semantica_agent.review.derive import (
     DERIVED_VALUES,
     DeriveError,
     PeriodRule,
@@ -17,8 +19,6 @@ from semantica_agent.derive import (
     is_closed_day,
     read_period_rule,
 )
-from semantica_agent.ids import derived_iri
-from semantica_agent.namespaces import KCASE, KOS
 
 RULE_14 = PeriodRule(days=14, count_first_day=True, extend_on_holiday=True)
 
@@ -136,7 +136,7 @@ def test_derive_rejects_non_date_literal():
 
 
 def test_definitions_with_law_basis_link_egov_sources():
-    from semantica_agent.ids import egov_source_iri
+    from semantica_agent.core.ids import egov_source_iri
 
     g = derived_definitions_graph()
     marriage = derived_iri("days-from-marriage-to-birth")

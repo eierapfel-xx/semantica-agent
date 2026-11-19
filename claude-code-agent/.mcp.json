@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "koseki": {
+      "command": "uv",
+      "args": ["run", "--project", "${KOSEKI_REPO_ROOT}", "--no-sync", "python", "-m", "semantica_agent.agent.mcp_server"]
+    }
+  }
+}

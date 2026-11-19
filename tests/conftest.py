@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from semantica_agent.extract import Row
+from semantica_agent.build.extract import Row
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -66,8 +66,8 @@ def _block_real_llm(request, monkeypatch):
     def _blocked(*args, **kwargs):
         raise RuntimeError("llm マーカーの無いテストで実際の Agent SDK を呼ぼうとしました")
 
-    monkeypatch.setattr("semantica_agent.llm_provider.query", _blocked)
-    monkeypatch.setattr("semantica_agent.agent.ClaudeSDKClient", _blocked)
+    monkeypatch.setattr("semantica_agent.build.llm_provider.query", _blocked)
+    monkeypatch.setattr("semantica_agent.agent.sdk.ClaudeSDKClient", _blocked)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -75,7 +75,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 @pytest.fixture(scope="session")
 def onto():
-    from semantica_agent.turtle_io import load_ontology
+    from semantica_agent.core.turtle_io import load_ontology
 
     return load_ontology(ROOT / "ontology")
 
@@ -94,6 +94,6 @@ def birth_cases():
 
 @pytest.fixture(scope="session")
 def knowledge():
-    from semantica_agent.tools import Knowledge
+    from semantica_agent.agent.tools import Knowledge
 
     return Knowledge.load(ROOT)

@@ -17,3 +17,10 @@ def test_run_checks_returns_only_check_results():
     results = run_checks()
     assert results
     assert all(isinstance(r, CheckResult) for r in results)
+
+
+def test_bundled_cli_check_reports_version():
+    from semantica_agent.doctor import check_bundled_cli
+
+    r = check_bundled_cli()
+    assert r.name == "Claude Code（SDK 同梱）" and r.ok and r.detail[0].isdigit()

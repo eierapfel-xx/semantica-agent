@@ -8,10 +8,10 @@ import pytest
 from rdflib import RDF, Graph, Literal
 from rdflib.namespace import XSD
 
-from semantica_agent.ids import short_id
-from semantica_agent.judge import judge
-from semantica_agent.namespaces import KCASE, KD, KOS
-from semantica_agent.turtle_io import load_ontology
+from semantica_agent.core.ids import short_id
+from semantica_agent.core.namespaces import KCASE, KD, KOS
+from semantica_agent.core.turtle_io import load_ontology
+from semantica_agent.review.judge import judge
 
 ROOT = Path(__file__).resolve().parents[1]
 CASES = json.loads((Path(__file__).parent / "fixtures/birth_cases/cases.json").read_text("utf-8"))

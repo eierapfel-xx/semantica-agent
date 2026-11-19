@@ -1,8 +1,9 @@
 import pytest
 from case_helpers import UNKNOWN, full_case
 
-from semantica_agent.assess import assess
-from semantica_agent.flow import (
+from semantica_agent.core.namespaces import KCASE
+from semantica_agent.review.assess import assess
+from semantica_agent.review.flow import (
     BUSINESSES,
     case_states,
     flow_shape,
@@ -11,8 +12,7 @@ from semantica_agent.flow import (
     replay,
     step_states,
 )
-from semantica_agent.namespaces import KCASE
-from semantica_agent.rule_inputs import rule_inputs
+from semantica_agent.review.rule_inputs import rule_inputs
 
 
 @pytest.fixture(scope="module")

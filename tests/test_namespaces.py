@@ -1,6 +1,6 @@
 from rdflib import Graph
 
-from semantica_agent.namespaces import KCASE, KD, KOS, PREFIXES, bind_prefixes
+from semantica_agent.core.namespaces import KCASE, KD, KOS, PREFIXES, bind_prefixes
 
 
 def test_namespaces_match_spec():

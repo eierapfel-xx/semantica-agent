@@ -1,0 +1,39 @@
+{
+  "autoMemoryEnabled": false,
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": false
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --project \"$KOSEKI_REPO_ROOT\" --no-sync python -m semantica_agent.agent.claude_code hook prompt"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "mcp__koseki__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --project \"$KOSEKI_REPO_ROOT\" --no-sync python -m semantica_agent.agent.claude_code hook pre-tool"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --project \"$KOSEKI_REPO_ROOT\" --no-sync python -m semantica_agent.agent.claude_code hook stop"
+          }
+        ]
+      }
+    ]
+  }
+}

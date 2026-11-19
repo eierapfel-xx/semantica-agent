@@ -5,8 +5,7 @@ from pathlib import Path
 import pytest
 from rdflib import RDF, Graph, Literal
 
-from semantica_agent.ids import ProvisionRef, amendment_iri, article_iri, item_iri, version_iri
-from semantica_agent.law_gen import (
+from semantica_agent.build.law_gen import (
     AMENDMENT_TARGETS,
     EGOV_LAW_IDS,
     ArticleText,
@@ -19,7 +18,8 @@ from semantica_agent.law_gen import (
     treatment_candidates,
     validate_amendments,
 )
-from semantica_agent.namespaces import KD, KOS
+from semantica_agent.core.ids import ProvisionRef, amendment_iri, article_iri, item_iri, version_iri
+from semantica_agent.core.namespaces import KD, KOS
 
 FX = Path(__file__).parent / "fixtures"
 ACT = KD["activity/t"]
@@ -199,7 +199,7 @@ def test_article_text_is_frozen():
 
 
 def test_cached_get_fetches_each_url_once():
-    from semantica_agent.law_gen import cached_get
+    from semantica_agent.build.law_gen import cached_get
 
     calls = []
 

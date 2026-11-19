@@ -1,10 +1,10 @@
 import pytest
 from case_helpers import UNKNOWN, case_changes, full_case
 
-from semantica_agent.assess import assess
-from semantica_agent.ids import short_id
-from semantica_agent.namespaces import KCASE, KD, KOS
-from semantica_agent.rule_inputs import rule_inputs
+from semantica_agent.core.ids import short_id
+from semantica_agent.core.namespaces import KCASE, KD, KOS
+from semantica_agent.review.assess import assess
+from semantica_agent.review.rule_inputs import rule_inputs
 
 
 @pytest.fixture(scope="module")

@@ -2,16 +2,16 @@ import pytest
 from rdflib import OWL, RDF, RDFS, Literal
 from semantica.semantic_extract.registry import provider_registry
 
-from semantica_agent.extract import Row, render_rows
-from semantica_agent.namespaces import KOS
-from semantica_agent.schema_gen import (
+from semantica_agent.build.extract import Row, render_rows
+from semantica_agent.build.schema_gen import (
     KosekiOntologyGenerator,
     check_schema_coverage,
     generate_schema,
     schema_dict_to_graph,
     schema_summary,
 )
-from semantica_agent.vocab import REQUIRED_CLASSES, REQUIRED_PROPERTIES
+from semantica_agent.core.namespaces import KOS
+from semantica_agent.core.vocab import REQUIRED_CLASSES, REQUIRED_PROPERTIES
 
 
 @pytest.fixture

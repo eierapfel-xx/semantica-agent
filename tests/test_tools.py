@@ -2,7 +2,7 @@ import time
 
 import pytest
 
-from semantica_agent.tools import (
+from semantica_agent.agent.tools import (
     Knowledge,
     ToolError,
     describe_node,
@@ -106,7 +106,7 @@ def test_describe_versions_carry_egov_sources(knowledge):
 
 
 def _session(*utterances):
-    from semantica_agent.tools import new_session
+    from semantica_agent.agent.tools import new_session
 
     s = new_session("t")
     s.utterances.extend(utterances)
@@ -114,7 +114,7 @@ def _session(*utterances):
 
 
 def test_judge_tool_rejects_bad_quote(knowledge):
-    from semantica_agent.tools import judge_birth_case
+    from semantica_agent.agent.tools import judge_birth_case
 
     s = _session("4月1日生まれです")
     args = {
@@ -126,14 +126,14 @@ def test_judge_tool_rejects_bad_quote(knowledge):
 
 
 def test_judge_tool_rejects_bad_input(knowledge):
-    from semantica_agent.tools import judge_birth_case
+    from semantica_agent.agent.tools import judge_birth_case
 
     with pytest.raises(ToolError, match="childBirthDate"):
         judge_birth_case(knowledge, _session("x"), {"childBirthDate": {"status": "given"}})
 
 
 def test_judge_tool_pending_lists_unconfirmed(knowledge):
-    from semantica_agent.tools import judge_birth_case
+    from semantica_agent.agent.tools import judge_birth_case
 
     s = _session("2024年4月1日生まれ")
     args = {"childBirthDate": {"status": "given", "value": "2024-04-01", "quote": "4月1日生まれ"}}
@@ -147,7 +147,7 @@ def test_judge_tool_pending_lists_unconfirmed(knowledge):
 def test_judge_tool_findings_payload(knowledge):
     from case_helpers import full_args
 
-    from semantica_agent.tools import judge_birth_case
+    from semantica_agent.agent.tools import judge_birth_case
 
     r = judge_birth_case(knowledge, _session("q"), full_args(filingDate="2026-11-20"))
     f = r.payload["findings"][0]

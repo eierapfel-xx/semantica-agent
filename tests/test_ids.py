@@ -1,6 +1,6 @@
 import pytest
 
-from semantica_agent.ids import (
+from semantica_agent.core.ids import (
     ProvisionRef,
     amendment_iri,
     article_iri,
@@ -17,7 +17,7 @@ from semantica_agent.ids import (
     version_iri,
     vocab_iri,
 )
-from semantica_agent.namespaces import KD
+from semantica_agent.core.namespaces import KD
 
 
 def test_business_and_step_iri():

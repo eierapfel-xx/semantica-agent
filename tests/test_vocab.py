@@ -1,4 +1,4 @@
-from semantica_agent.vocab import (
+from semantica_agent.core.vocab import (
     AUX_PROPERTIES,
     BUSINESS_SLUGS,
     CONDITION_SLUGS,
