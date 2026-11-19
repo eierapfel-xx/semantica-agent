@@ -15,7 +15,7 @@ uv run python -m semantica_agent.doctor   # 環境の確認
 
 ## 使い方（審査支援エージェント）
 
-設計は `docs/specs/2026-11-17-agent-design.md`。エージェントは Claude Pro のログインで動き、質問 1 回ごとに Pro の利用枠を使う。
+設計は `docs/specs/2026-11-17-agent-design.md`（コードの置き場所と Claude Code 版は `docs/specs/2026-11-19-package-split-and-claude-code.md`）。エージェントは Claude Pro のログインで動き、質問 1 回ごとに Pro の利用枠を使う。
 
 ### 起動する
 
@@ -25,6 +25,17 @@ uv run python -m semantica_agent.web      # http://127.0.0.1:8765/ を開く
 
 - モデルは `AGENT_MODEL`（既定 `claude-sonnet-5-5`）、ポートは `WEB_PORT`（既定 8765）。自分のマシンの `127.0.0.1` だけで待ち受ける。
 - 起動時にオントロジーを整合性シェイプで検証し、違反があれば起動しない。
+
+### Claude Code で起動する
+
+同じエージェントを、Agent SDK 同梱の Claude Code からも動かせる（ツール・システムプロンプト・トレースの形は Web 版と同じ）。
+
+```bash
+./claude-code-agent/run.sh                 # 対話で相談する
+./claude-code-agent/run.sh "質問"          # 1 問だけ聞いて終わる
+```
+
+開発用の CLAUDE.md・プラグイン・組み込みツールは読み込ませない。トレースは `output/traces/` に保存され、Web 画面のトレース一覧から開いて再生できる。詳しくは `claude-code-agent/README.md`、設計は `docs/specs/2026-11-19-package-split-and-claude-code.md`。
 
 ### 質問の例
 

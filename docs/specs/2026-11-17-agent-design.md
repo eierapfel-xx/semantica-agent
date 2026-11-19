@@ -3,6 +3,7 @@
 - 日付：2026-11-17
 - 前提：`docs/specs/2026-11-16-ontology-design.md`（オントロジーの段。PR #2 でマージ済み）。この仕様はその「ゴールにしないこと」に挙げた「エージェント本体、トレースの JSON スキーマ、報告の形」を決める。
 - 対象：オントロジーを使う審査支援エージェント、ツール、トレースの記録、ローカルの Web 画面での可視化。
+- 追記（2026-11-19）：モジュールの置き場所（`src/semantica_agent/agent/` 等）、`ReviewSession`、トレースの `runtime`、Claude Code 版は `docs/specs/2026-11-19-package-split-and-claude-code.md` を参照。この仕様に出てくるファイル名は当時のもの。
 
 ## 1. 目的
 
