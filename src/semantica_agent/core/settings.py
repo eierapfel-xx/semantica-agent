@@ -11,6 +11,7 @@ DEFAULT_RUN_ROOT = Path("data/generation")
 DEFAULT_AGENT_MODEL = "claude-sonnet-5-5"
 DEFAULT_WEB_PORT = 8765
 DEFAULT_TRACE_ROOT = Path("output/traces")
+DEFAULT_SPOOL_ROOT = Path("output/claude-code")
 AGENT_MAX_TURNS = 20
 SPARQL_TIMEOUT_S = 10.0
 _LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
@@ -30,6 +31,7 @@ class Settings:
     web_port: int = DEFAULT_WEB_PORT
     sparql_timeout_s: float = SPARQL_TIMEOUT_S
     trace_root: Path = DEFAULT_TRACE_ROOT
+    spool_root: Path = DEFAULT_SPOOL_ROOT
 
 
 def load_settings(env: Mapping[str, str] = os.environ) -> Settings:
@@ -50,6 +52,8 @@ def load_settings(env: Mapping[str, str] = os.environ) -> Settings:
         run_root=DEFAULT_RUN_ROOT,
         agent_model=env.get("AGENT_MODEL") or DEFAULT_AGENT_MODEL,
         web_port=int(port),
+        trace_root=Path(env.get("KOSEKI_TRACE_ROOT") or DEFAULT_TRACE_ROOT),
+        spool_root=Path(env.get("KOSEKI_SPOOL_ROOT") or DEFAULT_SPOOL_ROOT),
     )
 
 

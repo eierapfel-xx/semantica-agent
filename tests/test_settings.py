@@ -42,3 +42,14 @@ def test_agent_env_overrides():
 def test_bad_web_port():
     with pytest.raises(ConfigError, match="WEB_PORT"):
         load_settings({"WEB_PORT": "abc"})
+
+
+def test_spool_and_trace_roots_default_and_env():
+    s = load_settings({})
+    assert s.spool_root == Path("output/claude-code") and s.trace_root == Path("output/traces")
+    s = load_settings({"KOSEKI_SPOOL_ROOT": "/tmp/a", "KOSEKI_TRACE_ROOT": "/tmp/b"})
+    assert s.spool_root == Path("/tmp/a") and s.trace_root == Path("/tmp/b")
+
+
+def test_default_agent_model_is_sonnet():
+    assert load_settings({}).agent_model == "claude-sonnet-5-5"
