@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/candidate.json",
+    "sha256": "3ad68a36eb7e6ef63c3f9bb9a64d283d58457dea7f9098c4d4aead3ca13a4200",
+    "bytes": 14355
+  },
+  "artifact": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/agent-flow.html",
+    "sha256": "3e6ba3d4ab945d41fbae1dae538a5e168c822d7440a31f0399e0f3b566630c58",
+    "bytes": 876847
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/agent-flow.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools write pipe failed: read ECONNRESET [ECONNRESET]\nChrome process: still running.\nChrome stderr:\n/home/eiera/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell: error while loading shared libraries: libasound.so.2: cannot open shared object file: No such file or directory\nChrome transport: Node v26.13.1, libuv 1.52.1, linux; pid=260164, exitCode=null, signalCode=null.\nChrome read pipe: readable=true, ended=false, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=false, ended=false, destroyed=true, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/review-6/agent-flow.finalize.json",
+    "summaryReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/review-6/agent-flow.finalize-summary.json",
+    "browserCheckReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/review-6/agent-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-19T02:40:39.929Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1687,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

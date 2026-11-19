@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "a9808819-f8dc-4bff-959c-06eb37403812",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/candidate.json",
+  "output": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/agent-flow.html",
+  "specification": {
+    "sha256": "f3a575784b08f1f23cc4c9a3f4c3dc9d5b89b6ffcdb4776a5d652245c376ac0f",
+    "bytes": 15681
+  },
+  "artifact": {
+    "sha256": "d18d108376c92ea20aa9f1ff404dbbccec186ffbe97828e701c913cb915be555",
+    "bytes": 882404
+  }
+}

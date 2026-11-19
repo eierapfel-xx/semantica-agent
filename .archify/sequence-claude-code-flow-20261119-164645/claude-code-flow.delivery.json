@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "70eb9425-c578-4ee4-875e-a2496e7a1296",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/candidate.json",
+  "output": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+  "specification": {
+    "sha256": "79f5bf1f34b645ec7a555f2919547f5a9946ba842fd6be3d379b359347bd9edc",
+    "bytes": 16146
+  },
+  "artifact": {
+    "sha256": "ebb5b7aa5b2568de9778f0316c819b320ed3d5f05cd5d79c14098eb4927cb473",
+    "bytes": 884404
+  }
+}

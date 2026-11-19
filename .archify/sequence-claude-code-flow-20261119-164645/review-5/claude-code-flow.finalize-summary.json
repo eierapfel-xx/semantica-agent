@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "standard",
+  "specification": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/candidate.json",
+    "sha256": "79f5bf1f34b645ec7a555f2919547f5a9946ba842fd6be3d379b359347bd9edc",
+    "bytes": 16146
+  },
+  "artifact": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+    "sha256": "ebb5b7aa5b2568de9778f0316c819b320ed3d5f05cd5d79c14098eb4927cb473",
+    "bytes": 884404
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [
+    {
+      "code": "i18n/locale-fallback",
+      "severity": "warning",
+      "message": "meta.locale \"ja\" has no bundled catalog and no usable meta.translations; the Viewer chrome and <html lang> fall back to English.",
+      "subject": {
+        "diagramType": "sequence",
+        "path": "/meta/locale"
+      },
+      "evidence": {
+        "locale": "ja",
+        "bundledLocales": [
+          "en",
+          "zh-CN",
+          "zh-TW",
+          "es",
+          "ko",
+          "ar"
+        ]
+      },
+      "supportedFixes": [
+        "Supply meta.translations for this locale.",
+        "Use a bundled locale: en, zh-CN, zh-TW, es, ko, ar."
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/review-5/claude-code-flow.finalize.json",
+    "summaryReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/review-5/claude-code-flow.finalize-summary.json",
+    "browserCheckReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/review-5/claude-code-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-19T02:40:39.929Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3946,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

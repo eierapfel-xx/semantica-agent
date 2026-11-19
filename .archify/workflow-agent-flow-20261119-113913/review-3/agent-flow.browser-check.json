@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "browser-check",
+  "evidenceKind": "automated-browser",
+  "status": "fail",
+  "visualReview": "not-requested",
+  "provenance": "current",
+  "deliveryReceiptId": "5ba71e64-559d-4a05-b9b7-10dff37dda4e",
+  "artifact": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/agent-flow.html",
+    "sha256": "7a30c0b10879f378357d2c2c8f001b589c62255f7be78cb1b18f3b6258fe5f55",
+    "bytes": 864816
+  },
+  "state": {
+    "detail": "read",
+    "motion": "still"
+  },
+  "chrome": {
+    "status": "available",
+    "executable": "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+  },
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/agent-flow.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome stderr:\n[1119/114110.711:ERROR:chrome\\app\\chrome_main_delegate.cc:1243] Remote debugging pipe file descriptors are not open.\nChrome transport: Node v26.13.1, libuv 1.52.1, linux; pid=116352, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "containment": {
+    "status": "fail",
+    "policy": "fit-or-reader-declared-readable-vertical-scroll",
+    "viewports": []
+  },
+  "themeStates": {
+    "status": "fail",
+    "viewports": []
+  },
+  "readability": {
+    "status": "fail",
+    "minimumProjectedNodeTextPx": 6,
+    "viewports": []
+  },
+  "viewerChrome": {
+    "status": "fail",
+    "viewports": []
+  },
+  "captures": {
+    "status": "not-requested",
+    "screenshots": [],
+    "contactSheet": null
+  },
+  "sidecars": {
+    "directory": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/review-3",
+    "receipt": "agent-flow.browser-check.json",
+    "files": []
+  },
+  "error": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome stderr:\n[1119/114110.711:ERROR:chrome\\app\\chrome_main_delegate.cc:1243] Remote debugging pipe file descriptors are not open.\nChrome transport: Node v26.13.1, libuv 1.52.1, linux; pid=116352, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+}

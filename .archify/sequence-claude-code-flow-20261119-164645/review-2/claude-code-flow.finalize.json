@@ -1,0 +1,473 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "standard",
+  "startedAt": "2026-11-19T07:49:12.596Z",
+  "specification": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/candidate.json",
+    "sha256": "a6465b47c12d46f4ed1c100b1a14723070667d13d98d20ce21de5b6e6e92df2f",
+    "bytes": 15824
+  },
+  "artifact": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+    "sha256": "d7bc8f782baf73aaad9f892400fa18b079c135b428186f9ea0d4a866b258fa69",
+    "bytes": 885755
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/home/eiera/.nvm/versions/node/v26.13.1/bin/node",
+        "/home/eiera/.claude/skills/archify/bin/archify.mjs",
+        "deliver",
+        "sequence",
+        "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/candidate.json",
+        "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+        "--quality",
+        "standard",
+        "--repo-root",
+        "/home/eiera/work/ontology/semantica-agent",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "a6465b47c12d46f4ed1c100b1a14723070667d13d98d20ce21de5b6e6e92df2f",
+          "bytes": 15824
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "standard",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 1,
+          "compositionIssues": [
+            {
+              "severity": "warning",
+              "code": "composition/viewport-height",
+              "readerFit": null,
+              "viewBoxWidth": 1084,
+              "viewBoxHeight": 3219,
+              "viewportWidth": 1440,
+              "viewportHeight": 900,
+              "ratio": 0.34,
+              "wideRatio": 1.55,
+              "svgWidthPx": 1346,
+              "svgHeightPx": 3997,
+              "fixedChromePx": 126,
+              "pageHeightPx": 4123,
+              "overflowPx": 3223,
+              "detail": "[composition/viewport-height] Preserve every node, relationship, and label. This 1084x3219 canvas (ratio 0.34) declares no intrinsic-height fit and is below the 1.55 wide ratio, so the desktop Reader can neither narrow it nor accept vertical scroll: it renders 3997px tall at the full 1346px width and the page reaches 4123px before cards against 900px, a certain visual-check failure. Either compact vertical spacing so meta.viewBox height is at most 699 at this width, or spread content sideways so the width is at least 4990 at this height; for architecture and readable-v2 workflow, omitting meta.viewBox lets the renderer size the canvas and declare the fit."
+            }
+          ]
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 524,
+      "command": [
+        "/home/eiera/.nvm/versions/node/v26.13.1/bin/node",
+        "/home/eiera/.claude/skills/archify/bin/archify.mjs",
+        "deliver",
+        "sequence",
+        "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/candidate.json",
+        "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+        "--quality",
+        "standard",
+        "--repo-root",
+        "/home/eiera/work/ontology/semantica-agent",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "06d66755-f477-450e-9836-2bfa54e5c8e5",
+        "ok": true,
+        "command": "deliver",
+        "type": "sequence",
+        "input": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/candidate.json",
+        "output": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+        "specification": {
+          "sha256": "a6465b47c12d46f4ed1c100b1a14723070667d13d98d20ce21de5b6e6e92df2f",
+          "bytes": 15824
+        },
+        "artifact": {
+          "sha256": "d7bc8f782baf73aaad9f892400fa18b079c135b428186f9ea0d4a866b258fa69",
+          "bytes": 885755
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "standard",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 1,
+          "compositionIssues": [
+            {
+              "severity": "warning",
+              "code": "composition/viewport-height",
+              "readerFit": null,
+              "viewBoxWidth": 1084,
+              "viewBoxHeight": 3219,
+              "viewportWidth": 1440,
+              "viewportHeight": 900,
+              "ratio": 0.34,
+              "wideRatio": 1.55,
+              "svgWidthPx": 1346,
+              "svgHeightPx": 3997,
+              "fixedChromePx": 126,
+              "pageHeightPx": 4123,
+              "overflowPx": 3223,
+              "detail": "[composition/viewport-height] Preserve every node, relationship, and label. This 1084x3219 canvas (ratio 0.34) declares no intrinsic-height fit and is below the 1.55 wide ratio, so the desktop Reader can neither narrow it nor accept vertical scroll: it renders 3997px tall at the full 1346px width and the page reaches 4123px before cards against 900px, a certain visual-check failure. Either compact vertical spacing so meta.viewBox height is at most 699 at this width, or spread content sideways so the width is at least 4990 at this height; for architecture and readable-v2 workflow, omitting meta.viewBox lets the renderer size the canvas and declare the fit."
+            }
+          ]
+        },
+        "evidence": {
+          "verified": true,
+          "repository": "https://github.com/eierapfel-xx/semantica-agent",
+          "revision": "eff17605cbc4a94a2546c6bc221c9a322d3c8b5c",
+          "references": 16
+        },
+        "diagnostics": [
+          {
+            "code": "i18n/locale-fallback",
+            "severity": "warning",
+            "message": "meta.locale \"ja\" has no bundled catalog and no usable meta.translations; the Viewer chrome and <html lang> fall back to English.",
+            "subject": {
+              "diagramType": "sequence",
+              "path": "/meta/locale"
+            },
+            "evidence": {
+              "locale": "ja",
+              "bundledLocales": [
+                "en",
+                "zh-CN",
+                "zh-TW",
+                "es",
+                "ko",
+                "ar"
+              ]
+            },
+            "supportedFixes": [
+              "Supply meta.translations for this locale.",
+              "Use a bundled locale: en, zh-CN, zh-TW, es, ko, ar."
+            ]
+          }
+        ],
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "stderr": "archify: meta.locale \"ja\" has no bundled catalog and no usable meta.translations; the Viewer chrome and <html lang> fall back to English."
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 213,
+      "command": [
+        "/home/eiera/.nvm/versions/node/v26.13.1/bin/node",
+        "/home/eiera/.claude/skills/archify/bin/archify.mjs",
+        "check",
+        "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+        "artifact": {
+          "sha256": "d7bc8f782baf73aaad9f892400fa18b079c135b428186f9ea0d4a866b258fa69",
+          "bytes": 885755
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "standard",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 1
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 0,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 14,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 1,
+            "minProjectedNodeTextPx": 6.0055350553505535,
+            "maxBends": 0,
+            "routesOverSuggestedBends": 0,
+            "maxStretch": 1,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 88,
+            "minInteriorSegmentPx": null,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [],
+            "detours": []
+          },
+          "leadingSpace": {
+            "measured": false,
+            "reviewSuggested": false
+          },
+          "sequenceColumnSpace": {
+            "measured": true,
+            "columnFit": "spread",
+            "participantCount": 10,
+            "occupiedRight": 1044,
+            "viewBoxLeft": 0,
+            "canvasWidth": 1084,
+            "emptyRightPx": 40,
+            "emptyRightRatio": 0.037,
+            "typicalParticipantWidth": 86,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": null,
+            "requestedTargetMet": null,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "edge",
+              "id": "m1",
+              "from": "staff",
+              "to": "launch"
+            },
+            "minimumSourceTextPx": 7,
+            "minimumProjectedTextPx": 6.0055350553505535,
+            "semanticTextCount": 100
+          },
+          "issues": [
+            {
+              "severity": "warning",
+              "code": "composition/viewport-height",
+              "readerFit": null,
+              "viewBoxWidth": 1084,
+              "viewBoxHeight": 3219,
+              "viewportWidth": 1440,
+              "viewportHeight": 900,
+              "ratio": 0.34,
+              "wideRatio": 1.55,
+              "svgWidthPx": 1346,
+              "svgHeightPx": 3997,
+              "fixedChromePx": 126,
+              "pageHeightPx": 4123,
+              "overflowPx": 3223,
+              "detail": "[composition/viewport-height] Preserve every node, relationship, and label. This 1084x3219 canvas (ratio 0.34) declares no intrinsic-height fit and is below the 1.55 wide ratio, so the desktop Reader can neither narrow it nor accept vertical scroll: it renders 3997px tall at the full 1346px width and the page reaches 4123px before cards against 900px, a certain visual-check failure. Either compact vertical spacing so meta.viewBox height is at most 699 at this width, or spread content sideways so the width is at least 4990 at this height; for architecture and readable-v2 workflow, omitting meta.viewBox lets the renderer size the canvas and declare the fit."
+            }
+          ]
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "06d66755-f477-450e-9836-2bfa54e5c8e5"
+      }
+    },
+    "browser-check": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 94,
+      "command": [
+        "/home/eiera/.nvm/versions/node/v26.13.1/bin/node",
+        "/home/eiera/.claude/skills/archify/bin/archify.mjs",
+        "browser-check",
+        "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+        "--json",
+        "--require-provenance",
+        "--out-dir",
+        "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/review-2"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "fail",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "06d66755-f477-450e-9836-2bfa54e5c8e5",
+        "artifact": {
+          "path": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+          "sha256": "d7bc8f782baf73aaad9f892400fa18b079c135b428186f9ea0d4a866b258fa69",
+          "bytes": 885755
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "/home/eiera/.cache/ms-playwright/chromium-1254/chrome-linux64/chrome"
+        },
+        "diagnostics": [
+          {
+            "code": "viewer/browser-check-runtime",
+            "severity": "error",
+            "message": "browser-check could not complete its Chrome inspection.",
+            "subject": {
+              "artifact": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html"
+            },
+            "evidence": {
+              "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome stderr:\n/home/eiera/.cache/ms-playwright/chromium-1254/chrome-linux64/chrome: error while loading shared libraries: libasound.so.2: cannot open shared object file: No such file or directory\nChrome transport: Node v26.13.1, libuv 1.52.1, linux; pid=193574, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+            },
+            "supportedFixes": [
+              "resolve the reported Chrome inspection error, then rerun browser-check"
+            ]
+          }
+        ],
+        "containment": {
+          "status": "fail",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": []
+        },
+        "themeStates": {
+          "status": "fail",
+          "viewports": []
+        },
+        "readability": {
+          "status": "fail",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": []
+        },
+        "viewerChrome": {
+          "status": "fail",
+          "viewports": []
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "directory": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/review-2",
+          "receipt": "claude-code-flow.browser-check.json",
+          "files": []
+        },
+        "error": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome stderr:\n/home/eiera/.cache/ms-playwright/chromium-1254/chrome-linux64/chrome: error while loading shared libraries: libasound.so.2: cannot open shared object file: No such file or directory\nChrome transport: Node v26.13.1, libuv 1.52.1, linux; pid=193574, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome stderr:\n/home/eiera/.cache/ms-playwright/chromium-1254/chrome-linux64/chrome: error while loading shared libraries: libasound.so.2: cannot open shared object file: No such file or directory\nChrome transport: Node v26.13.1, libuv 1.52.1, linux; pid=193574, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/review-2/claude-code-flow.finalize.json",
+    "summaryReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/review-2/claude-code-flow.finalize-summary.json",
+    "browserCheckReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/sequence-claude-code-flow-20261119-164645/review-2/claude-code-flow.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "browser-check",
+  "finishedAt": "2026-11-19T07:49:13.576Z",
+  "durationMs": 980,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-19T02:40:39.929Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

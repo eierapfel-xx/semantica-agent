@@ -1,0 +1,714 @@
+{
+ "schema_version": 1,
+ "diagram_type": "sequence",
+ "meta": {
+  "title": "審査支援エージェント Claude Code 版の処理フロー（起動〜1 ターン〜終了）",
+  "locale": "ja",
+  "quality_profile": "standard",
+  "output": ".archify/sequence-claude-code-flow-20261119-164645/claude-code-flow.html",
+  "repository": {
+   "url": "https://github.com/eierapfel-xx/semantica-agent.git",
+   "provider": "github",
+   "link_mode": "web",
+   "revision": "eff17605cbc4a94a2546c6bc221c9a322d3c8b5c"
+  },
+  "legend": {
+   "entries": {
+    "emphasis": {
+     "label": "主な流れ（職員の操作・起動・ツール呼び出し）"
+    },
+    "default": {
+     "label": "呼び出し・読み取り"
+    },
+    "security": {
+     "label": "hook の呼び出し・回答の検証"
+    },
+    "dashed": {
+     "label": "記録ファイルへの書き込み"
+    },
+    "return": {
+     "label": "戻り値・応答"
+    }
+   }
+  }
+ },
+ "participants": [
+  {
+   "id": "staff",
+   "type": "external",
+   "label": "窓口職員",
+   "sublabel": "ターミナル",
+   "sources": [
+    {
+     "path": "claude-code-agent/README.md",
+     "line": 50,
+     "end_line": 56
+    }
+   ]
+  },
+  {
+   "id": "launch",
+   "type": "backend",
+   "label": "run.sh/launch",
+   "sublabel": "起動・後片づけ",
+   "sources": [
+    {
+     "path": "claude-code-agent/run.sh",
+     "line": 1,
+     "end_line": 6
+    },
+    {
+     "path": "src/semantica_agent/agent/claude_code.py",
+     "line": 203,
+     "end_line": 248
+    }
+   ]
+  },
+  {
+   "id": "cli",
+   "type": "backend",
+   "label": "Claude Code CLI",
+   "sublabel": "SDK 同梱 CLI",
+   "sources": [
+    {
+     "path": "src/semantica_agent/agent/claude_code.py",
+     "line": 87,
+     "end_line": 120
+    }
+   ]
+  },
+  {
+   "id": "llm",
+   "type": "cloud",
+   "label": "Claude LLM",
+   "sublabel": "既定 sonnet",
+   "sources": [
+    {
+     "path": "src/semantica_agent/agent/prompts/agent.md",
+     "line": 1,
+     "end_line": 28
+    }
+   ]
+  },
+  {
+   "id": "hook",
+   "type": "security",
+   "label": "hook",
+   "sublabel": "settings.json",
+   "sources": [
+    {
+     "path": "claude-code-agent/.claude/settings.json",
+     "line": 1,
+     "end_line": 39
+    },
+    {
+     "path": "src/semantica_agent/agent/claude_code.py",
+     "line": 134,
+     "end_line": 200
+    }
+   ]
+  },
+  {
+   "id": "mcp",
+   "type": "messagebus",
+   "label": "MCP koseki",
+   "sublabel": "ReviewSession",
+   "sources": [
+    {
+     "path": "claude-code-agent/.mcp.json",
+     "line": 1,
+     "end_line": 8
+    },
+    {
+     "path": "src/semantica_agent/agent/mcp_server.py",
+     "line": 34,
+     "end_line": 111
+    },
+    {
+     "path": "src/semantica_agent/agent/session.py",
+     "line": 206,
+     "end_line": 233
+    }
+   ]
+  },
+  {
+   "id": "onto",
+   "type": "database",
+   "label": "オントロジー",
+   "sublabel": "SHACL で判定",
+   "sources": [
+    {
+     "path": "src/semantica_agent/agent/tools.py",
+     "line": 66,
+     "end_line": 77
+    },
+    {
+     "path": "src/semantica_agent/review/judge.py",
+     "line": 117,
+     "end_line": 142
+    }
+   ]
+  },
+  {
+   "id": "transcript",
+   "type": "database",
+   "label": "会話の記録",
+   "sublabel": "transcript",
+   "sources": [
+    {
+     "path": "src/semantica_agent/agent/transcript.py",
+     "line": 53,
+     "end_line": 65
+    }
+   ]
+  },
+  {
+   "id": "spool",
+   "type": "database",
+   "label": "記録ファイル",
+   "sublabel": "spool・traces",
+   "sources": [
+    {
+     "path": "src/semantica_agent/agent/spool.py",
+     "line": 15,
+     "end_line": 106
+    },
+    {
+     "path": "src/semantica_agent/agent/turn_close.py",
+     "line": 76,
+     "end_line": 113
+    },
+    {
+     "path": "src/semantica_agent/agent/trace.py",
+     "line": 194,
+     "end_line": 207
+    }
+   ]
+  }
+ ],
+ "segments": [
+  {
+   "from": 165,
+   "label": "① 起動の準備（launch）",
+   "to": 575
+  },
+  {
+   "from": 579,
+   "label": "② MCP サーバーの起動",
+   "to": 861
+  },
+  {
+   "from": 865,
+   "label": "③ 質問の受付（UserPromptSubmit）",
+   "to": 1183
+  },
+  {
+   "from": 1187,
+   "label": "④ LLM がツールを選ぶ",
+   "to": 1575
+  },
+  {
+   "from": 1579,
+   "label": "⑤ MCP ツールで判定する",
+   "to": 1974
+  },
+  {
+   "from": 1978,
+   "label": "⑥ 根拠を集める（繰り返し）",
+   "to": 2192
+  },
+  {
+   "from": 2196,
+   "label": "⑦ 回答の提出と検証",
+   "to": 2567
+  },
+  {
+   "from": 2571,
+   "label": "⑧ ターンを閉じる（Stop）",
+   "to": 2889
+  },
+  {
+   "from": 2893,
+   "label": "⑨ 終了と後片づけ",
+   "to": 3105
+  }
+ ],
+ "messages": [
+  {
+   "id": "m1",
+   "from": "staff",
+   "to": "launch",
+   "y": 183,
+   "label": "./run.sh [質問]",
+   "variant": "emphasis",
+   "note": "質問を渡すと -p で 1 問だけ"
+  },
+  {
+   "id": "m2",
+   "from": "launch",
+   "to": "cli",
+   "y": 253,
+   "label": "claude plugin list --json",
+   "variant": "default",
+   "note": "すべて無効にする設定を作る"
+  },
+  {
+   "id": "m3",
+   "from": "cli",
+   "to": "launch",
+   "y": 323,
+   "label": "プラグイン ID の一覧",
+   "variant": "return"
+  },
+  {
+   "id": "m4",
+   "from": "launch",
+   "to": "onto",
+   "y": 357,
+   "label": "Knowledge.load・整合性の検証",
+   "variant": "default",
+   "note": "違反があれば起動しない"
+  },
+  {
+   "id": "m5",
+   "from": "launch",
+   "to": "spool",
+   "y": 427,
+   "label": "prompt.md・session.json を書く",
+   "variant": "dashed",
+   "note": "session_id＝uuid4。agent.md に今日の日付。runtime.kind=claude-code"
+  },
+  {
+   "id": "m6",
+   "from": "launch",
+   "to": "cli",
+   "y": 519,
+   "label": "claude を起動（cwd=claude-code-agent）",
+   "variant": "emphasis",
+   "note": "絞り込みのフラグと env KOSEKI_* を付ける（右下のカード）"
+  },
+  {
+   "id": "m7",
+   "from": "cli",
+   "to": "mcp",
+   "y": 597,
+   "label": "stdio で koseki を起動",
+   "variant": "emphasis",
+   "note": ".mcp.json の uv run … mcp_server"
+  },
+  {
+   "id": "m8",
+   "from": "mcp",
+   "to": "onto",
+   "y": 667,
+   "label": "Knowledge.load",
+   "variant": "default",
+   "note": "スキーマ・ルール・CQ を読む"
+  },
+  {
+   "id": "m9",
+   "from": "mcp",
+   "to": "spool",
+   "y": 737,
+   "label": "session.json の runtime を読む",
+   "variant": "default"
+  },
+  {
+   "id": "m10",
+   "from": "cli",
+   "to": "mcp",
+   "y": 771,
+   "label": "tools/list",
+   "variant": "default"
+  },
+  {
+   "id": "m11",
+   "from": "mcp",
+   "to": "cli",
+   "y": 805,
+   "label": "6 つのツールの説明とスキーマ",
+   "variant": "return",
+   "note": "SDK 版と同じ tool_specs"
+  },
+  {
+   "id": "m12",
+   "from": "staff",
+   "to": "cli",
+   "y": 883,
+   "label": "届出の内容を入力",
+   "variant": "emphasis"
+  },
+  {
+   "id": "m13",
+   "from": "cli",
+   "to": "hook",
+   "y": 917,
+   "label": "UserPromptSubmit（stdin に JSON）",
+   "variant": "security",
+   "note": "session_id が起動時と違えば記録しない"
+  },
+  {
+   "id": "m14",
+   "from": "hook",
+   "to": "spool",
+   "y": 987,
+   "label": "トレース：閉じていない前のターンを閉じる",
+   "variant": "dashed",
+   "note": "Stop が届かなかった分を error で保存"
+  },
+  {
+   "id": "m15",
+   "from": "hook",
+   "to": "spool",
+   "y": 1057,
+   "label": "turn.json・user イベント",
+   "variant": "dashed",
+   "note": "turn+1・質問・transcript_path"
+  },
+  {
+   "id": "m16",
+   "from": "hook",
+   "to": "cli",
+   "y": 1127,
+   "label": "exit 0",
+   "variant": "return",
+   "note": "失敗は hook-errors.log へ"
+  },
+  {
+   "id": "m17",
+   "from": "cli",
+   "to": "llm",
+   "y": 1205,
+   "label": "システムプロンプト＋発言＋ツール定義",
+   "variant": "emphasis",
+   "note": "組み込みツールなし。koseki の 6 つだけ"
+  },
+  {
+   "id": "m18",
+   "from": "cli",
+   "to": "transcript",
+   "y": 1275,
+   "label": "会話を JSONL に追記",
+   "variant": "dashed",
+   "note": "文章・思考・応答モデル"
+  },
+  {
+   "id": "m19",
+   "from": "llm",
+   "to": "cli",
+   "y": 1345,
+   "label": "tool_use：judge_birth_case",
+   "variant": "return",
+   "note": "発言の引用 quote 付きの事案"
+  },
+  {
+   "id": "m20",
+   "from": "cli",
+   "to": "hook",
+   "y": 1415,
+   "label": "PreToolUse（matcher mcp__koseki__.*）",
+   "variant": "security"
+  },
+  {
+   "id": "m21",
+   "from": "hook",
+   "to": "spool",
+   "y": 1449,
+   "label": "tool_call イベント",
+   "variant": "dashed",
+   "note": "ツール名・引数・tool_use_id（via=hook）"
+  },
+  {
+   "id": "m22",
+   "from": "hook",
+   "to": "cli",
+   "y": 1519,
+   "label": "許可（別の会話なら deny）",
+   "variant": "return",
+   "note": "dontAsk で確認なし"
+  },
+  {
+   "id": "m23",
+   "from": "cli",
+   "to": "mcp",
+   "y": 1597,
+   "label": "tools/call judge_birth_case",
+   "variant": "emphasis"
+  },
+  {
+   "id": "m24",
+   "from": "mcp",
+   "to": "spool",
+   "y": 1631,
+   "label": "turn.json を読んでターンに追いつく",
+   "variant": "default",
+   "note": "_follow_turn。閉じたターンならエラー"
+  },
+  {
+   "id": "m25",
+   "from": "mcp",
+   "to": "onto",
+   "y": 1701,
+   "label": "引用の照合 → assess（SHACL で判定）",
+   "variant": "emphasis",
+   "note": "引用が発言に無ければエラー。pyshacl で判定シェイプを当てる"
+  },
+  {
+   "id": "m26",
+   "from": "onto",
+   "to": "mcp",
+   "y": 1782,
+   "label": "判定・指摘・参照ノード",
+   "variant": "return"
+  },
+  {
+   "id": "m27",
+   "from": "mcp",
+   "to": "spool",
+   "y": 1816,
+   "label": "tool_result イベント（nodes・flow）",
+   "variant": "dashed",
+   "note": "events.jsonl に追記"
+  },
+  {
+   "id": "m28",
+   "from": "mcp",
+   "to": "spool",
+   "y": 1886,
+   "label": "state.json（判定・事案・回答）",
+   "variant": "dashed"
+  },
+  {
+   "id": "m29",
+   "from": "mcp",
+   "to": "cli",
+   "y": 1920,
+   "label": "CallToolResult（JSON）",
+   "variant": "return"
+  },
+  {
+   "id": "m30",
+   "from": "cli",
+   "to": "llm",
+   "y": 1954,
+   "label": "tool_result",
+   "variant": "default"
+  },
+  {
+   "id": "m31",
+   "from": "llm",
+   "to": "cli",
+   "y": 1996,
+   "label": "search_nodes・describe_node・run_cq・run_sparql",
+   "variant": "default",
+   "note": "pending なら職員に聞き返して再判定"
+  },
+  {
+   "id": "m32",
+   "from": "cli",
+   "to": "mcp",
+   "y": 2066,
+   "label": "PreToolUse → tools/call（④⑤と同じ）",
+   "variant": "default",
+   "note": "記録の分担も同じ"
+  },
+  {
+   "id": "m33",
+   "from": "mcp",
+   "to": "onto",
+   "y": 2136,
+   "label": "ノード検索・詳細・CQ・SELECT",
+   "variant": "default",
+   "note": "SPARQL は SELECT のみ・200 行まで"
+  },
+  {
+   "id": "m34",
+   "from": "llm",
+   "to": "cli",
+   "y": 2214,
+   "label": "tool_use：submit_answer",
+   "variant": "emphasis",
+   "note": "answer と claims（kind・nodes）"
+  },
+  {
+   "id": "m35",
+   "from": "cli",
+   "to": "mcp",
+   "y": 2284,
+   "label": "tools/call submit_answer",
+   "variant": "default",
+   "note": "PreToolUse は④と同じ"
+  },
+  {
+   "id": "m36",
+   "from": "mcp",
+   "to": "onto",
+   "y": 2354,
+   "label": "verify_claims：根拠ノードを確かめる",
+   "variant": "security",
+   "note": "rule＝最後の判定で評価したルール・審査項目、fact＝このターンに参照したノード。外れたら speculation に下げる"
+  },
+  {
+   "id": "m37",
+   "from": "mcp",
+   "to": "spool",
+   "y": 2479,
+   "label": "answer イベント・state.json",
+   "variant": "dashed"
+  },
+  {
+   "id": "m38",
+   "from": "llm",
+   "to": "cli",
+   "y": 2513,
+   "label": "最後の文章",
+   "variant": "return"
+  },
+  {
+   "id": "m39",
+   "from": "cli",
+   "to": "staff",
+   "y": 2547,
+   "label": "回答を表示",
+   "variant": "return"
+  },
+  {
+   "id": "m40",
+   "from": "cli",
+   "to": "hook",
+   "y": 2589,
+   "label": "Stop（last_assistant_message）",
+   "variant": "security"
+  },
+  {
+   "id": "m41",
+   "from": "hook",
+   "to": "transcript",
+   "y": 2623,
+   "label": "このターンの文章・思考・モデルを読む",
+   "variant": "default",
+   "note": "ターン開始以降の assistant 行"
+  },
+  {
+   "id": "m42",
+   "from": "hook",
+   "to": "spool",
+   "y": 2693,
+   "label": "events・state を読む",
+   "variant": "default",
+   "note": "時刻順に混ぜて seq を振る"
+  },
+  {
+   "id": "m43",
+   "from": "hook",
+   "to": "spool",
+   "y": 2763,
+   "label": "traces/<sid>/NNN.json・.md・.prov.ttl・decisions.json",
+   "variant": "emphasis",
+   "note": "スキーマ検証→報告→PROV-O→判断記録"
+  },
+  {
+   "id": "m44",
+   "from": "hook",
+   "to": "spool",
+   "y": 2833,
+   "label": "turn-NNN.done",
+   "variant": "dashed",
+   "note": "このターンは閉じた印"
+  },
+  {
+   "id": "m45",
+   "from": "staff",
+   "to": "cli",
+   "y": 2911,
+   "label": "終了（-p は 1 問で終わる）",
+   "variant": "default"
+  },
+  {
+   "id": "m46",
+   "from": "cli",
+   "to": "launch",
+   "y": 2945,
+   "label": "終了コード",
+   "variant": "return"
+  },
+  {
+   "id": "m47",
+   "from": "launch",
+   "to": "spool",
+   "y": 2979,
+   "label": "トレース：閉じていないターンを閉じる",
+   "variant": "dashed",
+   "note": "error 付きで保存。失敗は .failed"
+  },
+  {
+   "id": "m48",
+   "from": "launch",
+   "to": "staff",
+   "y": 3049,
+   "label": "トレースの場所を表示",
+   "variant": "return",
+   "note": "Web 画面で開いて再生できる"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "violet",
+   "title": "LLM（Claude）がすること",
+   "items": [
+    "ツールを選び、引数（引用付きの事案、検索語、SPARQL）を組み立てる",
+    "最後に submit_answer で回答と主張（kind・根拠ノード）を出す",
+    "判定そのものはしない：受理できるかは SHACL の判定結果から伝える"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "hook（.claude/settings.json）",
+   "items": [
+    "UserPromptSubmit：ターンを始め、職員の発言を記録",
+    "PreToolUse（mcp__koseki__.*）：ツールの呼び出しと引数を記録。別の会話なら deny",
+    "Stop：transcript と spool をまとめてトレースを保存",
+    "失敗してもターンは止めず hook-errors.log に残す"
+   ]
+  },
+  {
+   "dot": "cyan",
+   "title": "MCP サーバー koseki（.mcp.json）",
+   "items": [
+    "stdio で起動され、6 つのツールを出す（SDK 版と同じ ReviewSession）",
+    "ツールの結果・参照ノード・判定・回答を spool に書く",
+    "ターンの区切りは hook が書いた turn.json を読んで追いつく"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "起動時の絞り込み（build_launch_plan）",
+   "items": [
+    "--system-prompt-file（agent.md に日付）・--tools \"\"（組み込みツールなし）",
+    "--strict-mcp-config --mcp-config .mcp.json（koseki だけ）",
+    "--setting-sources project・--disable-slash-commands・プラグインはすべて無効",
+    "--allowedTools mcp__koseki__*・--permission-mode dontAsk",
+    "env：KOSEKI_REPO_ROOT・SESSION_ID・SPOOL_ROOT・TRACE_ROOT、CLAUDE.md・auto memory を無効化"
+   ]
+  },
+  {
+   "dot": "slate",
+   "title": "判定とツールの中身",
+   "items": [
+    "judge_birth_case：引用を職員の発言と照合 → 派生値 → 判定シェイプ（pyshacl）→ 指摘・decision・審査項目の状態",
+    "search_nodes／describe_node／run_cq／run_sparql：オントロジーの事実（fact の根拠）",
+    "submit_answer：主張の kind と根拠ノードをコードが検証し、外れたら speculation に下げる",
+    "submit_answer が無いターンは最後の文章を推測として回答にする"
+   ]
+  },
+  {
+   "dot": "emerald",
+   "title": "トレーサビリティの元",
+   "items": [
+    "呼び出し＝hook、結果・判定・回答＝MCP サーバー、文章・思考＝transcript",
+    "どれも LLM の自己申告ではない",
+    "出力は SDK 版と同じ形（runtime.kind=claude-code）"
+   ]
+  }
+ ]
+}

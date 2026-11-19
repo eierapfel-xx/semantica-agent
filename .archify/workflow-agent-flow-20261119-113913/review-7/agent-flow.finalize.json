@@ -1,0 +1,841 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "startedAt": "2026-11-19T12:14:27.017Z",
+  "specification": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/candidate.json",
+    "sha256": "f89bf8ca46fc64bcec15a30ea00f8f08f0a5896948d0e12f6c0a78c34bc8c02e",
+    "bytes": 16059
+  },
+  "artifact": {
+    "path": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/agent-flow.html",
+    "sha256": "3e6ba3d4ab945d41fbae1dae538a5e168c822d7440a31f0399e0f3b566630c58",
+    "bytes": 876847
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "/home/eiera/.nvm/versions/node/v26.13.1/bin/node",
+        "/home/eiera/.claude/skills/archify/bin/archify.mjs",
+        "deliver",
+        "workflow",
+        "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/candidate.json",
+        "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/agent-flow.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/eiera/work/ontology/semantica-agent",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "b05c88d9-d1c2-4976-b7ad-fef5b8de9d1e",
+        "stage": "render",
+        "type": "workflow",
+        "input": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/candidate.json",
+        "output": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/agent-flow.html",
+        "error": "Workflow layout validation failed:\n- [composition/proper-crossing] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" crosses edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [884.6, 330] (segments 3 and 3) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.\n- [composition/proper-crossing] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" crosses edges[8] id \"e-llm-submit\" \"llm\" -> \"submit\" at [1036.6, 296] (segments 1 and 3) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.\n- [composition/proper-crossing] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" crosses edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [884.6, 330] (segments 3 and 3) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.\n- [composition/proper-crossing] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" crosses edges[8] id \"e-llm-submit\" \"llm\" -> \"submit\" at [1036.6, 296] (segments 1 and 3) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.\n- [composition/proper-crossing] showcase workflow edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" crosses edges[8] id \"e-llm-submit\" \"llm\" -> \"submit\" at [1036.6, 306] (segments 2 and 3) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.\n- [composition/ambiguous-corridor] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" shares a 584.8px corridor with edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" at [540.2, 330] -> [1125, 330] (segments 3 and 3; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.\n- [composition/ambiguous-corridor] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" shares a 95.7px corridor with edges[6] id \"e-llm-sparql\" \"llm\" -> \"sparql\" at [632.9, 330] -> [728.6, 330] (segments 3 and 3; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.\n- [composition/ambiguous-corridor] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" shares a 10px corridor with edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [1125, 296] -> [1125, 306] (segments 2 and 1; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.\n- [composition/ambiguous-corridor] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" shares a 95.7px corridor with edges[6] id \"e-llm-sparql\" \"llm\" -> \"sparql\" at [632.9, 330] -> [728.6, 330] (segments 3 and 3; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.\n- [composition/ambiguous-corridor] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" shares a 10px corridor with edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [1125, 296] -> [1125, 306] (segments 2 and 1; minimum 8px) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+        "diagnostics": [
+          {
+            "code": "i18n/locale-fallback",
+            "severity": "warning",
+            "message": "meta.locale \"ja\" has no bundled catalog and no usable meta.translations; the Viewer chrome and <html lang> fall back to English.",
+            "subject": {
+              "diagramType": "workflow",
+              "path": "/meta/locale"
+            },
+            "evidence": {
+              "locale": "ja",
+              "bundledLocales": [
+                "en",
+                "zh-CN",
+                "zh-TW",
+                "es",
+                "ko",
+                "ar"
+              ]
+            },
+            "supportedFixes": [
+              "Supply meta.translations for this locale.",
+              "Use a bundled locale: en, zh-CN, zh-TW, es, ko, ar."
+            ]
+          },
+          {
+            "code": "composition/proper-crossing",
+            "severity": "error",
+            "message": "[composition/proper-crossing] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" crosses edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [884.6, 330] (segments 3 and 3) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 4,
+              "id": "e-llm-search",
+              "from": "llm",
+              "to": "search"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 7,
+                "id": "e-llm-judge",
+                "from": "llm",
+                "to": "judgeTool"
+              },
+              "point": [
+                884.5999999999985,
+                330
+              ],
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+            ]
+          },
+          {
+            "code": "composition/proper-crossing",
+            "severity": "error",
+            "message": "[composition/proper-crossing] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" crosses edges[8] id \"e-llm-submit\" \"llm\" -> \"submit\" at [1036.6, 296] (segments 1 and 3) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 4,
+              "id": "e-llm-search",
+              "from": "llm",
+              "to": "search"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 8,
+                "id": "e-llm-submit",
+                "from": "llm",
+                "to": "submit"
+              },
+              "point": [
+                1036.6000000000006,
+                296
+              ],
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+            ]
+          },
+          {
+            "code": "composition/proper-crossing",
+            "severity": "error",
+            "message": "[composition/proper-crossing] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" crosses edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [884.6, 330] (segments 3 and 3) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 5,
+              "id": "e-llm-describe",
+              "from": "llm",
+              "to": "describe"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 7,
+                "id": "e-llm-judge",
+                "from": "llm",
+                "to": "judgeTool"
+              },
+              "point": [
+                884.5999999999985,
+                330
+              ],
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+            ]
+          },
+          {
+            "code": "composition/proper-crossing",
+            "severity": "error",
+            "message": "[composition/proper-crossing] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" crosses edges[8] id \"e-llm-submit\" \"llm\" -> \"submit\" at [1036.6, 296] (segments 1 and 3) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 5,
+              "id": "e-llm-describe",
+              "from": "llm",
+              "to": "describe"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 8,
+                "id": "e-llm-submit",
+                "from": "llm",
+                "to": "submit"
+              },
+              "point": [
+                1036.6000000000006,
+                296
+              ],
+              "segmentIndex": 1,
+              "otherSegmentIndex": 3
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+            ]
+          },
+          {
+            "code": "composition/proper-crossing",
+            "severity": "error",
+            "message": "[composition/proper-crossing] showcase workflow edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" crosses edges[8] id \"e-llm-submit\" \"llm\" -> \"submit\" at [1036.6, 306] (segments 2 and 3) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 7,
+              "id": "e-llm-judge",
+              "from": "llm",
+              "to": "judgeTool"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 8,
+                "id": "e-llm-submit",
+                "from": "llm",
+                "to": "submit"
+              },
+              "point": [
+                1036.6000000000006,
+                305.99999999999994
+              ],
+              "segmentIndex": 2,
+              "otherSegmentIndex": 3
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+            ]
+          },
+          {
+            "code": "composition/ambiguous-corridor",
+            "severity": "error",
+            "message": "[composition/ambiguous-corridor] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" shares a 584.8px corridor with edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" at [540.2, 330] -> [1125, 330] (segments 3 and 3; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 4,
+              "id": "e-llm-search",
+              "from": "llm",
+              "to": "search"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 5,
+                "id": "e-llm-describe",
+                "from": "llm",
+                "to": "describe"
+              },
+              "overlapLengthPx": 584.8,
+              "minimumPx": 8,
+              "from": [
+                540.2,
+                330
+              ],
+              "to": [
+                1125,
+                330
+              ],
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+            ]
+          },
+          {
+            "code": "composition/ambiguous-corridor",
+            "severity": "error",
+            "message": "[composition/ambiguous-corridor] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" shares a 95.7px corridor with edges[6] id \"e-llm-sparql\" \"llm\" -> \"sparql\" at [632.9, 330] -> [728.6, 330] (segments 3 and 3; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 4,
+              "id": "e-llm-search",
+              "from": "llm",
+              "to": "search"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 6,
+                "id": "e-llm-sparql",
+                "from": "llm",
+                "to": "sparql"
+              },
+              "overlapLengthPx": 95.7,
+              "minimumPx": 8,
+              "from": [
+                632.9000000000001,
+                330
+              ],
+              "to": [
+                728.6,
+                330
+              ],
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+            ]
+          },
+          {
+            "code": "composition/ambiguous-corridor",
+            "severity": "error",
+            "message": "[composition/ambiguous-corridor] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" shares a 10px corridor with edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [1125, 296] -> [1125, 306] (segments 2 and 1; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 4,
+              "id": "e-llm-search",
+              "from": "llm",
+              "to": "search"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 7,
+                "id": "e-llm-judge",
+                "from": "llm",
+                "to": "judgeTool"
+              },
+              "overlapLengthPx": 10,
+              "minimumPx": 8,
+              "from": [
+                1125,
+                296
+              ],
+              "to": [
+                1125,
+                306
+              ],
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+            ]
+          },
+          {
+            "code": "composition/ambiguous-corridor",
+            "severity": "error",
+            "message": "[composition/ambiguous-corridor] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" shares a 95.7px corridor with edges[6] id \"e-llm-sparql\" \"llm\" -> \"sparql\" at [632.9, 330] -> [728.6, 330] (segments 3 and 3; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 5,
+              "id": "e-llm-describe",
+              "from": "llm",
+              "to": "describe"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 6,
+                "id": "e-llm-sparql",
+                "from": "llm",
+                "to": "sparql"
+              },
+              "overlapLengthPx": 95.7,
+              "minimumPx": 8,
+              "from": [
+                632.9000000000001,
+                330
+              ],
+              "to": [
+                728.6,
+                330
+              ],
+              "segmentIndex": 3,
+              "otherSegmentIndex": 3
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+            ]
+          },
+          {
+            "code": "composition/ambiguous-corridor",
+            "severity": "error",
+            "message": "[composition/ambiguous-corridor] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" shares a 10px corridor with edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [1125, 296] -> [1125, 306] (segments 2 and 1; minimum 8px) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+            "subject": {
+              "diagramType": "workflow",
+              "collection": "edges",
+              "index": 5,
+              "id": "e-llm-describe",
+              "from": "llm",
+              "to": "describe"
+            },
+            "evidence": {
+              "otherRelationship": {
+                "diagramType": "workflow",
+                "collection": "edges",
+                "index": 7,
+                "id": "e-llm-judge",
+                "from": "llm",
+                "to": "judgeTool"
+              },
+              "overlapLengthPx": 10,
+              "minimumPx": 8,
+              "from": [
+                1125,
+                296
+              ],
+              "to": [
+                1125,
+                306
+              ],
+              "segmentIndex": 2,
+              "otherSegmentIndex": 1
+            },
+            "supportedFixes": [
+              "if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+            ]
+          }
+        ],
+        "provenance": "failed",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "i18n/locale-fallback",
+      "severity": "warning",
+      "message": "meta.locale \"ja\" has no bundled catalog and no usable meta.translations; the Viewer chrome and <html lang> fall back to English.",
+      "subject": {
+        "diagramType": "workflow",
+        "path": "/meta/locale"
+      },
+      "evidence": {
+        "locale": "ja",
+        "bundledLocales": [
+          "en",
+          "zh-CN",
+          "zh-TW",
+          "es",
+          "ko",
+          "ar"
+        ]
+      },
+      "supportedFixes": [
+        "Supply meta.translations for this locale.",
+        "Use a bundled locale: en, zh-CN, zh-TW, es, ko, ar."
+      ]
+    },
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" crosses edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [884.6, 330] (segments 3 and 3) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 4,
+        "id": "e-llm-search",
+        "from": "llm",
+        "to": "search"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 7,
+          "id": "e-llm-judge",
+          "from": "llm",
+          "to": "judgeTool"
+        },
+        "point": [
+          884.5999999999985,
+          330
+        ],
+        "segmentIndex": 3,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+      ]
+    },
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" crosses edges[8] id \"e-llm-submit\" \"llm\" -> \"submit\" at [1036.6, 296] (segments 1 and 3) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 4,
+        "id": "e-llm-search",
+        "from": "llm",
+        "to": "search"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 8,
+          "id": "e-llm-submit",
+          "from": "llm",
+          "to": "submit"
+        },
+        "point": [
+          1036.6000000000006,
+          296
+        ],
+        "segmentIndex": 1,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+      ]
+    },
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" crosses edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [884.6, 330] (segments 3 and 3) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 5,
+        "id": "e-llm-describe",
+        "from": "llm",
+        "to": "describe"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 7,
+          "id": "e-llm-judge",
+          "from": "llm",
+          "to": "judgeTool"
+        },
+        "point": [
+          884.5999999999985,
+          330
+        ],
+        "segmentIndex": 3,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+      ]
+    },
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" crosses edges[8] id \"e-llm-submit\" \"llm\" -> \"submit\" at [1036.6, 296] (segments 1 and 3) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 5,
+        "id": "e-llm-describe",
+        "from": "llm",
+        "to": "describe"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 8,
+          "id": "e-llm-submit",
+          "from": "llm",
+          "to": "submit"
+        },
+        "point": [
+          1036.6000000000006,
+          296
+        ],
+        "segmentIndex": 1,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+      ]
+    },
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase workflow edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" crosses edges[8] id \"e-llm-submit\" \"llm\" -> \"submit\" at [1036.6, 306] (segments 2 and 3) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 7,
+        "id": "e-llm-judge",
+        "from": "llm",
+        "to": "judgeTool"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 8,
+          "id": "e-llm-submit",
+          "from": "llm",
+          "to": "submit"
+        },
+        "point": [
+          1036.6000000000006,
+          305.99999999999994
+        ],
+        "segmentIndex": 2,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" shares a 584.8px corridor with edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" at [540.2, 330] -> [1125, 330] (segments 3 and 3; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 4,
+        "id": "e-llm-search",
+        "from": "llm",
+        "to": "search"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 5,
+          "id": "e-llm-describe",
+          "from": "llm",
+          "to": "describe"
+        },
+        "overlapLengthPx": 584.8,
+        "minimumPx": 8,
+        "from": [
+          540.2,
+          330
+        ],
+        "to": [
+          1125,
+          330
+        ],
+        "segmentIndex": 3,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" shares a 95.7px corridor with edges[6] id \"e-llm-sparql\" \"llm\" -> \"sparql\" at [632.9, 330] -> [728.6, 330] (segments 3 and 3; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 4,
+        "id": "e-llm-search",
+        "from": "llm",
+        "to": "search"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 6,
+          "id": "e-llm-sparql",
+          "from": "llm",
+          "to": "sparql"
+        },
+        "overlapLengthPx": 95.7,
+        "minimumPx": 8,
+        "from": [
+          632.9000000000001,
+          330
+        ],
+        "to": [
+          728.6,
+          330
+        ],
+        "segmentIndex": 3,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[4] id \"e-llm-search\" \"llm\" -> \"search\" shares a 10px corridor with edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [1125, 296] -> [1125, 306] (segments 2 and 1; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 4,
+        "id": "e-llm-search",
+        "from": "llm",
+        "to": "search"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 7,
+          "id": "e-llm-judge",
+          "from": "llm",
+          "to": "judgeTool"
+        },
+        "overlapLengthPx": 10,
+        "minimumPx": 8,
+        "from": [
+          1125,
+          296
+        ],
+        "to": [
+          1125,
+          306
+        ],
+        "segmentIndex": 2,
+        "otherSegmentIndex": 1
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" shares a 95.7px corridor with edges[6] id \"e-llm-sparql\" \"llm\" -> \"sparql\" at [632.9, 330] -> [728.6, 330] (segments 3 and 3; minimum 8px) — if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 5,
+        "id": "e-llm-describe",
+        "from": "llm",
+        "to": "describe"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 6,
+          "id": "e-llm-sparql",
+          "from": "llm",
+          "to": "sparql"
+        },
+        "overlapLengthPx": 95.7,
+        "minimumPx": 8,
+        "from": [
+          632.9000000000001,
+          330
+        ],
+        "to": [
+          728.6,
+          330
+        ],
+        "segmentIndex": 3,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide/bias are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[5] id \"e-llm-describe\" \"llm\" -> \"describe\" shares a 10px corridor with edges[7] id \"e-llm-judge\" \"llm\" -> \"judgeTool\" at [1125, 296] -> [1125, 306] (segments 2 and 1; minimum 8px) — if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 5,
+        "id": "e-llm-describe",
+        "from": "llm",
+        "to": "describe"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 7,
+          "id": "e-llm-judge",
+          "from": "llm",
+          "to": "judgeTool"
+        },
+        "overlapLengthPx": 10,
+        "minimumPx": 8,
+        "from": [
+          1125,
+          296
+        ],
+        "to": [
+          1125,
+          306
+        ],
+        "segmentIndex": 2,
+        "otherSegmentIndex": 1
+      },
+      "supportedFixes": [
+        "if the authored fromSide/toSide are not required by the user, remove them so the renderer can re-plan; otherwise preserve that intent and adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/review-7/agent-flow.finalize.json",
+    "summaryReceipt": "/home/eiera/work/ontology/semantica-agent/.archify/workflow-agent-flow-20261119-113913/review-7/agent-flow.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-11-19T12:14:28.764Z",
+  "durationMs": 1746,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-19T02:40:39.929Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}
