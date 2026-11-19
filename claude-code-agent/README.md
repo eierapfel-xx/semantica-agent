@@ -2,7 +2,51 @@
 
 Agent SDK 版（`python -m semantica_agent.web`）と同じツール・同じシステムプロンプト・同じ形のトレースで、審査支援エージェントを Claude Code から動かす。仕様は `docs/specs/2026-11-19-package-split-and-claude-code.md`。
 
-このディレクトリには設定と起動スクリプトだけを置く。コードは `src/semantica_agent/agent/`（`claude_code.py`・`mcp_server.py`・`spool.py`・`transcript.py`・`turn_close.py`）にある。
+## 構成
+
+このディレクトリには設定と起動スクリプトだけを置く。システムプロンプト・MCP サーバー・hook の処理・オントロジーはリポジトリ本体にあり、ここからはそれを呼ぶだけ。
+
+```
+claude-code-agent/
+├── run.sh                 # 起動スクリプト（中身は semantica_agent.agent.claude_code launch）
+├── .mcp.json              # MCP サーバー koseki の起動コマンド
+├── .claude/settings.json  # hook の登録（UserPromptSubmit・PreToolUse・Stop）と auto memory・プラグインの無効化
+└── README.md
+```
+
+CLAUDE.md は置かない。システムプロンプトは起動時に `--system-prompt-file` で渡す。
+
+### 部品ごとの、設定の場所と実装元
+
+| 部品                           | どこで指定しているか                      | 実装元（リポジトリ内）                                                                   |
+| ------------------------------ | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
+| 起動                           | `run.sh`                                  | `src/semantica_agent/agent/claude_code.py`（`launch`・`build_launch_plan`）              |
+| システムプロンプト             | `run.sh` が `--system-prompt-file` で渡す | `src/semantica_agent/agent/prompts/agent.md`（`{today}` に今日の日付を入れたものを渡す） |
+| ツール（MCP サーバー）         | `.mcp.json` の `koseki`                   | `src/semantica_agent/agent/mcp_server.py`                                                |
+| ツールの中身                   | （MCP サーバーから呼ぶ）                  | `src/semantica_agent/agent/session.py`・`tools.py`（SDK 版と共通）、判定は `review/`     |
+| オントロジー                   | （MCP サーバーが読む）                    | `ontology/`（スキーマ・SHACL・インスタンスの Turtle）                                    |
+| hook（発言・呼び出し・終わり） | `.claude/settings.json` の `hooks`        | `src/semantica_agent/agent/claude_code.py`（`handle_hook`）                              |
+| ターンを閉じてトレースを作る   | `Stop` の hook と、`run.sh` の終了後      | `src/semantica_agent/agent/turn_close.py`・`transcript.py`・`trace.py`                   |
+| 途中の記録                     | （hook と MCP サーバーが書く）            | `src/semantica_agent/agent/spool.py`                                                     |
+
+### 起動から終了までの流れ
+
+1. `run.sh` が `claude_code launch` を呼ぶ。
+1. `launch` の準備：
+   - オントロジーを読み込んで検証する。
+   - セッション ID を作る。
+   - `agent.md` に日付を入れて `output/claude-code/<session_id>/prompt.md` に書く。
+   - `session.json` を書く。
+1. `launch` が、Agent SDK 同梱の `claude` をこのディレクトリで起動する。起動時には、下の「何を絞っているか」のフラグを付ける。環境変数は次の 4 つを渡す。
+   - `KOSEKI_REPO_ROOT`
+   - `KOSEKI_SESSION_ID`
+   - `KOSEKI_SPOOL_ROOT`
+   - `KOSEKI_TRACE_ROOT`
+1. `claude` が `.mcp.json` を読み、`uv run --project $KOSEKI_REPO_ROOT python -m semantica_agent.agent.mcp_server` で koseki を起動する。
+1. 質問のたびに、`.claude/settings.json` の hook が `python -m semantica_agent.agent.claude_code hook <prompt|pre-tool|stop>` を呼んで記録する。
+1. `claude` の終了後に、`launch` が閉じていないターンを閉じる。
+
+`.mcp.json` と hook のコマンドは `$KOSEKI_REPO_ROOT` などの環境変数を前提にしている。このため、`run.sh` を通さずに起動すると動かない。
 
 ## 起動
 
